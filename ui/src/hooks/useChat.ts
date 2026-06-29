@@ -437,7 +437,7 @@ export function useChat(): UseChatReturn {
                 wsPort: config.port,
                 wssPort: config.port,
                 forceTLS: config.forceTLS,
-                enabledTransports: config.forceTLS ? ["wss"] : ["ws"],
+                enabledTransports: ["ws"],
                 enableStats: false,
             });
 

@@ -1,0 +1,11 @@
+{
+    "debug": true,
+    "port": 6001,
+    "appManager.array.apps": [
+        {
+            "id": "soketi-25",
+            "key": "MvvnVXsfh5j64mVzxwgvL29N5mmNMNEEGMSMtvc5w",
+            "secret": "k2MdJlVA5bTGbxswFufMNswL2q9jl8vZ0LZhJIDRei4"
+        }
+    ]
+}

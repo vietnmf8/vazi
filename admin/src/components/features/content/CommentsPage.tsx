@@ -52,7 +52,7 @@ export function CommentsPage() {
  wsPort: Number(process.env.NEXT_PUBLIC_SOKETI_PORT ?? "6001"),
  wssPort: Number(process.env.NEXT_PUBLIC_SOKETI_PORT ?? "6001"),
  forceTLS: process.env.NEXT_PUBLIC_SOKETI_FORCE_TLS === "true",
- enabledTransports: process.env.NEXT_PUBLIC_SOKETI_FORCE_TLS === "true" ? ["wss"] : ["ws"],
+ enabledTransports: ["ws"],
  enableStats: false,
  });
 
