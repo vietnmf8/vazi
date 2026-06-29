@@ -19,7 +19,7 @@ async function runTest() {
         wsHost: process.env.NEXT_PUBLIC_SOKETI_HOST || "127.0.0.1",
         wsPort: Number(process.env.NEXT_PUBLIC_SOKETI_PORT || "6001"),
         forceTLS: process.env.NEXT_PUBLIC_SOKETI_FORCE_TLS === "true",
-        enabledTransports: process.env.NEXT_PUBLIC_SOKETI_FORCE_TLS === "true" ? ["wss"] : ["ws"],
+        enabledTransports: ["ws"],
     });
 
     const channel = pusherClient.subscribe("system-events");

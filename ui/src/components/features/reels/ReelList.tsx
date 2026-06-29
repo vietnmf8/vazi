@@ -87,7 +87,9 @@ export function ReelList({ reels }: { reels: ReelGroup[] }) {
       cluster: process.env.NEXT_PUBLIC_SOKETI_CLUSTER || 'mt1',
       wsHost: process.env.NEXT_PUBLIC_SOKETI_HOST || '127.0.0.1',
       wsPort: Number(process.env.NEXT_PUBLIC_SOKETI_PORT || 6001),
+      wssPort: Number(process.env.NEXT_PUBLIC_SOKETI_PORT || 6001),
       forceTLS: process.env.NEXT_PUBLIC_SOKETI_FORCE_TLS === 'true',
+      enabledTransports: ['ws'],
       enableStats: false,
     });
 
