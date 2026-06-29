@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Price Animation Options</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 32px 24px 60px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 36px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+  }
+
+  .card {
+    background: #1e2433;
+    border: 1.5px solid #2d3650;
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    position: relative;
+  }
+  .card:hover { border-color: #6c8cff; transform: translateY(-2px); }
+  .card.selected {
+    border-color: #6c8cff;
+    box-shadow: 0 0 0 3px rgba(108,140,255,0.25);
+  }
+  .card.selected::after {
+    content: '✓ Selected';
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #6c8cff;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .tag-a { background: #1e3a5f; color: #60a5fa; }
+  .tag-b { background: #2d1f4a; color: #a78bfa; }
+  .tag-c { background: #1a3d2e; color: #34d399; }
+  .tag-d { background: #3d2a1a; color: #fb923c; }
+
+  .card-title { font-size: 17px; font-weight: 700; color: #f1f5f9; margin-bottom: 8px; }
+  .card-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 20px; }
+
+  /* ─── Mini price card widget ─── */
+  .widget {
+    background: #141826;
+    border: 1px solid #2d3650;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+  .widget-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .price-row { display: flex; align-items: baseline; gap: 8px; }
+  .price-display {
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #f59e0b;
+    line-height: 1;
+    min-width: 120px;
+    display: inline-block;
+  }
+  .price-sub { font-size: 13px; color: #64748b; }
+
+  .trigger-btn {
+    width: 100%;
+    padding: 9px 0;
+    border: 1.5px solid #374151;
+    border-radius: 8px;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .trigger-btn:hover {
+    border-color: #6c8cff;
+    color: #a5b4fc;
+    background: rgba(108,140,255,0.06);
+  }
+
+  /* ─── pros/cons ─── */
+  .meta { display: flex; gap: 20px; margin-top: 14px; }
+  .pro, .con {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .pro { color: #34d399; }
+  .con { color: #f87171; }
+
+  /* ════════════════════════════════
+     A — Slot Machine / Digit Roll
+  ════════════════════════════════ */
+  .slot-wrapper {
+    display: inline-flex;
+    overflow: hidden;
+    align-items: baseline;
+  }
+  .slot-char {
+    display: inline-block;
+    position: relative;
+  }
+  .slot-char.rolling {
+    animation: slotRoll 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  @keyframes slotRoll {
+    0%   { transform: translateY(0); opacity: 1; }
+    30%  { transform: translateY(-60%); opacity: 0; }
+    31%  { transform: translateY(60%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ════════════════════════════════
+     B — Flash Glow + Scale
+  ════════════════════════════════ */
+  .flash-price {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 2px 6px;
+    transition: background 0.15s;
+  }
+  .flash-price.flash-up {
+    animation: flashUp 0.6s ease forwards;
+  }
+  .flash-price.flash-down {
+    animation: flashDown 0.6s ease forwards;
+  }
+  @keyframes flashUp {
+    0%   { transform: scale(1); background: transparent; color: #f59e0b; }
+    20%  { transform: scale(1.18); background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    60%  { transform: scale(1.08); background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    100% { transform: scale(1); background: transparent; color: #f59e0b; }
+  }
+  @keyframes flashDown {
+    0%   { transform: scale(1); background: transparent; color: #f59e0b; }
+    20%  { transform: scale(1.15); background: rgba(239, 68, 68, 0.18); color: #ef4444; }
+    60%  { transform: scale(1.07); background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+    100% { transform: scale(1); background: transparent; color: #f59e0b; }
+  }
+
+  /* ════════════════════════════════
+     C — Crossfade Vertical Slide
+  ════════════════════════════════ */
+  .slide-wrapper {
+    position: relative;
+    height: 42px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .slide-price {
+    position: absolute;
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #f59e0b;
+  }
+  .slide-price.exit-up {
+    animation: slideExitUp 0.35s ease forwards;
+  }
+  .slide-price.enter-up {
+    animation: slideEnterUp 0.35s ease forwards;
+  }
+  .slide-price.exit-down {
+    animation: slideExitDown 0.35s ease forwards;
+  }
+  .slide-price.enter-down {
+    animation: slideEnterDown 0.35s ease forwards;
+  }
+  @keyframes slideExitUp {
+    from { transform: translateY(0); opacity: 1; }
+    to   { transform: translateY(-100%); opacity: 0; }
+  }
+  @keyframes slideEnterUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideExitDown {
+    from { transform: translateY(0); opacity: 1; }
+    to   { transform: translateY(100%); opacity: 0; }
+  }
+  @keyframes slideEnterDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ════════════════════════════════
+     D — Ticker / Counting Up
+  ════════════════════════════════ */
+  .ticker-price {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #f59e0b;
+  }
+  .ticker-price.counting {
+    animation: tickerPulse 0.1s ease infinite;
+  }
+  @keyframes tickerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Price Change Animation — 4 Options</h1>
+<p class="subtitle">Nhấn "Simulate Price Change" trên mỗi card để xem animation. Click card để chọn.</p>
+
+<div class="grid">
+
+  <!-- ── Option A: Slot Machine ── -->
+  <div class="card" id="card-a" onclick="selectCard('a')">
+    <span class="tag tag-a">Option A</span>
+    <div class="card-title">Slot Machine Digit Roll</div>
+    <div class="card-desc">Mỗi chữ số "cuộn" lên như máy đánh bạc khi giá thay đổi. Rất visual và satisfying.</div>
+
+    <div class="widget">
+      <div class="widget-label">Estimated Total</div>
+      <div class="price-row">
+        <span class="slot-wrapper" id="slot-display">
+          <span class="price-display" id="slot-price">$95</span>
+        </span>
+        <span class="price-sub">for 1 traveller</span>
+      </div>
+    </div>
+
+    <button class="trigger-btn" onclick="event.stopPropagation(); triggerSlot()">⟳ Simulate Price Change</button>
+
+    <div class="meta">
+      <span class="pro">✓ Rất eye-catching</span>
+      <span class="pro">✓ Phân biệt từng digit</span>
+      <span class="con">✗ Complex hơn</span>
+    </div>
+  </div>
+
+  <!-- ── Option B: Flash Glow ── -->
+  <div class="card" id="card-b" onclick="selectCard('b')">
+    <span class="tag tag-b">Option B</span>
+    <div class="card-title">Flash Glow + Color Signal</div>
+    <div class="card-desc">Giá flash màu xanh (tăng) hoặc đỏ (giảm), scale nhẹ rồi trở về bình thường. Truyền đạt direction change.</div>
+
+    <div class="widget">
+      <div class="widget-label">Estimated Total</div>
+      <div class="price-row">
+        <span class="flash-price" id="flash-price">$95</span>
+        <span class="price-sub">for 1 traveller</span>
+      </div>
+    </div>
+
+    <button class="trigger-btn" onclick="event.stopPropagation(); triggerFlash()">⟳ Simulate Price Change</button>
+
+    <div class="meta">
+      <span class="pro">✓ Truyền đạt direction</span>
+      <span class="pro">✓ Đơn giản, clean</span>
+      <span class="con">✗ Màu có thể confuse</span>
+    </div>
+  </div>
+
+  <!-- ── Option C: Slide In/Out ── -->
+  <div class="card" id="card-c" onclick="selectCard('c')">
+    <span class="tag tag-c">Option C</span>
+    <div class="card-title">Vertical Slide (Directional)</div>
+    <div class="card-desc">Giá cũ slide ra, giá mới slide vào theo chiều dọc. Hướng trượt phản ánh tăng/giảm giá.</div>
+
+    <div class="widget">
+      <div class="widget-label">Estimated Total</div>
+      <div class="price-row">
+        <div class="slide-wrapper" id="slide-wrapper">
+          <span class="slide-price" id="slide-price">$95</span>
+        </div>
+        <span class="price-sub" style="margin-left:8px">for 1 traveller</span>
+      </div>
+    </div>
+
+    <button class="trigger-btn" onclick="event.stopPropagation(); triggerSlide()">⟳ Simulate Price Change</button>
+
+    <div class="meta">
+      <span class="pro">✓ Spatial metaphor rõ</span>
+      <span class="pro">✓ Smooth, professional</span>
+      <span class="con">✗ Cần overflow hidden</span>
+    </div>
+  </div>
+
+  <!-- ── Option D: Count Up Ticker ── -->
+  <div class="card" id="card-d" onclick="selectCard('d')">
+    <span class="tag tag-d">Option D</span>
+    <div class="card-title">Count Up Ticker</div>
+    <div class="card-desc">Giá "đếm" từ giá cũ lên giá mới, như odometer hay counter. Rất satisfying khi thêm người.</div>
+
+    <div class="widget">
+      <div class="widget-label">Estimated Total</div>
+      <div class="price-row">
+        <span class="ticker-price" id="ticker-price">$95</span>
+        <span class="price-sub">for 1 traveller</span>
+      </div>
+    </div>
+
+    <button class="trigger-btn" onclick="event.stopPropagation(); triggerTicker()">⟳ Simulate Price Change</button>
+
+    <div class="meta">
+      <span class="pro">✓ Rất satisfying</span>
+      <span class="pro">✓ Trực quan nhất</span>
+      <span class="con">✗ Chậm nếu delta lớn</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Selection
+  let selected = null;
+  function selectCard(id) {
+    if (selected) document.getElementById('card-' + selected).classList.remove('selected');
+    selected = id;
+    document.getElementById('card-' + id).classList.add('selected');
+    // emit event for companion
+    if (window.__companion_select) window.__companion_select(id);
+  }
+
+  // ── Prices cycle
+  const prices = [95, 145, 120, 190, 75];
+  let idxSlot = 0, idxFlash = 0, idxSlide = 0, idxTicker = 0;
+
+  // ── A: Slot Machine
+  function triggerSlot() {
+    idxSlot = (idxSlot + 1) % prices.length;
+    const newVal = '$' + prices[idxSlot];
+    const el = document.getElementById('slot-price');
+    const oldVal = el.textContent;
+
+    // Animate char by char
+    const chars = newVal.split('');
+    el.textContent = '';
+    chars.forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.textContent = ch;
+      span.style.display = 'inline-block';
+      span.style.animationDelay = (i * 60) + 'ms';
+      span.classList.add('rolling');
+      setTimeout(() => { span.textContent = ch; }, i * 60);
+      el.appendChild(span);
+    });
+
+    // After animation, set clean text
+    setTimeout(() => {
+      el.textContent = newVal;
+    }, chars.length * 60 + 500);
+  }
+
+  // ── B: Flash Glow
+  let flashDir = 1;
+  function triggerFlash() {
+    idxFlash = (idxFlash + 1) % prices.length;
+    const newVal = '$' + prices[idxFlash];
+    const el = document.getElementById('flash-price');
+    const oldNum = parseInt(el.textContent.replace('$',''));
+    const newNum = prices[idxFlash];
+    const going_up = newNum > oldNum;
+
+    el.classList.remove('flash-up', 'flash-down');
+    void el.offsetWidth; // reflow
+    el.textContent = newVal;
+    el.classList.add(going_up ? 'flash-up' : 'flash-down');
+    el.style.fontSize = '32px';
+    el.style.fontWeight = '800';
+    el.style.fontFamily = "'SF Mono', 'Fira Code', monospace";
+    setTimeout(() => el.classList.remove('flash-up', 'flash-down'), 700);
+  }
+
+  // ── C: Vertical Slide
+  function triggerSlide() {
+    idxSlide = (idxSlide + 1) % prices.length;
+    const newVal = '$' + prices[idxSlide];
+    const wrapper = document.getElementById('slide-wrapper');
+    const oldEl = document.getElementById('slide-price');
+    const oldNum = parseInt(oldEl.textContent.replace('$',''));
+    const newNum = prices[idxSlide];
+    const going_up = newNum > oldNum;
+
+    // Exit old
+    oldEl.classList.add(going_up ? 'exit-up' : 'exit-down');
+
+    // Create new
+    const newEl = document.createElement('span');
+    newEl.classList.add('slide-price');
+    newEl.id = 'slide-price';
+    newEl.textContent = newVal;
+    newEl.classList.add(going_up ? 'enter-up' : 'enter-down');
+    wrapper.appendChild(newEl);
+
+    setTimeout(() => {
+      oldEl.remove();
+      newEl.classList.remove('enter-up', 'enter-down');
+    }, 400);
+  }
+
+  // ── D: Count Up Ticker
+  function triggerTicker() {
+    const el = document.getElementById('ticker-price');
+    const from = parseInt(el.textContent.replace('$','')) || 95;
+    idxTicker = (idxTicker + 1) % prices.length;
+    const to = prices[idxTicker];
+    const duration = 600;
+    const steps = 30;
+    const stepTime = duration / steps;
+    let current = from;
+    const delta = (to - from) / steps;
+    let i = 0;
+
+    el.classList.add('counting');
+    const interval = setInterval(() => {
+      i++;
+      current += delta;
+      el.textContent = '$' + Math.round(current);
+      if (i >= steps) {
+        clearInterval(interval);
+        el.textContent = '$' + to;
+        el.classList.remove('counting');
+      }
+    }, stepTime);
+  }
+</script>
+
+<script>
+  // Companion selection bridge
+  window.__companion_select = function(choice) {
+    try {
+      const ev = { type: 'click', choice, text: 'Option ' + choice.toUpperCase(), timestamp: Date.now() };
+      fetch('/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ev)
+      }).catch(() => {});
+    } catch(e) {}
+  };
+</script>
+
+</body>
+</html>

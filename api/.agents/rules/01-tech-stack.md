@@ -1,0 +1,42 @@
+---
+activation: always_on
+description: Backend tech stack & core conventions for this project.
+---
+
+# Backend Tech Stack
+
+| Layer          | Technology | Version           |
+| -------------- | ---------- | ----------------- |
+| Runtime        | Node.js    | 20 LTS            |
+| Language       | TypeScript | 5.x (strict mode) |
+| Framework      | Express    | 4.x               |
+| ORM            | Prisma     | 5.x or 6.x        |
+| Database       | MySQL      | 8.x (InnoDB)      |
+| Validation     | Zod        | 3.x or 4.x        |
+| Error tracking | Sentry     | latest            |
+| Testing        | Vitest     | latest            |
+
+## Project Structure (Layered Architecture)
+
+```
+src/
+├── config/              # unifiedConfig (NEVER process.env directly)
+├── controllers/         # extend BaseController
+├── services/            # business logic
+├── repositories/        # Prisma access layer
+├── routes/              # Express route definitions (ONLY routing)
+├── middleware/          # auth, validation, error boundary
+├── validators/          # Zod schemas
+├── types/               # TS types
+├── instrument.ts        # Sentry init (MUST be first import)
+├── app.ts               # Express setup
+└── server.ts            # HTTP listen
+```
+
+## Core principles
+
+1. Routes ONLY route. Controllers ONLY handle req/res.
+2. NEVER use `process.env` directly — use `unifiedConfig`.
+3. Validate ALL input with Zod at the boundary (route → controller).
+4. All errors → Sentry.captureException + re-throw.
+5. Use Repository pattern for complex queries.

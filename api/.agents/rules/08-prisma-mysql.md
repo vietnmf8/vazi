@@ -1,0 +1,49 @@
+---
+activation: model_decision
+description: Prisma ORM with MySQL best practices for Next.js
+globs: src/**/*.ts, prisma/*.prisma
+---
+
+## Context
+
+Project uses Prisma + MySQL. Apply when working with schema, migrations, or queries.
+
+## Requirements
+
+### Schema Design
+
+- Use `@id @default(cuid())` over autoincrement for distributed-safe IDs
+- Always declare `@@index` for foreign keys (MySQL doesn't auto-index FKs)
+- Use `Decimal` (not `Float`) for money — MySQL precision matters
+- Mark soft-delete fields explicitly: `deletedAt DateTime?`
+- Use `@db.Text` for long strings instead of default `VARCHAR(191)`
+
+### Client Setup (Next.js)
+
+Use a singleton in `lib/prisma.ts` to prevent hot-reload connection leaks:
+
+```typescript
+import { PrismaClient } from "@prisma/client";
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+```
+
+### Queries
+
+- Prefer `select` over `include` — only fetch needed columns
+- Use transactions (`prisma.$transaction`) for multi-table writes
+- NEVER use `findMany()` without `take` limit on user-facing endpoints
+- Use `Prisma.sql` for raw queries — never string concatenation (SQL injection)
+
+### Migrations
+
+- `npx prisma migrate dev --name <descriptive_name>` in development
+- `npx prisma migrate deploy` in production (no schema diff)
+- Never `prisma db push` to production (loses migration history)
+
+### Performance
+
+- Add explicit `@@index([col1, col2])` for common query patterns
+- Use `EXPLAIN` on slow queries (MySQL Workbench or `prisma.$queryRaw`)
+- Connection pooling: use PgBouncer-like for MySQL (PlanetScale, ProxySQL)

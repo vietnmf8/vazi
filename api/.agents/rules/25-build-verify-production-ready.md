@@ -1,0 +1,106 @@
+---
+activation: always_on
+description: Bắt buộc verify toàn diện (dev + build) sau mỗi lần implement code, trước khi kết luận task hoàn tất.
+---
+
+# Build Verify & Production Ready Gate
+
+> **Iron Law:** Không được kết luận task hoàn thành cho đến khi `npm run build` **và** server dev/start đều pass 100%.
+
+**Auto-trigger:** Sau mỗi lần implement code (thực thi plan, sửa feature, fix bug). Đọc skill `production-ready-checklist` trước khi báo done.
+
+## Quy trình bắt buộc (theo thứ tự)
+
+### 1. Review implementation
+
+- [ ] Tất cả yêu cầu task đã implement đầy đủ (MVCS layers đúng scope)
+- [ ] Logic đúng, AppError + i18n keys đầy đủ
+- [ ] Không dead code, import/biến/hàm không dùng
+- [ ] Không `console.log` debug, `TODO`/`FIXME` thiếu context
+- [ ] Không vi phạm rule 22 (res.json direct, process.env trong service, ...)
+
+### 2. Production build — `npm run build`
+
+```bash
+cd api && npm run build
+```
+
+Xác nhận (chạy **trước** dev nếu có thay đổi TypeScript):
+
+- [ ] Build exit 0 — `tsc && tsc-alias` thành công
+- [ ] Không compile errors
+- [ ] Không type errors
+
+Chạy thêm:
+
+```bash
+npm run typecheck
+```
+
+### 3. Local development — `npm run dev`
+
+```bash
+cd api && npm run dev
+```
+
+Xác nhận (có bằng chứng output):
+
+- [ ] Server khởi động thành công (`✓ Server running on http://localhost:...`)
+- [ ] Không runtime errors khi boot
+- [ ] Route/endpoint liên quan task test pass (curl — không tạo file test trong source)
+
+**Sau verify:** kill tiến trình, giải phóng PORT (xem `24-dev-server-verification.mdc`).
+
+### 4. Production readiness
+
+- [ ] Code sạch, nhất quán MVCS pattern
+- [ ] Không broken imports / alias `@/`
+- [ ] Env qua `unifiedConfig`, không `process.env` trực tiếp trong service/controller
+- [ ] i18n keys vi + en cho message mới
+- [ ] Error handling qua AppError + envelope response
+- [ ] Không vấn đề rõ ràng về performance hoặc security
+
+## Auto Fix Loop (bắt buộc)
+
+```
+Phát hiện lỗi/warning/issue
+  → Phân tích nguyên nhân
+  → Sửa code
+  → npm run build (verify lại)
+  → npm run dev + test endpoint (verify lại)
+  → Lặp đến khi PASS 100%
+```
+
+**Cấm:** Báo "xong", "done", "Production Ready ✅" khi chưa chạy verify fresh trong phiên hiện tại.
+
+## Điều kiện hoàn thành task
+
+Chỉ được xác nhận **Production Ready ✅** khi:
+
+| Gate | Command | Status |
+| ---- | ------- | ------ |
+| Production build | `npm run build` | ✅ Pass |
+| Typecheck | `npm run typecheck` | ✅ Pass |
+| Dev server | `npm run dev` | ✅ Pass |
+| API smoke test | curl endpoint liên quan | ✅ Pass |
+| Implementation review | Checklist §1 | ✅ Pass |
+| Production readiness | Checklist §4 | ✅ Pass |
+
+## Báo cáo bắt buộc
+
+Trước khi kết luận, report dạng bảng:
+
+```markdown
+## Verify Summary
+
+| Step | Command | Result | Notes |
+| ---- | ------- | ------ | ----- |
+| Build | npm run build | ✅/❌ | ... |
+| Typecheck | npm run typecheck | ✅/❌ | ... |
+| Dev | npm run dev | ✅/❌ | ... |
+| API test | curl ... | ✅/❌ | ... |
+| Review | implementation | ✅/❌ | ... |
+| Ready | production checklist | ✅/❌ | ... |
+
+**Production Ready:** ✅ / ❌ (chỉ ✅ khi tất cả pass)
+```

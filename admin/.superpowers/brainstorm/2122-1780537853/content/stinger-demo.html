@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stinger Transition — FastVisa</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #080e1a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .page-title { font-size: 20px; font-weight: 900; color: #f8fafc; text-align: center; letter-spacing: -0.02em; }
+        .page-subtitle { font-size: 12px; color: #64748b; text-align: center; margin-top: 4px; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+            padding: 14px 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 680px;
+        }
+        .ctrl-group { display: flex; flex-direction: column; gap: 6px; min-width: 140px; }
+        .ctrl-label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
+        .ctrl-value { display: inline; color: #38bdf8; font-weight: 700; }
+        .ctrl-group input[type=range] { accent-color: #0ea5e9; width: 100%; cursor: pointer; }
+
+        /* Screen */
+        .screen-wrap {
+            width: 100%;
+            max-width: 680px;
+            aspect-ratio: 16/9;
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(56,189,248,0.06);
+        }
+
+        /* Scenes */
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 28px;
+        }
+        .scene-a { background: linear-gradient(140deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%); }
+        .scene-b { background: linear-gradient(140deg, #0f172a 0%, #14312a 60%, #0f172a 100%); opacity: 0; }
+
+        .scene-badge {
+            position: absolute; top: 12px; left: 14px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 3px 10px; border-radius: 20px;
+        }
+        .scene-a .scene-badge { background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+        .scene-b .scene-badge { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+
+        /* Fake content cards */
+        .fake-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 14px 18px;
+            width: 100%;
+            max-width: 340px;
+        }
+        .fake-card h3 { font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .fake-stat { display: flex; justify-content: space-between; align-items: center; }
+        .fake-num { font-size: 32px; font-weight: 900; color: #38bdf8; line-height: 1; }
+        .fake-num-green { color: #4ade80 !important; }
+        .fake-badge {
+            font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+            background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.15);
+        }
+        .fake-badge-green { background: rgba(74,222,128,0.12) !important; color: #4ade80 !important; border-color: rgba(74,222,128,0.15) !important; }
+        .fake-sub { font-size: 10px; color: #334155; margin-top: 6px; }
+
+        .fake-rows { display: flex; flex-direction: column; gap: 7px; width: 100%; max-width: 340px; }
+        .fake-row { display: flex; gap: 8px; align-items: center; }
+        .fake-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .fake-bar { height: 7px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+
+        /* Stinger layers */
+        #stinger-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
+
+        .sl1, .sl2 { position: absolute; inset: 0; display: none; }
+        /* Group 1 — Top-left diagonal */
+        .sl1-d3 { background: rgba(14,165,233,0.28); }
+        .sl1-d2 { background: rgba(14,165,233,0.62); }
+        .sl1-d1 { background: #0ea5e9; }
+        /* Group 2 — Bottom-right diagonal */
+        .sl2-d3 { background: rgba(12,74,110,0.55); }
+        .sl2-d2 { background: rgba(2,132,199,0.75); }
+        .sl2-d1 { background: #0c4a6e; }
+
+        /* Logo */
+        #stinger-logo {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; z-index: 60;
+        }
+        .logo-box {
+            background: rgba(8,14,26,0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(56,189,248,0.3);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.7), 0 0 30px rgba(14,165,233,0.15);
+            border-radius: 18px;
+            padding: 16px 24px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            border-radius: 11px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 14px; color: white;
+            box-shadow: 0 0 16px rgba(14,165,233,0.5);
+            letter-spacing: -0.02em;
+        }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-name { font-size: 17px; font-weight: 900; color: #f8fafc; letter-spacing: -0.01em; }
+        .logo-sub { font-size: 10px; color: #38bdf8; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1px; }
+
+        /* Trigger button */
+        .trigger-btn {
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            color: white; font-weight: 800; font-size: 13px;
+            padding: 13px 32px; border-radius: 50px; border: none; cursor: pointer;
+            box-shadow: 0 0 24px rgba(14,165,233,0.35);
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+            letter-spacing: 0.04em; text-transform: uppercase;
+        }
+        .trigger-btn:hover { transform: scale(1.04); box-shadow: 0 0 36px rgba(14,165,233,0.55); }
+        .trigger-btn:active { transform: scale(0.97); }
+        .trigger-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+        /* Chips row */
+        .chips { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+        .chip {
+            font-size: 10px; padding: 4px 11px; border-radius: 20px;
+            background: rgba(30,41,59,0.8); border: 1px solid #1e293b;
+            color: #64748b; font-weight: 500; letter-spacing: 0.03em;
+        }
+        .chip strong { color: #38bdf8; }
+
+        /* Footer note */
+        .note { font-size: 11px; color: #334155; text-align: center; max-width: 500px; line-height: 1.6; }
+        .note strong { color: #475569; }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="page-title">Stinger Transition — FastVisa Demo</div>
+        <div class="page-subtitle">Mockup trực quan · Thử animation trước khi implement</div>
+    </div>
+
+    <!-- Tuning controls -->
+    <div class="controls">
+        <div class="ctrl-group">
+            <span class="ctrl-label">Duration: <span class="ctrl-value" id="v-dur">0.5</span>s</span>
+            <input type="range" id="ctrl-dur" min="0.3" max="1.5" step="0.05" value="0.5">
+        </div>
+        <div class="ctrl-group">
+            <span class="ctrl-label">Stagger: <span class="ctrl-value" id="v-stag">0.08</span>s</span>
+            <input type="range" id="ctrl-stag" min="0" max="0.2" step="0.01" value="0.08">
+        </div>
+    </div>
+
+    <!-- Stream screen -->
+    <div class="screen-wrap">
+
+        <!-- Scene A: Before -->
+        <div class="scene scene-a" id="scene-a">
+            <span class="scene-badge">State: Before Load</span>
+            <div class="fake-card">
+                <h3>Hồ sơ đang xử lý</h3>
+                <div class="fake-stat">
+                    <div class="fake-num">24</div>
+                    <div class="fake-badge">Đang chờ</div>
+                </div>
+                <div class="fake-sub">Nhấn nút bên dưới để trigger Stinger Transition</div>
+            </div>
+            <div class="fake-rows">
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#38bdf8"></div>
+                    <div class="fake-bar" style="flex:1"></div>
+                    <div class="fake-bar" style="width:25%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#818cf8"></div>
+                    <div class="fake-bar" style="flex:0.6"></div>
+                    <div class="fake-bar" style="width:35%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#f59e0b"></div>
+                    <div class="fake-bar" style="flex:0.8"></div>
+                    <div class="fake-bar" style="width:20%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene B: After -->
+        <div class="scene scene-b" id="scene-b">
+            <span class="scene-badge">State: Loaded ✓</span>
+            <div class="fake-card">
+                <h3>Hồ sơ đã duyệt</h3>
+                <div class="fake-stat">
+                    <div class="fake-num fake-num-green">18</div>
+                    <div class="fake-badge fake-badge-green">Thành công</div>
+                </div>
+                <div class="fake-sub">Dữ liệu tải xong · Stinger đã ẩn</div>
+            </div>
+            <div class="fake-rows">
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:1"></div>
+                    <div class="fake-bar" style="width:20%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:0.75"></div>
+                    <div class="fake-bar" style="width:30%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:0.9"></div>
+                    <div class="fake-bar" style="width:15%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stinger Overlay -->
+        <div id="stinger-overlay">
+            <!-- Group 1: top-left triangle -->
+            <div class="sl1 sl1-d3" id="s1-3"></div>
+            <div class="sl1 sl1-d2" id="s1-2"></div>
+            <div class="sl1 sl1-d1" id="s1-1"></div>
+            <!-- Group 2: bottom-right triangle -->
+            <div class="sl2 sl2-d3" id="s2-3"></div>
+            <div class="sl2 sl2-d2" id="s2-2"></div>
+            <div class="sl2 sl2-d1" id="s2-1"></div>
+            <!-- Logo center -->
+            <div id="stinger-logo">
+                <div class="logo-box">
+                    <div class="logo-icon">FV</div>
+                    <div class="logo-text">
+                        <span class="logo-name">FastVisa</span>
+                        <span class="logo-sub">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info chips -->
+    <div class="chips">
+        <div class="chip">Hướng bay: <strong>Diagonal</strong></div>
+        <div class="chip">Layers: <strong>3</strong></div>
+        <div class="chip">Easing: <strong>expo.inOut</strong></div>
+        <div class="chip">Logo: <strong>Sync</strong></div>
+    </div>
+
+    <button id="trigger-btn" class="trigger-btn">▶&nbsp; Chạy Stinger (A → B)</button>
+
+    <p class="note">
+        <strong>Hướng dẫn:</strong> Kéo thanh Duration &amp; Stagger để thấy sự khác biệt thời gian. Nhấn nút để toggle giữa 2 trạng thái.
+    </p>
+
+    <script>
+        let isSceneA = true;
+        let isAnimating = false;
+
+        const btn = document.getElementById('trigger-btn');
+        const ctrlDur = document.getElementById('ctrl-dur');
+        const ctrlStag = document.getElementById('ctrl-stag');
+        const vDur = document.getElementById('v-dur');
+        const vStag = document.getElementById('v-stag');
+
+        ctrlDur.addEventListener('input', e => vDur.textContent = e.target.value);
+        ctrlStag.addEventListener('input', e => vStag.textContent = e.target.value);
+
+        const layers1 = ['s1-3','s1-2','s1-1'].map(id => document.getElementById(id));
+        const layers2 = ['s2-3','s2-2','s2-1'].map(id => document.getElementById(id));
+
+        btn.addEventListener('click', () => {
+            if (isAnimating) return;
+            isAnimating = true;
+            btn.disabled = true;
+            btn.textContent = '⏳  Đang chạy...';
+
+            const dur   = parseFloat(ctrlDur.value);
+            const stag  = parseFloat(ctrlStag.value);
+            const ease  = 'expo.inOut';
+
+            // --- Reset ---
+            gsap.set([...layers1, ...layers2], { clearProps: 'all' });
+            gsap.set([...layers1, ...layers2], { display: 'none' });
+            gsap.set('#stinger-logo', { opacity: 0, scale: 0.5, rotation: -45 });
+
+            // --- Diagonal setup ---
+            gsap.set(layers1, { display: 'block', clipPath: 'polygon(0 0, 100% 0, 0 100%)', x: '-100%', y: '-100%' });
+            gsap.set(layers2, { display: 'block', clipPath: 'polygon(100% 100%, 0 100%, 100% 0)', x: '100%', y: '100%' });
+
+            const maxStag     = stag * 2; // numLayers - 1 = 2
+            const fullCover   = dur + maxStag;
+            const logoAppear  = fullCover - 0.2; // sync mode
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    isAnimating = false;
+                    btn.disabled = false;
+                    btn.textContent = isSceneA
+                        ? '▶  Chạy Stinger (B → A)'
+                        : '▶  Chạy Stinger (A → B)';
+                }
+            });
+
+            // Fly IN
+            tl.to(layers1, { x: '0%', y: '0%', duration: dur, ease, stagger: stag }, 0);
+            tl.to(layers2, { x: '0%', y: '0%', duration: dur, ease, stagger: stag }, 0);
+
+            // Logo appear (sync with cover closing)
+            tl.to('#stinger-logo', {
+                opacity: 1, scale: 1.05, rotation: 0,
+                duration: 0.45, ease: 'back.out(1.7)'
+            }, logoAppear);
+
+            // Scene swap (at blind spot)
+            tl.call(() => {
+                if (isSceneA) {
+                    gsap.set('#scene-a', { opacity: 0 });
+                    gsap.set('#scene-b', { opacity: 1 });
+                } else {
+                    gsap.set('#scene-a', { opacity: 1 });
+                    gsap.set('#scene-b', { opacity: 0 });
+                }
+                isSceneA = !isSceneA;
+            }, null, fullCover + 0.1);
+
+            // Logo hide
+            tl.to('#stinger-logo', {
+                opacity: 0, scale: 0.5, rotation: -45,
+                duration: 0.22, ease: 'power2.in'
+            }, fullCover + 0.5);
+
+            // Fly OUT
+            const retractAt = fullCover + 0.85;
+            tl.to(layers1, { x: '-100%', y: '-100%', duration: dur, ease, stagger: { each: stag, from: 'end' } }, retractAt);
+            tl.to(layers2, { x: '100%', y: '100%', duration: dur, ease, stagger: { each: stag, from: 'end' } }, retractAt);
+        });
+    </script>
+</body>
+</html>

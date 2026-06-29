@@ -1,0 +1,2016 @@
+{
+  "Metadata": {
+    "site_name": "FastVisa",
+    "default_title": "FastVisa — Cấp Visa Đúng Hạn Đến 120+ Điểm Đến, Có Bảo Đảm",
+    "description": "Nộp đơn xin visa trực tuyến trong vài phút. Nhanh chóng, đáng tin cậy và đảm bảo đúng hạn đến 120+ điểm đến trên thế giới."
+  },
+  "HomePage": {
+    "title": "Chào mừng đến FASTVISA",
+    "description": "Đối tác xin visa đáng tin cậy của bạn.",
+    "switch_language": "Đổi ngôn ngữ",
+    "Hero": {
+      "eyebrow": "Dịch vụ E-Visa Việt Nam",
+      "headline_1": "Nhận",
+      "headline_2": "E-Visa Việt Nam",
+      "headline_3": "trong 24 Giờ",
+      "subheadline_1": "Thủ tục trực tuyến đơn giản, giá cả minh bạch và đảm bảo đúng hạn — được tin dùng bởi",
+      "subheadline_2": "hơn 150.000 du khách",
+      "subheadline_3": "trên toàn thế giới.",
+      "apply_now": "Đăng ký ngay →",
+      "check_status": "Kiểm tra trạng thái",
+      "stat_1_value": "150.000+",
+      "stat_1_label": "Visa đã cấp",
+      "stat_2_value": "24h",
+      "stat_2_label": "Xử lý",
+      "stat_3_value": "4.9★",
+      "stat_3_label": "Đánh giá"
+    },
+    "QuickApply": {
+      "est_pricing": "Ước tính phí Visa",
+      "express_speed": "Tốc độ Express",
+      "total_for_travellers": "tổng cho {count} người",
+      "per_traveller": "mỗi người",
+      "fee_desc": "${price}/người · Đảm bảo dịch vụ trọn gói",
+      "standard_fee": "Phí Visa tiêu chuẩn",
+      "express_delivery": "Xử lý nhanh",
+      "people": "người",
+      "person": "người",
+      "guaranteed_price": "Giá dịch vụ đảm bảo",
+      "continue_to_apply": "Tiếp tục đăng ký",
+      "evisa_desc": "✓ Đã bao gồm $25 phí dán tem Chính phủ. Xử lý nhanh chóng.",
+      "voa_desc": "✓ Phí dán tem Chính phủ thanh toán tại quầy nhập cảnh Việt Nam.",
+      "fasttrack_desc": "✓ Đã bao gồm mã ưu tiên hỗ trợ làm thủ tục sân bay chính thức.",
+      "visa_category": "Loại Visa",
+      "evisa": "E-Visa",
+      "fast_track": "Fast-Track",
+      "visa_on_arrival": "Visa cửa khẩu",
+      "nationality": "Quốc tịch",
+      "select_nationality": "Chọn quốc tịch...",
+      "no_nationality": "Không tìm thấy quốc tịch.",
+      "port_of_entry": "Cửa khẩu nhập cảnh",
+      "date_of_arrival": "Ngày nhập cảnh",
+      "select_arrival_date": "Chọn ngày nhập cảnh",
+      "visa_option": "Tùy chọn Visa",
+      "travellers": "Số hành khách",
+      "processing_time": "Thời gian xử lý",
+      "free": "Miễn phí"
+    },
+    "Constants": {
+      "basic_fasttrack": "Hỗ trợ Fast-Track cơ bản",
+      "code_fasttrack": "Hỗ trợ Fast-Track VIP",
+      "evisa_30_single": "30 Ngày — Nhập cảnh 1 lần",
+      "evisa_90_single": "90 Ngày — Nhập cảnh 1 lần",
+      "evisa_90_multiple": "90 Ngày — Nhập cảnh nhiều lần",
+      "voa_1m_single": "1 Tháng — Nhập cảnh 1 lần VOA",
+      "voa_1m_multiple": "1 Tháng — Nhập cảnh nhiều lần VOA",
+      "voa_3m_single": "3 Tháng — Nhập cảnh 1 lần VOA",
+      "voa_3m_multiple": "3 Tháng — Nhập cảnh nhiều lần VOA",
+      "normal_7_days": "Bình thường — 7 Ngày làm việc",
+      "urgent_4_days": "Khẩn cấp — 4 Ngày làm việc",
+      "urgent_2_hours": "Khẩn cấp — 2 Giờ làm việc",
+      "urgent_1_day": "Giờ chót — 4 Giờ làm việc",
+      "han": "HAN — Sân bay Hà Nội",
+      "sgn": "SGN — Sân bay Sài Gòn",
+      "dad": "DAD — Sân bay Đà Nẵng",
+      "pqc": "PQC — Sân bay Phú Quốc",
+      "moc_bai": "Cửa khẩu Mộc Bài (Đường bộ)"
+    },
+    "Eligibility": {
+      "title": "Tôi có đủ điều kiện làm E-Visa Việt Nam?",
+      "desc": "Chọn quốc tịch của bạn để xem liệu bạn có đủ điều kiện làm E-Visa Việt Nam trực tuyến hay không — kết quả ngay lập tức, không cần tạo tài khoản.",
+      "checker": "Công cụ kiểm tra điều kiện",
+      "your_nationality": "Quốc tịch của bạn",
+      "select_nationality": "Chọn quốc tịch của bạn",
+      "no_nationality": "Không tìm thấy quốc tịch.",
+      "error_lookup": "Không thể tải chi tiết miễn thị thực cho quốc gia này.",
+      "qualify_title": "Bạn đủ điều kiện làm E-Visa Việt Nam!",
+      "visa_type": "Loại Visa",
+      "max_duration": "Thời gian lưu trú",
+      "stamping_fee": "Phí dán tem",
+      "processing_speed": "Tốc độ xử lý",
+      "req_docs": "Tài liệu yêu cầu",
+      "req_1": "Hộ chiếu hợp lệ còn hạn ít nhất 6 tháng kể từ ngày nhập cảnh",
+      "req_2": "Ít nhất 2 trang trống trong hộ chiếu để dán tem nhập cảnh",
+      "req_3": "Ảnh chân dung kỹ thuật số chất lượng cao (nền trắng, có màu)",
+      "req_4": "Bản scan hoặc ảnh rõ nét trang dữ liệu hộ chiếu của bạn",
+      "advisory": "Lưu ý",
+      "visa_exemption_1": "Miễn thị thực áp dụng cho thời gian lưu trú lên đến",
+      "visa_exemption_2": "ngày. Bạn không cần visa nếu lưu trú dưới khoảng thời gian này!",
+      "apply_evisa_now": "Đăng ký E-Visa ngay",
+      "alt_options_req": "Cần các tùy chọn Visa thay thế",
+      "not_eligible_desc": "Quốc tịch của bạn có thể không đủ điều kiện làm E-Visa tiêu chuẩn. Đừng lo lắng! Hãy liên hệ với các chuyên gia hỗ trợ của chúng tôi để khám phá các tùy chọn như visa nhập cảnh sân bay (VOA) hoặc bảo lãnh từ đại sứ quán.",
+      "contact_support": "Liên hệ chuyên gia hỗ trợ",
+      "details_status": "Hỗ trợ đầy đủ E-Visa",
+      "details_stay": "Lưu trú lên đến 90 Ngày",
+      "details_fee": "Phí Chính phủ $25 USD",
+      "details_processing": "Tiêu chuẩn 3 ngày / Khẩn 24h"
+    },
+    "HowItWorks": {
+      "title": "Quy trình làm việc",
+      "desc": "Bốn bước đơn giản từ lúc đăng ký đến khi được duyệt — hầu hết người dùng hoàn thành biểu mẫu dưới 10 phút.",
+      "steps": {
+        "step_1_title": "Chọn Visa",
+        "step_1_desc": "Chọn loại visa, tốc độ xử lý và số lượng người nộp đơn.",
+        "step_2_title": "Điền biểu mẫu",
+        "step_2_desc": "Nhập chi tiết hộ chiếu và tải lên các tài liệu bắt buộc một cách an toàn.",
+        "step_3_title": "Thanh toán",
+        "step_3_desc": "Thanh toán trực tuyến qua thẻ hoặc PayPal với giá minh bạch.",
+        "step_4_title": "Nhận qua Email",
+        "step_4_desc": "Nhận e-visa đã được duyệt qua email của bạn."
+      }
+    },
+    "FAQ": {
+      "title": "Câu hỏi thường gặp",
+      "subtitle": "Giải đáp nhanh các câu hỏi phổ biến về E-Visa Việt Nam.",
+      "view_all": "Xem tất cả FAQ",
+      "q1": "Mất bao lâu để nhận được e-visa Việt Nam?",
+      "a1": "Xử lý thông thường mất 7 ngày làm việc. Tùy chọn khẩn cấp có sẵn từ 4 giờ đến 1 ngày làm việc tùy loại visa.",
+      "q2": "Tôi cần những tài liệu gì để nộp đơn?",
+      "a2": "Bạn cần hộ chiếu hợp lệ (còn hạn 6+ tháng), bản scan trang thông tin hộ chiếu và ảnh chân dung. Dịch vụ VIP có thể yêu cầu tài liệu khác.",
+      "q3": "Tôi có thể xin visa cho nhiều người trong một đơn không?",
+      "a3": "Có. Chọn số lượng người ở Bước 1 và điền một thẻ thông tin riêng cho từng người ở Bước 2.",
+      "q4": "Bạn chấp nhận phương thức thanh toán nào?",
+      "a4": "Chúng tôi chấp nhận thẻ tín dụng (Visa, Mastercard) và PayPal. Mọi giao dịch bằng USD.",
+      "q5": "Nếu đơn của tôi bị từ chối thì sao?",
+      "a5": "Chính sách hoàn tiền của chúng tôi áp dụng cho các trường hợp từ chối đủ điều kiện. Liên hệ hỗ trợ với mã đặt chỗ để được giúp đỡ."
+    },
+    "Trust": {
+      "title": "Được tin dùng bởi du khách toàn thế giới",
+      "stat_1": "Visa đã cấp",
+      "stat_2": "Xử lý nhanh",
+      "stat_3": "Đánh giá",
+      "stat_4": "Quốc gia phục vụ",
+      "reviews": {
+        "1_text": "Nộp đơn vào sáng thứ Hai và nhận được e-visa vào ngày hôm sau. Quá trình suôn sẻ từ đầu đến cuối.",
+        "1_name": "Sarah Mitchell",
+        "1_country": "Vương quốc Anh",
+        "2_text": "Giá cả rõ ràng, không phí ẩn. Đội ngũ hỗ trợ trả lời câu hỏi của tôi trong vòng vài phút qua WhatsApp.",
+        "2_name": "James Chen",
+        "2_country": "Úc",
+        "3_text": "Biểu mẫu dễ hiểu và công cụ kiểm tra trạng thái cập nhật liên tục cho tôi. Rất đáng giới thiệu.",
+        "3_name": "Maria Lopez",
+        "3_country": "Hoa Kỳ"
+      }
+    },
+    "CTA": {
+      "title": "Sẵn sàng đến thăm Việt Nam?",
+      "desc": "Bắt đầu hồ sơ ngay — hầu hết khách du lịch hoàn thành dưới 10 phút. Visa được duyệt sẽ gửi thẳng vào email.",
+      "apply_now": "Đăng ký ngay →",
+      "check_status": "Kiểm tra trạng thái"
+    },
+    "ReadyToApply": {
+      "badge": "Xử lý Fast Track",
+      "title": "Sẵn sàng bắt đầu hành trình đến Việt Nam?",
+      "desc": "Bỏ qua hàng dài chờ đợi và thủ tục phức tạp. Nộp E-Visa Việt Nam trực tuyến chưa đến 5 phút. An toàn, đơn giản và 100% online.",
+      "trust_1": "Kết nối mã hóa an toàn",
+      "trust_2": "Kiểm duyệt đại lý ngay lập tức",
+      "apply_now": "Đăng ký ngay"
+    },
+    "EmergencyNotice": {
+      "title": "Thông báo Hỗ trợ Khẩn cấp",
+      "need_an": "Cần ",
+      "emergency_visa": "Visa KHẨN CẤP",
+      "desc": "? Liên hệ đội ngũ hỗ trợ của chúng tôi để được ưu tiên xử lý 24/7."
+    },
+    "FeaturedNationalities": {
+      "title": "Kiểm tra Yêu cầu theo Quốc tịch",
+      "loading": "Đang tải danh sách...",
+      "select": "Chọn quốc tịch...",
+      "no_found": "Không tìm thấy quốc tịch.",
+      "check_btn": "Kiểm tra Miễn thị thực",
+      "see_less": "Thu gọn",
+      "see_more": "Xem thêm quốc gia",
+      "tab_good": "Hỗ trợ EVISA và VOA",
+      "tab_normal": "Chỉ hỗ trợ được VOA",
+      "tab_blacklist": "Không hỗ trợ",
+      "Dialog": {
+        "subtitle": "Yêu cầu Visa Việt Nam",
+        "important_requirements": "YÊU CẦU QUAN TRỌNG",
+        "close": "Đóng",
+        "apply_now": "Đăng ký E-Visa Ngay",
+        "service_unavailable": "Dịch vụ không khả dụng",
+        "passport_validity": "Hộ chiếu còn hiệu lực <strong>trên 6 tháng</strong> kể từ ngày nhập cảnh.",
+        "blank_pages": "Ít nhất <strong>2 trang trắng</strong> để đóng dấu.",
+        "apply_early": "Nộp đơn trước <strong>3-4 ngày</strong> trước khi khởi hành.",
+        "status": {
+          "exempt": {
+            "title": "Miễn thị thực (Tối đa {days} ngày)",
+            "description": "Tin vui! Công dân nước này được miễn visa Việt Nam cho các chuyến đi tối đa {days} ngày. Bạn chỉ cần hộ chiếu còn hiệu lực ít nhất 6 tháng với 2 trang trắng."
+          },
+          "evisa_only": {
+            "title": "Bắt buộc có E-Visa",
+            "description": "Công dân nước này cần E-Visa hợp lệ để nhập cảnh Việt Nam. E-Visa có giá trị cho mục đích du lịch hoặc công việc, cho phép lưu trú tới 90 ngày với một hoặc nhiều lần nhập cảnh."
+          },
+          "blacklist": {
+            "title": "Dịch vụ không hỗ trợ",
+            "description": "Rất tiếc, chúng tôi hiện không hỗ trợ dịch vụ visa cho công dân nước này. Vui lòng liên hệ bộ phận hỗ trợ hoặc đại sứ quán gần nhất."
+          }
+        }
+      }
+    },
+    "PricingPreview": {
+      "title": "Các Lựa chọn E-Visa Phổ biến",
+      "desc": "Phí dịch vụ minh bạch cho mỗi đương đơn. Có hỗ trợ xử lý khẩn cấp ở bước thanh toán.",
+      "best_value": "Tiết kiệm nhất",
+      "popular": "Phổ biến",
+      "per_person": "/ người",
+      "apply_btn": "Đăng ký",
+      "see_full_pricing": "Xem Bảng giá Chi tiết"
+    },
+    "CommentSection": {
+      "title": "Hỏi & Đáp",
+      "entries_in_discussion": "bình luận trong cuộc thảo luận này",
+      "quick_inquiry": "Biểu mẫu Gửi câu hỏi nhanh",
+      "full_name": "Họ và Tên *",
+      "full_name_placeholder": "VD: Nguyễn Văn A",
+      "email": "Địa chỉ Email *",
+      "email_placeholder": "VD: email@example.com",
+      "nationality": "Quốc tịch *",
+      "select_country": "Chọn quốc gia",
+      "no_country": "Không tìm thấy quốc gia.",
+      "your_question": "Câu hỏi của bạn *",
+      "question_placeholder": "Bạn đang tìm kiếm thông tin gì?",
+      "confirm_delete_title": "Xác nhận xóa bình luận",
+      "confirm_delete_desc": "Bạn có chắc chắn muốn xóa bình luận này? Hành động này không thể hoàn tác.",
+      "no": "Không",
+      "yes": "Có",
+      "posting": "Đang viết..."
+    },
+    "BlogPreviewSection": {
+      "title_start": "Trung tâm Thông tin",
+      "title_highlight": "Visa",
+      "desc": "Cập nhật các hướng dẫn du lịch Việt Nam mới nhất, các chính sách thị thực chính thức và những mẹo hữu ích từ đội ngũ hỗ trợ của chúng tôi.",
+      "view_all": "Xem tất cả bài viết",
+      "read_full": "Đọc Toàn bộ Bài viết",
+      "drag_browse": "← Kéo để xem →"
+    },
+    "SubscribeForm": {
+      "success_title": "Tham gia thành công!",
+      "success_desc": "Cảm ơn bạn! Bạn đã đăng ký nhận thông tin mới nhất về chính sách du lịch & e-visa.",
+      "email_label": "Bản tin Email",
+      "desc": "Đăng ký để nhận thông tin cập nhật e-visa, thay đổi chính sách và mẹo du lịch.",
+      "placeholder": "Nhập địa chỉ email của bạn",
+      "error_generic": "Đăng ký thất bại. Vui lòng thử lại."
+    },
+    "Data": {
+      "PricingPlans": {
+        "0": {
+          "name": "E-Visa Tiêu chuẩn",
+          "processing": "Xử lý tiêu chuẩn (3 ngày làm việc)",
+          "features": {
+            "0": "Có giá trị trong 30 ngày",
+            "1": "Nhập cảnh một lần",
+            "2": "Hỗ trợ qua email",
+            "3": "Không có phí ẩn"
+          }
+        },
+        "1": {
+          "name": "E-Visa Khẩn cấp",
+          "processing": "Xử lý khẩn cấp (24 giờ làm việc)",
+          "features": {
+            "0": "Có giá trị trong 90 ngày",
+            "1": "Nhập cảnh một lần",
+            "2": "Hỗ trợ ưu tiên (24/7)",
+            "3": "Xử lý nhanh chóng"
+          }
+        },
+        "2": {
+          "name": "E-Visa Cấp tốc",
+          "processing": "Xử lý cấp tốc (4 giờ làm việc)",
+          "features": {
+            "0": "Có giá trị trong 90 ngày",
+            "1": "Nhập cảnh nhiều lần",
+            "2": "Hỗ trợ VIP tại sân bay (tùy chọn)",
+            "3": "Hỗ trợ ngay lập tức qua WhatsApp"
+          }
+        }
+      },
+      "BlogPosts": {
+        "0": {
+          "title": "Du ngoạn vùng nước ngọc bích huyền bí của Vịnh Hạ Long",
+          "excerpt": "Khám phá hàng ngàn núi đá vôi vươn lên từ mặt biển tĩnh lặng, và khám phá những hang động ẩn mình trên các con tàu gỗ truyền thống.",
+          "date": "12 Tháng 5, 2026",
+          "category": "Du thuyền"
+        },
+        "1": {
+          "title": "Cẩm nang 48 giờ khám phá khu phố cổ Hà Nội cho người yêu ẩm thực",
+          "excerpt": "Thưởng thức những bát Phở bốc khói, Bánh Mì giòn rụm và cà phê trứng trên những con phố đường tàu chật hẹp của thủ đô ngàn năm văn hiến.",
+          "date": "10 Tháng 5, 2026",
+          "category": "Ẩm thực & Văn hóa"
+        },
+        "2": {
+          "title": "Bạn đã trải nghiệm hết những sắc màu du lịch rực rỡ tại Đà Nẵng chưa?",
+          "excerpt": "Đà Nẵng - thành phố hiện đại và đáng nhớ nhất nằm bên bờ sông Hàn - chào đón du khách với những bãi biển tuyệt đẹp và Cầu Vàng huyền thoại.",
+          "date": "20 Tháng 5, 2026",
+          "category": "Cẩm nang Du lịch"
+        },
+        "3": {
+          "title": "Những địa điểm không thể bỏ lỡ tại Thành phố Hồ Chí Minh (Sài Gòn)",
+          "excerpt": "Dù sống ở đây hay là một du khách, thành phố xinh đẹp này vẫn sẽ thu hút bạn bởi sự kết hợp độc đáo giữa kiến trúc Pháp lịch sử và cuộc sống về đêm năng động.",
+          "date": "18 Tháng 5, 2026",
+          "category": "Điểm đến"
+        },
+        "4": {
+          "title": "Những ngọn đèo ngoạn mục nhất miền Bắc Việt Nam dành cho người mê thám hiểm",
+          "excerpt": "Đổ đèo lúc nửa đêm, hay dựng trại dọc đường là những kỉ niệm vô giá đối với những người yêu thích mạo hiểm chinh phục Hà Giang & Cao Bằng.",
+          "date": "15 Tháng 5, 2026",
+          "category": "Khám phá"
+        }
+      },
+      "Nationalities": {
+        "us": "Hoa Kỳ",
+        "uk": "Vương quốc Anh",
+        "au": "Úc",
+        "ca": "Canada",
+        "fr": "Pháp",
+        "de": "Đức",
+        "in": "Ấn Độ",
+        "jp": "Nhật Bản",
+        "cn": "Trung Quốc",
+        "vn": "Việt Nam"
+      },
+      "HowItWorks": {
+        "0": {
+          "title": "Chọn loại Visa",
+          "description": "Chọn loại visa, tốc độ xử lý và số lượng người nộp đơn."
+        },
+        "1": {
+          "title": "Điền biểu mẫu",
+          "description": "Nhập chi tiết hộ chiếu và tải lên các tài liệu cần thiết một cách an toàn."
+        },
+        "2": {
+          "title": "Thanh toán",
+          "description": "Thanh toán trực tuyến qua thẻ hoặc PayPal với mức giá minh bạch."
+        },
+        "3": {
+          "title": "Nhận qua Email",
+          "description": "Nhận e-visa đã được phê duyệt qua email của bạn."
+        }
+      },
+      "TrustStats": {
+        "0": {
+          "label": "Visa đã cấp"
+        },
+        "1": {
+          "label": "Xử lý nhanh chóng"
+        },
+        "2": {
+          "label": "Đánh giá từ khách hàng"
+        },
+        "3": {
+          "label": "Quốc gia được hỗ trợ"
+        }
+      },
+      "Testimonials": {
+        "0": {
+          "country": "Vương quốc Anh",
+          "text": "Đã nộp đơn vào sáng thứ Hai và nhận được e-visa vào ngày hôm sau. Quá trình suôn sẻ từ đầu đến cuối."
+        },
+        "1": {
+          "country": "Úc",
+          "text": "Giá cả rõ ràng, không có phí ẩn. Bộ phận hỗ trợ đã trả lời các câu hỏi của tôi trong vài phút qua WhatsApp."
+        },
+        "2": {
+          "country": "Hoa Kỳ",
+          "text": "Biểu mẫu đơn giản và công cụ kiểm tra trạng thái luôn cập nhật cho tôi. Rất đáng giới thiệu."
+        }
+      },
+      "Faqs": {
+        "0": {
+          "question": "Mất bao lâu để có e-visa Việt Nam?",
+          "answer": "Xử lý tiêu chuẩn mất 7 ngày làm việc. Các lựa chọn khẩn cấp có sẵn từ 4 giờ đến 1 ngày làm việc tùy thuộc vào loại visa."
+        },
+        "1": {
+          "question": "Tôi cần những tài liệu gì để nộp đơn?",
+          "answer": "Bạn cần một hộ chiếu hợp lệ (còn hạn 6+ tháng), bản scan trang thông tin hộ chiếu và một ảnh chân dung. Dịch vụ ưu tiên có thể yêu cầu thêm tài liệu."
+        },
+        "2": {
+          "question": "Tôi có thể nộp đơn cho nhiều người trong một đơn hàng không?",
+          "answer": "Có. Chọn số lượng người nộp đơn ở Bước 1 và điền một thẻ biểu mẫu riêng cho mỗi người ở Bước 2."
+        },
+        "3": {
+          "question": "Các phương thức thanh toán được chấp nhận là gì?",
+          "answer": "Chúng tôi chấp nhận các thẻ tín dụng chính (Visa, Mastercard) và PayPal. Tất cả các khoản phí đều tính bằng USD."
+        },
+        "4": {
+          "question": "Điều gì xảy ra nếu đơn đăng ký của tôi bị từ chối?",
+          "answer": "Bảo lãnh hoàn tiền của chúng tôi bao gồm các trường hợp từ chối đủ điều kiện. Liên hệ với bộ phận hỗ trợ bằng số đặt chỗ của bạn để được trợ giúp."
+        }
+      }
+    },
+    "EligibilityConstants": {
+      "us": {
+        "status": "Đủ điều kiện E-Visa",
+        "stay": "Lên đến 90 ngày (Một lần/Nhiều lần)",
+        "fee": "25 USD (Một lần) / 50 USD (Nhiều lần)",
+        "processing": "Tiêu chuẩn: 3 ngày | Khẩn cấp: 24h | Cấp tốc: 4h",
+        "requirements": {
+          "0": "Hộ chiếu phổ thông Mỹ còn hạn 6 tháng sau ngày nhập cảnh",
+          "1": "Ít nhất 2 trang trống trong hộ chiếu",
+          "2": "1 ảnh chân dung gần đây (màu, nền trắng, không đeo kính)",
+          "3": "Bản scan/ảnh chụp rõ nét trang thông tin hộ chiếu"
+        },
+        "note": "Công dân Mỹ có thể dễ dàng nộp đơn trực tuyến cho E-Visa du lịch hoặc công tác. Đảm bảo cổng nhập cảnh trùng khớp với thư chấp thuận E-Visa."
+      },
+      "au": {
+        "status": "Đủ điều kiện E-Visa",
+        "stay": "Lên đến 90 ngày (Một lần/Nhiều lần)",
+        "fee": "25 USD (Một lần) / 50 USD (Nhiều lần)",
+        "processing": "Tiêu chuẩn: 3 ngày | Khẩn cấp: 24h | Cấp tốc: 4h",
+        "requirements": {
+          "0": "Hộ chiếu Úc còn hạn ít nhất 6 tháng",
+          "1": "Ít nhất 2 trang trống trong hộ chiếu",
+          "2": "Ảnh cỡ hộ chiếu gần đây (nền trắng, rõ mặt)",
+          "3": "Ảnh chụp rõ nét trang thông tin hộ chiếu"
+        },
+        "note": "Người mang hộ chiếu Úc đủ điều kiện 100%. Dịch vụ Fast-Track tại sân bay được khuyến khích tại Hà Nội (HAN) và Sài Gòn (SGN) để bỏ qua hàng đợi dài."
+      },
+      "cn": {
+        "status": "Đủ điều kiện E-Visa (Hộ chiếu phổ thông G)",
+        "stay": "Lên đến 90 ngày (Một lần/Nhiều lần)",
+        "fee": "25 USD (Một lần) / 50 USD (Nhiều lần)",
+        "processing": "Tiêu chuẩn: 3-4 ngày | Khẩn cấp: Có sẵn 24h",
+        "requirements": {
+          "0": "Hộ chiếu phổ thông Trung Quốc (Dòng G). Hộ chiếu điện tử (Dòng E) được hỗ trợ cho đường hàng không nhưng cần kiểm tra kỹ",
+          "1": "Hộ chiếu phải còn hạn 6 tháng và 2 trang trống",
+          "2": "Ảnh cỡ hộ chiếu rõ nét với nền trắng",
+          "3": "Bản scan trang thông tin hộ chiếu"
+        },
+        "note": "E-visa chỉ áp dụng cho hộ chiếu dòng G phổ thông. Hộ chiếu điện tử (bắt đầu bằng E) có thể gặp kiểm tra thêm ở một số cửa khẩu đường bộ. Rất khuyến khích đi bằng đường hàng không."
+      },
+      "ca": {
+        "status": "Đủ điều kiện E-Visa",
+        "stay": "Lên đến 90 ngày (Một lần/Nhiều lần)",
+        "fee": "25 USD (Một lần) / 50 USD (Nhiều lần)",
+        "processing": "Tiêu chuẩn: 3 ngày | Khẩn cấp: Có sẵn 24h",
+        "requirements": {
+          "0": "Hộ chiếu Canada còn hạn 6 tháng sau thời gian lưu trú",
+          "1": "Ít nhất 2 trang trống trong hộ chiếu",
+          "2": "Ảnh chân dung kỹ thuật số định dạng JPG",
+          "3": "Bản scan kỹ thuật số trang thông tin hộ chiếu"
+        },
+        "note": "Công dân Canada có thể đến Việt Nam để du lịch, công tác hoặc thăm người thân. Đơn xin trực tuyến đơn giản và không cần đến đại sứ quán."
+      },
+      "gb": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Anh hợp lệ còn hạn 6 tháng và 2 trang trống",
+          "1": "Cho Miễn thị thực: Bằng chứng vé khứ hồi/chuyển tiếp trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu và ảnh chân dung kỹ thuật số"
+        },
+        "note": "Công dân Anh được miễn thị thực 45 ngày. Nếu dự định ở lại lâu hơn (lên đến 90 ngày) hoặc cần nhập cảnh nhiều lần, hãy nộp đơn xin E-Visa trực tuyến trước khi khởi hành."
+      },
+      "fr": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Pháp hợp lệ còn hạn 6 tháng",
+          "1": "Cho Miễn thị thực: Vé chuyến bay chuyển tiếp trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu và ảnh chân dung"
+        },
+        "note": "Công dân Pháp được miễn thị thực lên đến 45 ngày. Ở từ 46 đến 90 ngày cần có E-Visa."
+      },
+      "de": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Đức hợp lệ còn hạn 6 tháng",
+          "1": "Cho Miễn thị thực: Vé chuyến bay chuyển tiếp trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu và ảnh chân dung"
+        },
+        "note": "Công dân Đức được miễn thị thực 45 ngày. Ở từ 46 đến 90 ngày cần có E-Visa."
+      },
+      "jp": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Nhật Bản hợp lệ còn hạn tối thiểu 6 tháng",
+          "1": "Cho Miễn thị thực: Vé khứ hồi hoặc chuyển tiếp trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu kỹ thuật số và ảnh chân dung"
+        },
+        "note": "Người mang hộ chiếu Nhật Bản được hưởng một trong những quyền miễn thị thực mạnh nhất. Đối với các chuyến đi trên 45 ngày hoặc nhập cảnh nhiều lần, hãy nộp đơn xin E-Visa trực tuyến trước khi khởi hành."
+      },
+      "kr": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Hàn Quốc hợp lệ còn hạn 6 tháng",
+          "1": "Bằng chứng vé du lịch khứ hồi hoặc chuyển tiếp trong vòng 45 ngày (miễn thị thực)",
+          "2": "Cho E-Visa: Bản scan thông tin hộ chiếu và ảnh chân dung gần đây"
+        },
+        "note": "Công dân Hàn Quốc được miễn thị thực 45 ngày. Du khách thường xuyên và đi dài ngày nên xin E-Visa Nhập cảnh nhiều lần 90 ngày."
+      },
+      "in": {
+        "status": "Đủ điều kiện E-Visa",
+        "stay": "Lên đến 90 ngày (Một lần/Nhiều lần)",
+        "fee": "25 USD (Một lần) / 50 USD (Nhiều lần)",
+        "processing": "Tiêu chuẩn: 3-5 ngày | Khẩn cấp: Có sẵn 24-48h",
+        "requirements": {
+          "0": "Hộ chiếu Ấn Độ hợp lệ còn hạn ít nhất 6 tháng",
+          "1": "Ít nhất 2 trang trống trong hộ chiếu",
+          "2": "Ảnh chân dung kỹ thuật số gần đây (nền trắng)",
+          "3": "Bản scan rõ nét trang thông tin hộ chiếu"
+        },
+        "note": "Công dân Ấn Độ phải xin E-Visa trước khi đến. Quá trình đăng ký hoàn toàn trực tuyến và thường mất 3-5 ngày làm việc. Hãy đăng ký sớm cho các mùa du lịch bận rộn."
+      },
+      "sg": {
+        "status": "Miễn thị thực (30 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 30 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Singapore hợp lệ còn hạn 6 tháng",
+          "1": "Cho Miễn thị thực: Vé chuyến bay chuyển tiếp trong vòng 30 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu kỹ thuật số và ảnh chân dung"
+        },
+        "note": "Người mang hộ chiếu Singapore được miễn thị thực 30 ngày — một trong những mức độ tin cậy song phương cao nhất. Đối với các kỳ lưu trú dài hơn hoặc các chuyến công tác, hãy nộp đơn xin E-Visa 90 ngày."
+      },
+      "es": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Tây Ban Nha hợp lệ còn hạn tối thiểu 6 tháng",
+          "1": "Cho Miễn thị thực: Bằng chứng chuyến đi chuyển tiếp/khứ hồi trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu và ảnh chân dung màu gần đây"
+        },
+        "note": "Công dân Tây Ban Nha được miễn thị thực 45 ngày tới Việt Nam. Bạn đang lên kế hoạch cho chuyến đi Đông Dương dài hơn? Hãy nộp đơn xin E-Visa nhập cảnh nhiều lần 90 ngày để linh hoạt hoàn toàn."
+      },
+      "it": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Ý hợp lệ còn hạn ít nhất 6 tháng",
+          "1": "Cho Miễn thị thực: Vé chuyển tiếp/khứ hồi đã được xác nhận trong vòng 45 ngày",
+          "2": "Cho E-Visa: Bản scan hộ chiếu kỹ thuật số và ảnh chân dung"
+        },
+        "note": "Người mang hộ chiếu Ý được miễn thị thực trong 45 ngày. Đối với các chuyến đi dài hơn kết hợp Việt Nam với Campuchia hoặc Lào, E-Visa nhập cảnh nhiều lần 90 ngày là lựa chọn tốt nhất."
+      },
+      "nl": {
+        "status": "Miễn thị thực (45 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 45 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Hà Lan hợp lệ còn hạn 6 tháng",
+          "1": "Bằng chứng chuyến bay khứ hồi hoặc chuyển tiếp (đối với miễn thị thực)",
+          "2": "Cho E-Visa: Bản scan hộ chiếu và ảnh chân dung"
+        },
+        "note": "Công dân Hà Lan được hưởng 45 ngày miễn thị thực. Đối với các cuộc họp kinh doanh hoặc kỳ nghỉ kéo dài, có thể nhận E-Visa Việt Nam trực tuyến trong vòng 3 ngày làm việc."
+      },
+      "my": {
+        "status": "Miễn thị thực (30 ngày) & Đủ điều kiện E-Visa (90 ngày)",
+        "stay": "Miễn thị thực: 30 ngày | E-Visa: Lên đến 90 ngày",
+        "fee": "Miễn thị thực: Miễn phí | E-Visa: 25 - 50 USD",
+        "processing": "Miễn thị thực: Ngay lập tức | E-Visa: Tiêu chuẩn 3 ngày",
+        "requirements": {
+          "0": "Hộ chiếu Malaysia hợp lệ còn hạn 6 tháng",
+          "1": "Vé khứ hồi hoặc chuyển tiếp đã xác nhận trong vòng 30 ngày (miễn thị thực)",
+          "2": "Cho E-Visa: Bản scan hộ chiếu rõ nét và ảnh chân dung kỹ thuật số"
+        },
+        "note": "Người mang hộ chiếu Malaysia đủ điều kiện được miễn thị thực 30 ngày. Du khách qua biên giới thường xuyên và khách công tác nên nộp đơn xin E-Visa nhập cảnh nhiều lần 90 ngày."
+      }
+    },
+    "QuickApplyConstants": {
+      "visa_options": {
+        "basic-fasttrack": "Ưu tiên Cơ bản",
+        "code-fasttrack": "Mã chấp thuận + Ưu tiên",
+        "evisa-30-single": "E-Visa 30 Ngày (Một lần)",
+        "evisa-90-single": "E-Visa 90 Ngày (Một lần)",
+        "evisa-90-multiple": "E-Visa 90 Ngày (Nhiều lần)",
+        "voa-1m-single": "Visa tại sân bay 1 Tháng (Một lần)",
+        "voa-1m-multiple": "Visa tại sân bay 1 Tháng (Nhiều lần)",
+        "voa-3m-single": "Visa tại sân bay 3 Tháng (Một lần)",
+        "voa-3m-multiple": "Visa tại sân bay 3 Tháng (Nhiều lần)"
+      },
+      "processing_options": {
+        "normal": "Xử lý thông thường (3-5 ngày)",
+        "urgent-4d": "Xử lý Khẩn cấp (4 ngày)",
+        "urgent-2d": "Xử lý Cấp tốc (2 giờ)",
+        "urgent-1d": "Xử lý Khẩn cấp (1 ngày)"
+      },
+      "ports": {
+        "HAN": "Hà Nội (HAN)",
+        "SGN": "Thành phố Hồ Chí Minh (SGN)",
+        "DAD": "Đà Nẵng (DAD)",
+        "PQC": "Phú Quốc (PQC)",
+        "MOC_BAI": "Cửa khẩu Mộc Bài"
+      }
+    },
+    "CommentsConstants": {
+      "c1": {
+        "nationality": "Hoa Kỳ",
+        "date": "1 ngày trước",
+        "content": "Dịch vụ khẩn cấp 24 giờ có hoạt động vào cuối tuần không? Tôi có chuyến bay đột xuất vào sáng thứ Hai và cần E-Visa được xử lý càng sớm càng tốt.",
+        "r1": {
+          "date": "18 giờ trước",
+          "content": "Chào Marcus! Có, dịch vụ E-Visa khẩn cấp và siêu khẩn cấp của chúng tôi hoạt động 24/7, bao gồm cả cuối tuần và ngày lễ. Vì chuyến bay của bạn vào sáng thứ Hai, chúng tôi thực sự khuyên bạn nên chọn tốc độ 'Siêu khẩn 4 giờ' hoặc 'Khẩn 24 giờ'. Vui lòng đảm bảo ảnh chụp và bản scan hộ chiếu của bạn rõ nét để tránh mọi sự chậm trễ."
+        }
+      },
+      "c2": {
+        "nationality": "Vương quốc Anh",
+        "date": "2 ngày trước",
+        "content": "Tôi sẽ đến Hà Nội (HAN) và khởi hành từ Đà Nẵng (DAD). Tôi có cần thị thực nhập cảnh nhiều lần cho việc này không?",
+        "r2": {
+          "date": "1 ngày trước",
+          "content": "Xin chào Sarah! Do bạn sẽ đến Hà Nội (HAN) và khởi hành từ Đà Nẵng (DAD), bạn chỉ cần một e-visa nhập cảnh một lần vì bạn sẽ ở trong lãnh thổ Việt Nam trong quá trình di chuyển giữa hai thành phố này."
+        }
+      },
+      "c3": {
+        "nationality": "Nhật Bản",
+        "date": "4 ngày trước",
+        "content": "Konnichiwa! Tôi là công dân Nhật Bản dự định ở lại Việt Nam trong 60 ngày. Tôi có cần e-visa không hay có được miễn không?",
+        "r3": {
+          "date": "3 ngày trước",
+          "content": "Konnichiwa Hiroshi! Vâng, công dân Nhật Bản được hưởng chế độ miễn thị thực 45 ngày khi nhập cảnh vào Việt Nam. Do bạn muốn ở lại 60 ngày, bạn phải xin E-Visa du lịch. Chúng tôi khuyên bạn nên nộp đơn xin E-Visa 'nhập cảnh một lần 90 ngày' hoặc 'nhập cảnh nhiều lần 90 ngày' trực tuyến, điều này sẽ dễ dàng bao gồm thời gian lưu trú 60 ngày của bạn."
+        }
+      }
+    },
+    "TOC": {
+      "hero": "E-Visa Việt Nam",
+      "nationalities": "Quốc gia hỗ trợ",
+      "eligibility": "Điều kiện Visa",
+      "how-it-works": "Các bước đăng ký",
+      "pricing": "Bảng giá Visa",
+      "trust": "Đánh giá du khách",
+      "faq": "Câu hỏi thường gặp",
+      "comments": "Hỏi đáp & Thảo luận",
+      "blog": "Tin tức mới nhất"
+    }
+  },
+  "Header": {
+    "select_timezone": "Chọn múi giờ...",
+    "whatsapp_priority": "WhatsApp (24/7):",
+    "check_status": "Kiểm tra trạng thái",
+    "apply_now": "Đăng ký ngay",
+    "light_mode": "Giao diện Sáng",
+    "dark_mode": "Giao diện Tối"
+  },
+  "Navigation": {
+    "guide": "Hướng dẫn",
+    "how_to_apply": "Cách đăng ký",
+    "visa_fees": "Lệ phí Visa",
+    "faqs": "Câu hỏi thường gặp",
+    "about_us": "Về chúng tôi",
+    "emergency_inquiry": "Khẩn cấp",
+    "visa_extensions": "Gia hạn Visa",
+    "visa_exemption_rules": "Quy định miễn Visa",
+    "extra_services": "Dịch vụ bổ sung",
+    "payment_guideline": "Hướng dẫn thanh toán",
+    "timezone_vietnam": "Việt Nam (GMT+7)",
+    "timezone_london": "Luân Đôn (GMT+0)",
+    "timezone_new_york": "New York (GMT-5)",
+    "timezone_sydney": "Sydney (GMT+10)",
+    "apply_online": "Đăng ký trực tuyến",
+    "check_status": "Kiểm tra trạng thái",
+    "timezone_korea": "Hàn Quốc (KST)",
+    "timezone_japan": "Nhật Bản (JST)",
+    "timezone_china": "Trung Quốc (CST)",
+    "timezone_france": "Pháp (CET)",
+    "timezone_germany": "Đức (CET)",
+    "timezone_spain": "Tây Ban Nha (CET)"
+  },
+  "Footer": {
+    "hotline_support": "Hỗ trợ Hotline",
+    "tel": "SĐT:",
+    "whatsapp_priority_desc": "Hỗ trợ Ưu tiên WhatsApp 24/7",
+    "support_email": "Email Hỗ trợ",
+    "response_time": "Phản hồi trong 1-2 giờ",
+    "hanoi_office": "Văn phòng Chính Hà Nội",
+    "cau_giay_district": "Quận Cầu Giấy",
+    "hanoi_vietnam": "Hà Nội, Việt Nam",
+    "description": "Cung cấp tư vấn chuyên nghiệp và dịch vụ visa nhanh cho du khách quốc tế đến Việt Nam từ năm 2011.",
+    "gov_disclaimer": "Tuyên bố từ chối trách nhiệm",
+    "gov_disclaimer_desc": "VietnamEVisa là cơ quan visa thương mại cung cấp hỗ trợ xử lý. Chúng tôi không phải đại diện chính thức hoặc liên kết với Chính phủ Việt Nam.",
+    "quick_links": "Liên kết Nhanh",
+    "guide": "Hướng dẫn",
+    "stay_updated": "Nhận Thông báo",
+    "all_rights_reserved": "VietnamEVisa. Đã đăng ký bản quyền."
+  },
+  "HowToApplyPage": {
+    "title": "Cách thức nộp đơn",
+    "subtitle": "5 bước đơn giản từ lúc nộp đơn đến khi nhận e-visa qua email",
+    "applicationTimelineTitle": "Quy trình nộp hồ sơ",
+    "requiredDocumentsTitle": "Tài liệu bắt buộc",
+    "quickAnswersTitle": "Giải đáp nhanh",
+    "quickAnswersSubtitle": "Nhận giải đáp tức thì cho các câu hỏi thường gặp về quy trình nộp đơn e-visa.",
+    "startApplicationBtn": "Bắt đầu nộp đơn",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Chọn loại Visa",
+        "description": "Chọn loại visa, tốc độ xử lý và số lượng người nộp đơn trên biểu mẫu trực tuyến."
+      },
+      {
+        "step": 2,
+        "title": "Chuẩn bị Tài liệu",
+        "description": "Chuẩn bị bản sao hộ chiếu (còn hạn 6+ tháng), ảnh chân dung và các tài liệu bổ sung cho dịch vụ VIP."
+      },
+      {
+        "step": 3,
+        "title": "Điền thông tin",
+        "description": "Nhập thông tin hộ chiếu cho từng người và tải lên các tệp bắt buộc một cách an toàn."
+      },
+      {
+        "step": 4,
+        "title": "Kiểm tra & Thanh toán",
+        "description": "Xác nhận chi phí — không có phí ẩn — sau đó thanh toán qua thẻ hoặc PayPal bằng USD."
+      },
+      {
+        "step": 5,
+        "title": "Nhận E-Visa qua Email",
+        "description": "Xử lý tiêu chuẩn mất 7 ngày làm việc. Lựa chọn khẩn cấp từ 4 giờ đến 1 ngày làm việc."
+      }
+    ],
+    "documents": [
+      {
+        "id": "Passport Copy",
+        "title": "Bản sao Hộ chiếu",
+        "description": "Bản scan trang thông tin với ít nhất 6 tháng hiệu lực."
+      },
+      {
+        "id": "Portrait Photo",
+        "title": "Ảnh chân dung",
+        "description": "Ảnh chụp gần đây trên nền trắng, kích thước chuẩn hộ chiếu."
+      },
+      {
+        "id": "Application Form",
+        "title": "Đơn xin Visa",
+        "description": "Hoàn thành trực tuyến — không yêu cầu đơn giấy đối với e-visa."
+      }
+    ],
+    "tips": [
+      {
+        "question": "E-visa Việt Nam là gì?",
+        "answer": "Là thị thực điện tử do chính phủ Việt Nam cấp. Bạn sẽ nhận được thư chấp thuận dưới dạng PDF để xuất trình tại cửa khẩu."
+      },
+      {
+        "question": "Tôi có thể nhận visa nhanh cỡ nào?",
+        "answer": "Thời gian xử lý thông thường là 7 ngày làm việc. Tùy chọn khẩn cấp: 4 ngày, 2 ngày, 1 ngày hoặc 4 giờ làm việc tùy loại visa."
+      },
+      {
+        "question": "Có chi phí phát sinh không?",
+        "answer": "Tổng = phí dịch vụ cơ bản + phụ phí xử lý + dịch vụ tùy chọn (ví dụ: VIP fast-track +$55). Phí dán tem tại sân bay được tính riêng (25$ du lịch / 50$ công tác)."
+      }
+    ]
+  },
+  "VietnamVisaFeesPage": {
+    "title": "Lệ Phí Visa Việt Nam",
+    "subtitle": "Phí dịch vụ minh bạch bằng USD — không có phí ẩn khi thanh toán",
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbGuide": "Hướng dẫn",
+    "disclaimerTitle": "Phí Dịch vụ vs. Phí Dán tem Chính phủ — Phân biệt Quan trọng",
+    "disclaimerServiceFee": "Phí Dịch vụ",
+    "disclaimerServiceFeeDesc": " (trả trực tuyến khi thanh toán) — bao gồm phí xử lý hồ sơ, xét duyệt tài liệu và gửi visa qua email.",
+    "disclaimerGovFee": "Phí Dán tem Chính phủ",
+    "disclaimerGovFeeDesc1": " (trả bằng ",
+    "disclaimerGovFeeDesc2": "tiền mặt USD chính xác",
+    "disclaimerGovFeeDesc3": " tại cửa khẩu Việt Nam) — ",
+    "disclaimerGovFeeDesc4": "25$ cho du lịch",
+    "disclaimerGovFeeDesc5": ", ",
+    "disclaimerGovFeeDesc6": "50$ cho công tác",
+    "disclaimerGovFeeDesc7": ". Các cửa khẩu đường bộ có thể không có máy ATM — vui lòng chuẩn bị tiền mặt trước.",
+    "saveMoreTogether": "Tiết kiệm hơn khi đi cùng nhau",
+    "groupDiscountPricing": "Giá Ưu đãi theo Nhóm",
+    "groupDiscountDesc": "Giảm giá được áp dụng tự động lúc thanh toán dựa trên số lượng người nộp đơn.",
+    "paxTiers": {
+      "1_Person": "1 Người",
+      "2_3_Persons": "2–3 Người",
+      "4_5_Persons": "4–5 Người",
+      "6_Plus_Persons": "6+ Người",
+      "off": "Giảm {discount}%",
+      "standard": "Tiêu chuẩn",
+      "save_per_person": "Tiết kiệm {discount}% mỗi người",
+      "base_service_price": "Giá dịch vụ cơ bản"
+    },
+    "sampleCalcTitle": "Tính toán mẫu: E-Visa 90 Ngày Nhập cảnh Nhiều lần (Bình thường, 85$/người)",
+    "tableGroupSize": "Quy mô Nhóm",
+    "tablePricePerson": "Giá/Người",
+    "tableTotal": "Tổng cộng",
+    "tableYouSave": "Bạn Tiết kiệm",
+    "sampleGroups": {
+      "1_person": "1 người",
+      "2_persons": "2 người",
+      "3_persons": "3 người",
+      "4_persons": "4 người",
+      "6_persons": "6 người"
+    },
+    "feeSchedule": "Bảng Phí",
+    "eVisa": "E-Visa (Visa điện tử)",
+    "voa": "Visa Nhận Tại Sân Bay (VOA)",
+    "tableVisaType": "Loại Visa",
+    "tableNormal": "Bình thường (7 ngày)",
+    "tableUrgent4D": "Khẩn 4 Ngày",
+    "tableUrgent2D": "Khẩn 2 Ngày",
+    "tableUrgent1D": "Khẩn 1 Ngày",
+    "tableAction": "Hành động",
+    "applyNow": "Nộp Đơn Ngay",
+    "visaTypes": {
+      "30_Days_Single_Entry": "30 Ngày Nhập cảnh 1 lần",
+      "90_Days_Single_Entry": "90 Ngày Nhập cảnh 1 lần",
+      "90_Days_Multiple_Entry": "90 Ngày Nhập cảnh Nhiều lần",
+      "1_Month_Single_Entry": "1 Tháng Nhập cảnh 1 lần",
+      "1_Month_Multiple_Entry": "1 Tháng Nhập cảnh Nhiều lần",
+      "3_Months_Single_Entry": "3 Tháng Nhập cảnh 1 lần",
+      "3_Months_Multiple_Entry": "3 Tháng Nhập cảnh Nhiều lần"
+    },
+    "addOnsLabel": "Tiện ích bổ sung",
+    "extraServicesTitle": "Dịch vụ Thêm",
+    "vipFastTrack": "Đón khách VIP tại sân bay:",
+    "vipFastTrackDesc": " +55$ mỗi người",
+    "carPickUp": "Xe đưa đón:",
+    "carPickUpDesc": " giá thay đổi theo khoảng cách — liên hệ hỗ trợ để nhận báo giá",
+    "viewAllExtraServices": "Xem tất cả dịch vụ thêm"
+  },
+  "FaqsPage": {
+    "Data": {
+      "Categories": [
+        {
+          "id": "general",
+          "label": "Chung"
+        },
+        {
+          "id": "payment",
+          "label": "Thanh toán"
+        },
+        {
+          "id": "application",
+          "label": "Hồ sơ"
+        },
+        {
+          "id": "after-apply",
+          "label": "Sau khi nộp"
+        }
+      ],
+      "Faqs": [
+        {
+          "id": "g1",
+          "category": "general",
+          "question": "Mất bao lâu để có E-visa Việt Nam?",
+          "answer": "Xử lý tiêu chuẩn mất 7 ngày làm việc. Các tùy chọn khẩn cấp có sẵn từ 4 giờ đến 1 ngày làm việc tùy thuộc vào loại visa."
+        },
+        {
+          "id": "g2",
+          "category": "general",
+          "question": "Những quốc tịch nào đủ điều kiện xin E-visa Việt Nam?",
+          "answer": "Hầu hết các quốc tịch bao gồm Mỹ, Anh, Úc, Canada, các nước EU, Ấn Độ và Nhật Bản. Sử dụng công cụ kiểm tra điều kiện trên trang chủ của chúng tôi."
+        },
+        {
+          "id": "g3",
+          "category": "general",
+          "question": "FastVisa có phải là trang web chính thức của chính phủ không?",
+          "answer": "Chúng tôi là nhà cung cấp dịch vụ visa được cấp phép. Chúng tôi thay mặt bạn nộp hồ sơ và gửi e-visa đã được phê duyệt qua email."
+        },
+        {
+          "id": "g4",
+          "category": "general",
+          "question": "Tôi có cần visa để thăm đảo Phú Quốc không?",
+          "answer": "Du khách nước ngoài được miễn visa Việt Nam cho kỳ nghỉ lên đến 30 ngày tại Đảo Phú Quốc, miễn là họ nhập cảnh qua Sân bay Quốc tế Phú Quốc hoặc cảng biển và không rời khỏi đảo. Nếu bạn có kế hoạch đi đến các vùng khác của Việt Nam, bạn phải nộp đơn xin E-visa."
+        },
+        {
+          "id": "p1",
+          "category": "payment",
+          "question": "Bạn chấp nhận các phương thức thanh toán nào?",
+          "answer": "Chúng tôi chấp nhận các thẻ tín dụng chính (Visa, Mastercard) và PayPal. Tất cả các khoản phí đều tính bằng USD."
+        },
+        {
+          "id": "p2",
+          "category": "payment",
+          "question": "Có phí ẩn nào không?",
+          "answer": "Không. Tổng số tiền thanh toán của bạn bằng phí dịch vụ cơ bản + phụ phí xử lý + bất kỳ tiện ích bổ sung tùy chọn nào bạn đã chọn."
+        },
+        {
+          "id": "p3",
+          "category": "payment",
+          "question": "Tôi có thể được hoàn tiền nếu hồ sơ của tôi bị từ chối không?",
+          "answer": "Chính sách đảm bảo hoàn tiền của chúng tôi bao gồm các trường hợp bị từ chối đủ điều kiện. Hãy liên hệ với bộ phận hỗ trợ kèm theo số đặt chỗ của bạn để được trợ giúp."
+        },
+        {
+          "id": "a1",
+          "category": "application",
+          "question": "Tôi cần những giấy tờ gì để nộp đơn?",
+          "answer": "Hộ chiếu hợp lệ (còn hạn 6+ tháng), bản scan trang thông tin hộ chiếu và ảnh chân dung. Dịch vụ ưu tiên VIP có thể yêu cầu thêm giấy tờ."
+        },
+        {
+          "id": "a2",
+          "category": "application",
+          "question": "Tôi có thể nộp đơn cho nhiều người trong một đơn hàng không?",
+          "answer": "Có. Chọn số lượng người nộp đơn ở Bước 1 và điền một biểu mẫu riêng cho mỗi người ở Bước 2."
+        },
+        {
+          "id": "a3",
+          "category": "application",
+          "question": "Tôi có thể lưu hồ sơ và hoàn thành sau không?",
+          "answer": "Có. Bản nháp của bạn được lưu cục bộ trên trình duyệt để bạn có thể quay lại và hoàn thành trong vòng 7 ngày."
+        },
+        {
+          "id": "f1",
+          "category": "after-apply",
+          "question": "Làm thế nào để tôi kiểm tra tình trạng hồ sơ của mình?",
+          "answer": "Sử dụng trang Kiểm tra Trạng thái với số đặt chỗ và email đăng ký của bạn để xem cập nhật theo thời gian thực."
+        },
+        {
+          "id": "f2",
+          "category": "after-apply",
+          "question": "Khi nào tôi có thể tải xuống visa đã được phê duyệt?",
+          "answer": "Khi trạng thái hiển thị 'Đã hoàn thành', nút Tải xuống Visa sẽ xuất hiện cùng với thư chấp thuận dạng PDF của bạn."
+        },
+        {
+          "id": "f3",
+          "category": "after-apply",
+          "question": "Nếu tôi cần thay đổi ngày đi thì sao?",
+          "answer": "Vui lòng liên hệ với bộ phận hỗ trợ kèm theo số đặt chỗ trước khi visa của bạn được xử lý. Có thể không thay đổi được sau khi đã nộp cho cơ quan xuất nhập cảnh."
+        },
+        {
+          "id": "f4",
+          "category": "after-apply",
+          "question": "Tôi có thể thay đổi cửa khẩu nhập cảnh sau khi E-Visa được phê duyệt không?",
+          "answer": "Không, bạn không thể thay đổi cửa khẩu nhập cảnh sau khi E-visa Việt Nam của bạn đã được cấp. Nếu bạn phải nhập cảnh qua một cửa khẩu khác với cửa khẩu in trên E-visa đã được phê duyệt, bạn sẽ cần phải xin một E-visa mới. Các cơ quan du lịch và hãng hàng không sẽ từ chối cho lên máy bay nếu cửa khẩu nhập cảnh không khớp."
+        }
+      ]
+    },
+    "UI": {
+      "title": "Câu hỏi thường gặp",
+      "subtitle": "Tìm câu trả lời về hồ sơ, thanh toán và xử lý",
+      "breadcrumbHome": "Trang chủ",
+      "breadcrumbFaqs": "Câu hỏi thường gặp",
+      "searchPlaceholder": "Tìm kiếm câu hỏi...",
+      "tabAll": "Tất cả",
+      "noResults": "Không có câu hỏi nào phù hợp với tìm kiếm của bạn. Hãy thử từ khóa hoặc danh mục khác."
+    },
+    "Form": {
+      "widgetTitle": "Không tìm thấy điều bạn cần?",
+      "widgetSubtitle": "Gửi câu hỏi tùy chỉnh của bạn và các chuyên gia visa của chúng tôi sẽ phản hồi trực tiếp.",
+      "successTitle": "Đã gửi câu hỏi thành công!",
+      "successDesc": "Cảm ơn bạn đã liên hệ. Đội ngũ hỗ trợ của chúng tôi sẽ xem xét câu hỏi của bạn và phản hồi vào email ({email}) trong vòng 24 giờ.",
+      "askAnother": "Hỏi câu hỏi khác",
+      "fullName": "Họ và tên",
+      "namePlaceholder": "Tên của bạn",
+      "email": "Địa chỉ Email",
+      "emailPlaceholder": "email@cua-ban.com",
+      "question": "Câu hỏi của bạn",
+      "questionPlaceholder": "Nhập chi tiết câu hỏi của bạn...",
+      "submitBtn": "Gửi câu hỏi",
+      "errorEmpty": "Vui lòng điền vào tất cả các trường.",
+      "errorEmail": "Vui lòng nhập một địa chỉ email hợp lệ."
+    }
+  },
+  "AboutUsPage": {
+    "Hero": {
+      "title": "Chúng tôi là <accent>FastVisa.</accent>",
+      "subtitle": "Một trong những dịch vụ visa Việt Nam được khuyên dùng nhiều nhất trên toàn cầu.<br/>Tiên phong mang lại sự di chuyển không rào cản với hơn 15 năm kinh nghiệm đáng tin cậy."
+    },
+    "Quote": {
+      "text": "“Dịch vụ e-visa của Việt Nam đã trở nên cực kỳ tinh gọn — các dịch vụ như FastVisa làm cho quy trình xin visa trở nên dễ dàng hơn bao giờ hết đối với du khách quốc tế đến thăm một trong những điểm đến tuyệt vời nhất Đông Nam Á.”",
+      "author": "The New York Times",
+      "section": "Chuyên mục Du lịch"
+    },
+    "Mission": {
+      "label": "Mục đích của chúng tôi",
+      "title": "Sứ Mệnh",
+      "description": "Chúng tôi giúp du khách xin visa Việt Nam đúng hạn với mức giá minh bạch, xử lý hồ sơ bảo mật và hỗ trợ nhiệt tình. Quy trình đăng ký dễ dàng, không có phụ phí ẩn, cùng chính sách cam kết hoàn tiền cho các trường hợp đủ điều kiện.",
+      "hassleFreeTitle": "Quy Trình Tiện Lợi",
+      "hassleFreeDesc": "Tối ưu hóa thủ tục để bạn tập trung vào trải nghiệm chuyến đi.",
+      "reliabilityTitle": "Độ Tin Cậy Tuyệt Đối",
+      "reliabilityDesc": "Cập nhật trực tiếp và các kênh bảo mật đảm bảo an toàn thông tin cá nhân của bạn."
+    },
+    "SceneSlider": {
+      "heading": "Khám Phá Vẻ Đẹp Việt Nam",
+      "subheading": "Từ những vịnh xanh ngọc đến các thành phố cổ kính — chuyến phiêu lưu tiếp theo đang chờ bạn.",
+      "destinations": {
+        "sapa": {
+          "title": "Ruộng Bậc Thang",
+          "location": "Sa Pa, Lào Cai",
+          "desc": "Kiệt tác thiên nhiên và con người miền núi Tây Bắc."
+        },
+        "hoian": {
+          "title": "Phố Cổ Hội An",
+          "location": "Quảng Nam",
+          "desc": "Di sản văn hóa thế giới với vẻ đẹp cổ kính, lãng mạn."
+        },
+        "halong": {
+          "title": "Vịnh Hạ Long",
+          "location": "Quảng Ninh",
+          "desc": "Kỳ quan thiên nhiên với hàng ngàn hòn đảo kỳ vĩ."
+        },
+        "danang": {
+          "title": "Cầu Vàng",
+          "location": "Đà Nẵng",
+          "desc": "Tuyệt tác kiến trúc nâng đỡ bởi đôi bàn tay khổng lồ."
+        },
+        "ninhbinh": {
+          "title": "Tràng An",
+          "location": "Ninh Bình",
+          "desc": "Quần thể danh thắng được mệnh danh là Vịnh Hạ Long trên cạn."
+        },
+        "phuquoc": {
+          "title": "Bãi Sao",
+          "location": "Phú Quốc",
+          "desc": "Bãi biển cát trắng mịn màng với làn nước trong xanh."
+        },
+        "journey": {
+          "title": "Hành Trình Khám Phá",
+          "location": "Việt Nam",
+          "desc": "Chuẩn bị hành trang cho những trải nghiệm khó quên."
+        }
+      }
+    },
+    "Features": {
+      "label": "Lý Do Chọn Chúng Tôi",
+      "title": "Tại Sao Nên Đăng Ký Với Chúng Tôi",
+      "items": {
+        "noHiddenCharges": {
+          "title": "Không Phụ Phí Ẩn",
+          "description": "Giá cả minh bạch từ báo giá đến thanh toán."
+        },
+        "experience": {
+          "title": "Hơn 15 Năm Kinh Nghiệm",
+          "description": "Được du khách toàn cầu tin tưởng từ năm 2009."
+        },
+        "delivery": {
+          "title": "99% Đúng Hẹn",
+          "description": "Hồ sơ được xử lý trong thời gian đã cam kết."
+        },
+        "prices": {
+          "title": "Giá Cả Cạnh Tranh",
+          "description": "Giá trị tốt nhất cho dịch vụ tiêu chuẩn và khẩn cấp."
+        },
+        "guarantee": {
+          "title": "Cam Kết Hoàn Tiền",
+          "description": "Hoàn tiền cho các trường hợp bị từ chối đủ điều kiện."
+        }
+      }
+    },
+    "Team": {
+      "ctaTitle": "Bạn có thắc mắc về yêu cầu xin Visa Việt Nam?",
+      "ctaDesc": "Các chuyên viên của chúng tôi luôn sẵn sàng xem xét hồ sơ của bạn và cung cấp giải pháp tùy chỉnh cho các nhóm du lịch hoặc chuyến đi công tác.",
+      "ctaButton": "Liên Hệ Nhóm Của Chúng Tôi",
+      "label": "Hỗ Trợ Từ Chuyên Gia",
+      "title": "Đội Ngũ Nòng Cốt"
+    },
+    "Metadata": {
+      "title": "Về Chúng Tôi",
+      "description": "FastVisa — dịch vụ visa Việt Nam đáng tin cậy với hơn 15 năm kinh nghiệm, giá cả minh bạch và cam kết hoàn tiền."
+    }
+  },
+  "GuidePage": {
+    "title": "Hướng Dẫn Visa",
+    "subtitle": "Tất cả những gì bạn cần biết trước khi nộp đơn",
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbGuide": "Hướng dẫn",
+    "readGuide": "Xem hướng dẫn",
+    "vietnamVisaFees": {
+      "title": "Lệ phí Visa Việt Nam",
+      "description": "Bảng giá đầy đủ cho E-Visa và VOA cùng các tùy chọn xử lý khẩn cấp."
+    }
+  },
+  "guideSlugPage": {
+    "extra-services": {
+      "title": "Dịch Vụ Bổ Sung",
+      "description": "Chúng tôi cung cấp một loạt các dịch vụ bổ sung cho mọi nhu cầu du lịch của bạn tại Việt Nam, bao gồm Fast-Track Nhập cảnh, Đón xe riêng và Đặt phòng khách sạn."
+    },
+    "visa-extension": {
+      "title": "Gia Hạn Visa Việt Nam",
+      "description": "Tất cả những gì bạn cần biết về việc gia hạn thời gian lưu trú tại Việt Nam một cách suôn sẻ và hợp pháp."
+    },
+    "visa-exemptions": {
+      "title": "Miễn Visa Việt Nam",
+      "description": "Các quy định mới về thời gian nhập cảnh Việt Nam đối với người nước ngoài theo chính sách miễn visa đơn phương và song phương của Việt Nam."
+    },
+    "not_found": "Không tìm thấy bài viết"
+  },
+  "mockGuideContent": {
+    "extra-services": {
+      "title": "Dịch Vụ Bổ Sung",
+      "subtitle": "Các tùy chọn bổ sung giúp tăng tốc trải nghiệm tại sân bay của bạn."
+    },
+    "visa-exemptions": {
+      "title": "Miễn Visa",
+      "subtitle": "Kiểm tra xem quốc tịch của bạn có đủ điều kiện nhập cảnh miễn visa vào Việt Nam hay không."
+    },
+    "visa-extension": {
+      "title": "Gia Hạn Visa",
+      "subtitle": "Cách gia hạn thời gian lưu trú khi bạn đang ở Việt Nam."
+    },
+    "payment-guideline": {
+      "title": "Hướng Dẫn Thanh Toán",
+      "subtitle": "Thanh toán trực tuyến an toàn cho hồ sơ xin visa Việt Nam của bạn."
+    }
+  },
+  "ExtraServicesGuide": {
+    "fastTrack": {
+      "noteTitle": "Vui lòng chuẩn bị phí dán tem bằng tiền mặt (USD):",
+      "note1": "cho visa nhập cảnh 1 lần loại 1 tháng / 3 tháng / 6 tháng.",
+      "note2": "cho visa nhập cảnh nhiều lần loại 1 tháng / 3 tháng.",
+      "note3": "cho visa nhập cảnh nhiều lần loại 6 tháng / 1 năm.",
+      "title": "Sân Bay Việt Nam – Dịch Vụ Fast Track",
+      "desc": "Bỏ qua việc xếp hàng dài tại khu vực nhập cảnh. Nhân viên của chúng tôi sẽ hỗ trợ bạn qua một lối đi riêng, giúp bạn tiết kiệm thời gian quý báu khi đến nơi.",
+      "normal": "Dịch vụ Thường",
+      "vip": "Dịch vụ VIP",
+      "normalDesc": "Bạn chỉ mất 15 đến 20 phút thay vì 1 giờ chờ đợi như bình thường. Nhân viên của chúng tôi sẽ cầm bảng ghi tên bạn tại khu vực Nhập cảnh, nhận hộ chiếu và phí đóng dấu để làm mọi thủ tục, sau đó trả lại hộ chiếu đã đóng dấu trong khi bạn chờ xử lý nhận dạng.",
+      "vipDesc": "Chỉ mất 5 đến 10 phút. Nhân viên của chúng tôi sẽ chờ với bảng tên của bạn, nhận hộ chiếu và lệ phí. Bạn không cần phải chờ đợi xử lý nhận dạng—đi thẳng qua lối VIP riêng đến khu vực nhận hành lý hoặc xe của bạn!",
+      "pax": "/khách"
+    },
+    "carPickup": {
+      "table": {
+        "economicClass": "Hạng Phổ Thông",
+        "businessClass": "Hạng Thương Gia",
+        "fordTransit": "Ford Transit, Mercedes Transit..",
+        "huyndai": "Huyndai, Daewoo..",
+        "civic": "Civic, Chervolet, Altis, Vios..",
+        "camry": "Camry, Mercedes, BMW, Audi..",
+        "innova": "Innova, Chervolet..",
+        "mercedes": "Mercedes, BMW, Audi..",
+        "contact": "Liên Hệ"
+      },
+      "title": "Xe Đưa Đón Sân Bay Riêng",
+      "desc": "Chúng tôi đón bạn tại sân bay và đưa bạn an toàn đến địa chỉ cụ thể bằng các loại xe hiện đại, được bảo dưỡng tốt cùng với tài xế chuyên nghiệp.",
+      "sedan": "Sedan (4 Chỗ)",
+      "suv": "SUV (7 Chỗ)",
+      "minibus": "Minibus 16-24 Chỗ",
+      "coach": "Xe Khách 35-45 Chỗ"
+    },
+    "hotel": {
+      "title": "Đặt Phòng Khách Sạn",
+      "desc": "Bên cạnh các dịch vụ visa Việt Nam, chúng tôi cũng cung cấp dịch vụ Đặt phòng Khách sạn với mức giá tốt nhất. Đăng nhập vào tài khoản đã đăng ký trong quá trình xin visa của bạn để xem danh sách phòng.",
+      "howToBook": "Cách đặt phòng:",
+      "step1": "Sau khi nộp hồ sơ xin visa trên trang web của chúng tôi, hãy để lại lời nhắn với tên khách sạn hoặc mức giá bạn mong muốn.",
+      "step2": "Hoặc, gửi email yêu cầu của bạn đến sales@vietnamevisa.com.",
+      "hotline": "Hỗ trợ Hotline 24/7:"
+    }
+  },
+  "VisaExtensionGuide": {
+    "whyUsFeatures": {
+      "noTravel": {
+        "title": "Không Cần Đi Lại",
+        "desc": "Chúng tôi nhận hồ sơ và trả kết quả tận nơi cho bạn."
+      },
+      "guaranteed": {
+        "title": "Đảm Bảo Kết Quả",
+        "desc": "Hơn 10 năm kinh nghiệm làm việc với Cục Xuất Nhập cảnh."
+      },
+      "noHidden": {
+        "title": "Không Phí Ẩn",
+        "desc": "Chi phí minh bạch từ đầu, không phát sinh thêm."
+      },
+      "fast": {
+        "title": "Xử Lý Nhanh",
+        "desc": "Có dịch vụ xử lý khẩn cấp cho những trường hợp gấp."
+      }
+    },
+    "faqs": {
+      "q1": {
+        "q": "Mất bao lâu để gia hạn visa?",
+        "a": "Thời gian xử lý tiêu chuẩn là 5-7 ngày làm việc. Tuy nhiên, chúng tôi cũng cung cấp các tùy chọn xử lý khẩn cấp nếu visa của bạn sắp hết hạn."
+      },
+      "q2": {
+        "q": "Tôi có thể gia hạn E-Visa không?",
+        "a": "Không, hiện tại Cục Xuất Nhập cảnh Việt Nam không cho phép gia hạn E-Visa. Bạn phải xuất cảnh và nộp đơn xin visa mới."
+      },
+      "q3": {
+        "q": "Mức phạt khi ở quá hạn là bao nhiêu?",
+        "a": "Việc lưu trú quá hạn visa sẽ dẫn đến các khoản phạt hành chính từ 500.000 VNĐ đến 20.000.000 VNĐ tùy thuộc vào số ngày ở quá hạn, đồng thời có nguy cơ bị trục xuất hoặc đưa vào danh sách đen."
+      }
+    },
+    "definitions": {
+      "title": "Các Định Nghĩa Quan Trọng",
+      "visaPeriod": "Thời Hạn Visa",
+      "visaPeriodDesc": "Thời hạn hiệu lực của visa được thể hiện rõ qua ngày bắt đầu và ngày hết hạn trên visa của người nộp đơn.",
+      "tempStay": "Lưu Trú Tạm Thời",
+      "tempStayDesc": "Thời gian tối đa (Số ngày) mà người nước ngoài được phép lưu trú kể từ khi nhập cảnh. Thời gian lưu trú tạm thời có thể ngắn hơn hoặc bằng thời hạn của visa nhưng không bao giờ dài hơn thời hạn hiệu lực của visa.",
+      "whatIs": "Gia Hạn Visa Là Gì?",
+      "whatIsDesc": "Người nước ngoài đã được cấp visa và đang lưu trú tại Việt Nam mong muốn tiếp tục lưu trú sau khi visa hết hạn cần tiến hành gia hạn visa (hay còn gọi là gia hạn tạm trú). Điều này cho phép người nước ngoài tiếp tục lưu trú tại Việt Nam mà không cần xuất cảnh."
+    },
+    "visaTypes": {
+      "title": "Các Loại Visa Được Phép Gia Hạn",
+      "evisa": "1. E-VISA",
+      "evisaDesc": "Loại visa này KHÔNG THỂ gia hạn. Người nước ngoài sử dụng e-visa để nhập cảnh Việt Nam cần xuất cảnh đúng hạn khi hết hạn, sau đó xin visa mới nếu muốn tiếp tục nhập cảnh.",
+      "voa": "2. VISA CẤP TẠI SÂN BAY (VOA)",
+      "voaDesc": "Loại visa này được phép gia hạn. Thời gian gia hạn phụ thuộc vào mục đích lưu trú và các quy định liên quan trong Luật Nhập cảnh, Xuất cảnh của Việt Nam.",
+      "voa1": "Visa du lịch",
+      "voa2": "Thăm thân",
+      "voa3": "Kinh doanh / Đầu tư"
+    },
+    "procedures": {
+      "title": "Thủ Tục Gia Hạn Visa",
+      "desc": "Thực hiện theo các bước sau để gia hạn thời gian lưu trú tại Việt Nam một cách suôn sẻ và hợp pháp.",
+      "step1": "Chuẩn Bị Hồ Sơ",
+      "step1Desc": "Tập hợp hộ chiếu gốc, mẫu đơn NA5, và giấy tờ của công ty/người thân bảo lãnh.",
+      "step2": "Nộp Hồ Sơ",
+      "step2Desc": "Nộp tại Cục Quản lý Xuất Nhập cảnh Việt Nam ở Hà Nội, Đà Nẵng, hoặc Thành phố Hồ Chí Minh.",
+      "step3": "Nhận Kết Quả",
+      "step3Desc": "Thời gian xử lý là 5-7 ngày làm việc. Nhận lại hộ chiếu với tem gia hạn mới."
+    },
+    "whyUs": {
+      "title": "Tại Sao Sử Dụng Dịch Vụ Của FastVisa?"
+    },
+    "faq": {
+      "title": "Các Câu Hỏi Thường Gặp"
+    }
+  },
+  "VisaExemptionsGuide": {
+    "countries": {
+      "cl": "Chile",
+      "pa": "Panama",
+      "kh": "Campuchia",
+      "id": "Indonesia",
+      "kg": "Kyrgyzstan",
+      "la": "Lào",
+      "my": "Malaysia",
+      "sg": "Singapore",
+      "th": "Thái Lan",
+      "ph": "Philippines",
+      "bn": "Brunei",
+      "mm": "Myanmar",
+      "by": "Belarus",
+      "kr": "Hàn Quốc",
+      "jp": "Nhật Bản",
+      "de": "Đức",
+      "dk": "Đan Mạch",
+      "no": "Na Uy",
+      "ru": "Nga",
+      "fr": "Pháp",
+      "fi": "Phần Lan",
+      "es": "Tây Ban Nha",
+      "se": "Thụy Điển",
+      "it": "Ý",
+      "gb": "Vương quốc Anh"
+    },
+    "days": "{count} ngày",
+    "otherCases": {
+      "diplomatic": {
+        "title": "Hộ chiếu Ngoại giao",
+        "desc": "Nhập cảnh Việt Nam vì mục đích công vụ."
+      },
+      "trc": {
+        "title": "Thẻ Tạm Trú",
+        "desc": "Được nhập cảnh và lưu trú theo thời hạn của thẻ tạm trú."
+      },
+      "vec": {
+        "title": "Giấy Miễn Thị Thực",
+        "desc": "Được nhập cảnh và lưu trú tối đa 180 ngày."
+      },
+      "apec": {
+        "title": "Thẻ APEC",
+        "desc": "Người mang thẻ APEC cùng hộ chiếu hợp lệ được nhập cảnh và lưu trú tối đa 60 ngày."
+      },
+      "sez": {
+        "title": "Đặc Khu Kinh Tế",
+        "desc": "Ví dụ: Đảo Phú Quốc. Được nhập cảnh và lưu trú tối đa 30 ngày."
+      },
+      "title": "Các Trường Hợp Miễn Visa Khác"
+    },
+    "extension": {
+      "rules": {
+        "bilateral": {
+          "title": "Miễn Thị Thực Song Phương",
+          "desc": "Phải xuất cảnh Việt Nam sau khi hết hạn lưu trú, sau đó nhập cảnh lại nếu muốn ở lâu hơn."
+        },
+        "unilateral": {
+          "title": "Miễn Thị Thực Đơn Phương",
+          "desc": "Sau khi hết thời hạn lưu trú, có thể gia hạn thêm 15 ngày."
+        },
+        "vec": {
+          "title": "Giấy Miễn Thị Thực",
+          "desc": "Có thể gia hạn thêm 180 ngày nếu có người bảo lãnh hợp lệ tại Việt Nam và có lý do chính đáng."
+        }
+      },
+      "note": "Lưu ý: Mọi thủ tục gia hạn tạm trú đều được xử lý tại Cục Quản lý Xuất Nhập cảnh Việt Nam.",
+      "whyUsFeatures": {
+        "fast": {
+          "title": "Xử Lý Nhanh Chóng",
+          "desc": "Nhận kết quả nhanh chóng trong 3-5 ngày làm việc. Chúng tôi hỗ trợ toàn bộ quá trình từ chuẩn bị đến khi hoàn thành."
+        },
+        "accuracy": {
+          "title": "Chính Xác 100%",
+          "desc": "Đội ngũ chuyên gia chuẩn bị hồ sơ nhanh chóng và đảm bảo tính chính xác 100% để gia hạn thành công."
+        },
+        "convenience": {
+          "title": "Tiện Lợi",
+          "desc": "Không cần đến trực tiếp cơ quan chức năng. Chúng tôi thu hồ sơ và trả kết quả tận nơi tại Việt Nam."
+        }
+      },
+      "contactBtn": "Liên Hệ Gia Hạn Ngay",
+      "title": "Gia Hạn Miễn Visa",
+      "rulesTitle": "Quy tắc Gia hạn theo Loại",
+      "needExtension": "Cần Gia Hạn?",
+      "needExtensionDesc": "Gia hạn lưu trú tại Việt Nam hợp pháp và an toàn với các dịch vụ chuyên nghiệp của chúng tôi.",
+      "whyUs": "Tại Sao Nên Sử Dụng Dịch Vụ Gia Hạn Visa Của Chúng Tôi?"
+    },
+    "whatIs": {
+      "title": "Miễn Visa Là Gì?",
+      "desc": "Miễn visa (hay còn gọi là visa-free) cho phép công dân của các quốc gia cụ thể nhập cảnh vào Việt Nam mà không cần xin visa hay trả bất kỳ khoản phí nào liên quan đến visa, trong một khoảng thời gian nhất định.",
+      "bilateral": "Miễn Visa Song Phương",
+      "bilateralDesc": "Một thỏa thuận giữa hai quốc gia cho phép công dân của cả hai đi lại tự do không cần visa tới lãnh thổ của nhau.",
+      "unilateral": "Miễn Visa Đơn Phương",
+      "unilateralDesc": "Việt Nam đơn phương miễn visa cho công dân của một quốc gia cụ thể, bất kể quốc gia đó có miễn visa cho công dân Việt Nam hay không.",
+      "note": "Lưu ý: Chính sách miễn visa này hoàn toàn khác biệt với GIẤY MIỄN THỊ THỰC (VISA 5 NĂM) cấp cho người Việt kiều hoặc vợ/chồng/con cái của người Việt kiều."
+    },
+    "requirements": {
+      "title": "Yêu Cầu Cho Việc Nhập Cảnh Miễn Visa",
+      "desc": "Đảm bảo giấy tờ du lịch của bạn đáp ứng các tiêu chuẩn trước khi khởi hành.",
+      "nationality": "Quốc Tịch Đủ Điều Kiện",
+      "nationalityDesc": "Sở hữu hộ chiếu từ một quốc gia nằm trong danh sách miễn visa song phương/đơn phương.",
+      "validity": "Hiệu Lực Hộ Chiếu",
+      "validityDesc": "Hộ chiếu phải còn hạn ít nhất 6 tháng kể từ ngày nhập cảnh.",
+      "blankPages": "Trang Trống",
+      "blankPagesDesc": "Hộ chiếu phải còn ít nhất hai (02) trang trống để đóng dấu nhập cảnh."
+    },
+    "list": {
+      "title": "Các Quốc Gia Được Miễn",
+      "desc": "Hiện tại, Việt Nam cấp miễn visa song phương và đơn phương cho công dân từ 25 quốc gia.",
+      "search": "Tìm kiếm quốc gia...",
+      "showing": "Đang hiển thị {count} quốc gia",
+      "noData": "Không tìm thấy quốc gia nào khớp với \"{query}\"",
+      "tableNo": "STT.",
+      "tableNationality": "Quốc Tịch",
+      "tableDays": "Thời gian lưu trú",
+      "notesTitle": "Lưu ý quan trọng về miễn visa:",
+      "note1": "Từ ngày 1 tháng 1 năm 2023, công dân của các quốc gia nằm trong danh sách miễn visa đơn phương có thể nhập cảnh và xuất cảnh không giới hạn số lần mà không cần chờ 30 ngày giữa các lần nhập cảnh.",
+      "note2": "Công dân Anh ở nước ngoài (BNOs) không được miễn visa Việt Nam.",
+      "note3": "Công dân của những quốc gia này vẫn có thể xin visa nếu muốn lưu trú lâu hơn."
+    }
+  },
+  "ArticleHero": {
+    "latestNews": "Tin Tức Mới Nhất",
+    "guide": "Hướng Dẫn"
+  },
+  "PaymentGuideline": {
+    "toc": {
+      "paymentOptions": "Cách thanh toán",
+      "specialNotes": "Lưu ý đặc biệt",
+      "needHelp": "Bạn cần hỗ trợ?"
+    },
+    "options": {
+      "title": "Làm thế nào để thanh toán?",
+      "desc": "Có 2 lựa chọn tiện lợi để thanh toán cho hồ sơ xin visa của bạn. Hãy chọn phương thức phù hợp nhất.",
+      "opt1": "Lựa chọn 1",
+      "paypal": {
+        "title": "Thanh toán qua PayPal",
+        "desc1": "Thanh toán qua <strong>PayPal (www.paypal.com)</strong> bằng thẻ tín dụng của bạn.",
+        "desc2": "Ở bước cuối cùng của quá trình nộp đơn, chúng tôi sẽ cung cấp liên kết thanh toán qua cổng PayPal, hoặc liên kết sẽ được gửi đến email của bạn. Nhấp vào liên kết đó để thanh toán qua địa chỉ PayPal của chúng tôi:",
+        "quote": "\"www.paypal.com là một trong những mạng chuyển tiền quốc tế đáng tin cậy nhất. Nó được sử dụng để gửi và nhận tiền bởi khách hàng trên toàn thế giới. An toàn hơn, dễ dàng hơn, nhanh hơn và không hoàn lại tiền trực tuyến là những gì khách hàng tìm thấy tại PayPal.\" – Paypal"
+      },
+      "opt2": "Lựa chọn 2",
+      "cash": {
+        "title": "Thanh toán bằng tiền mặt",
+        "desc1": "Thanh toán bằng tiền mặt tại văn phòng của chúng tôi ở Việt Nam.",
+        "desc2": "Nếu bạn có bạn bè hoặc người thân ở Việt Nam, bạn có thể nhờ họ đến văn phòng của chúng tôi để thanh toán cho hồ sơ của bạn.",
+        "officeTitle": "Địa chỉ văn phòng",
+        "officeDesc1": "Văn phòng VietnamEvisa.com:",
+        "officeDesc2": "Số 47/2 Hoàng Sâm, Nghĩa Đô, Cầu Giấy, Hà Nội, Việt Nam"
+      }
+    },
+    "notes": {
+      "title": "Lưu ý đặc biệt",
+      "imgAlt": "Lưu ý đặc biệt",
+      "imgDesc": "Thông tin quan trọng về quá trình xử lý hồ sơ xin visa của bạn.",
+      "processTitle": "Thời gian xử lý",
+      "processDesc": "Sau khi nhận được thanh toán, chúng tôi sẽ xử lý công văn chấp thuận visa của bạn. Nó sẽ sẵn sàng trên trang web của chúng tôi sau <strong>1 ngày làm việc</strong> (dịch vụ khẩn cấp) hoặc <strong>2 ngày làm việc</strong> (dịch vụ bình thường).",
+      "feeTitle": "Phí dịch vụ và Phí dán tem",
+      "feeDesc": "Phí bạn trả cho chúng tôi là <strong>phí dịch vụ</strong> dùng để xử lý công văn chấp thuận visa. Khi nhận tem visa tại sân bay đến, bạn bắt buộc phải trả thêm <strong>phí dán tem</strong>.",
+      "viewFee": "Xem chi tiết phí visa Việt Nam"
+    },
+    "help": {
+      "title": "Bạn cần hỗ trợ?",
+      "desc": "Bộ phận hỗ trợ của chúng tôi sẵn sàng giúp đỡ bạn. Chúng tôi sẽ phản hồi trong vòng 2 giờ trong giờ làm việc và trong vòng 24 giờ ngoài giờ làm việc.",
+      "hotline": "Hotline (WhatsApp)",
+      "email": "Địa chỉ Email"
+    },
+    "heroTitle": "Hướng Dẫn Thanh Toán",
+    "heroSubtitle": "Chúng tôi cung cấp các tùy chọn thanh toán an toàn và thuận tiện cho hồ sơ xin visa của bạn. Xin lưu ý rằng khoản phí bạn trả cho chúng tôi là phí dịch vụ để xử lý công văn chấp thuận visa."
+  },
+  "CheckStatusPage": {
+    "title": "Kiểm tra trạng thái đơn",
+    "subtitle": "Theo dõi hồ sơ visa của bạn trong thời gian thực",
+    "breadcrumb_home": "Trang chủ",
+    "breadcrumb_check_status": "Kiểm tra trạng thái",
+    "faqs_heading": "Tra cứu trạng thái — Câu hỏi thường gặp",
+    "need_help": "Bạn cần hỗ trợ?",
+    "chat_whatsapp": "Chat với chúng tôi qua WhatsApp 24/7",
+    "faqs": [
+      {
+        "id": "sf1",
+        "question": "Mất bao lâu để trạng thái được cập nhật?",
+        "answer": "Trạng thái được cập nhật trong vòng 1 ngày làm việc sau mỗi giai đoạn xử lý. Các đơn khẩn cấp có thể được cập nhật nhanh hơn."
+      },
+      {
+        "id": "sf2",
+        "question": "Trạng thái 'Processing' (Đang xử lý) có nghĩa là gì?",
+        "answer": "Đơn của bạn đã được tiếp nhận và đang được nhóm của chúng tôi xét duyệt. Bạn sẽ nhận được email khi có tiến triển."
+      },
+      {
+        "id": "sf3",
+        "question": "Khi nào tôi có thể tải xuống e-visa đã được phê duyệt?",
+        "answer": "Sau khi trạng thái hiển thị 'Completed' (Hoàn tất), nút Tải xuống sẽ xuất hiện trên trang này. Kiểm tra email của bạn để lấy liên kết trực tiếp."
+      },
+      {
+        "id": "sf4",
+        "question": "Nếu trạng thái hiển thị 'On Hold' (Tạm giữ) thì sao?",
+        "answer": "Nhóm của chúng tôi có thể cần thêm thông tin. Kiểm tra hộp thư đến (bao gồm cả thư rác) hoặc liên hệ ngay với bộ phận hỗ trợ qua WhatsApp."
+      },
+      {
+        "id": "sf5",
+        "question": "Tôi không tìm thấy mã đặt chỗ của mình — tôi nên làm gì?",
+        "answer": "Mã đặt chỗ (bắt đầu bằng FV-) đã được gửi đến email đăng ký của bạn tại thời điểm thanh toán. Tìm kiếm 'FastVisa booking' trong hộp thư đến của bạn."
+      },
+      {
+        "id": "sf6",
+        "question": "Visa của tôi đã được duyệt nhưng tôi chưa nhận được file PDF.",
+        "answer": "Kiểm tra thư mục spam/thư rác để tìm email từ thanhdatvietnamvisa@gmail.com. Nếu không tìm thấy, hãy sử dụng nút Tải xuống trên trang này hoặc liên hệ hỗ trợ WhatsApp của chúng tôi."
+      }
+    ]
+  },
+  "CheckStatusForm": {
+    "lookup_title": "Tra cứu hồ sơ",
+    "lookup_desc": "Nhập mã đặt chỗ và email đăng ký để xem trạng thái đơn.",
+    "booking_format": "Định dạng mã:",
+    "booking_number": "Mã đặt chỗ",
+    "booking_placeholder": "VD: VN-20260520-AB12C",
+    "email": "Địa chỉ email",
+    "email_placeholder": "email.cua.ban@example.com",
+    "check_status_btn": "Kiểm tra trạng thái",
+    "network_error": "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại.",
+    "not_found": "Không tìm thấy đơn đăng ký. Hãy đảm bảo mã đặt chỗ và email khớp với thông tin đăng ký.",
+    "status_title": "Trạng thái hồ sơ",
+    "arrival_date": "Ngày đến",
+    "applicants": "Số người",
+    "visa_type": "Loại visa",
+    "total_amount": "Tổng tiền",
+    "download_visa": "Tải E-Visa",
+    "errors": {
+      "booking_required": "Mã đặt chỗ là bắt buộc",
+      "booking_invalid": "Định dạng mã không hợp lệ (VD: VN-YYYYMMDD-XXXXX)",
+      "email_invalid": "Vui lòng nhập địa chỉ email hợp lệ"
+    }
+  },
+  "EntryGateModal": {
+    "label": "Trước khi tiếp tục",
+    "title": "Bạn đã nộp đơn xin E-Visa chưa?",
+    "desc": "Điều này giúp chúng tôi chuyển hướng bạn đến dịch vụ phù hợp để hỗ trợ nhanh nhất.",
+    "opt_new_title": "Chưa, tôi cần E-Visa mới",
+    "opt_new_desc": "Bắt đầu đơn xin e-visa mới — Xử lý Tiêu chuẩn hoặc Khẩn cấp.",
+    "opt_fasttrack_title": "Rồi, tôi có E-Visa & cần Fast-Track",
+    "opt_fasttrack_desc": "Đã có E-Visa? Đặt dịch vụ đón khách Fast-Track chính thức tại sân bay ở đây.",
+    "opt_urgent_title": "Rồi, tôi đã nộp nhưng cần hỗ trợ khẩn cấp",
+    "opt_urgent_desc": "Đã nộp đơn? Liên hệ với chúng tôi ngay lập tức để được hỗ trợ xử lý nhanh.",
+    "footer_need_help": "Cần hỗ trợ ngay lập tức?",
+    "footer_whatsapp": "Chat WhatsApp 24/7 →"
+  },
+  "SubPageSidebar": {
+    "why_us": "Tại sao chọn chúng tôi?",
+    "why_us_items": [
+      {
+        "title": "Hơn 15 năm kinh nghiệm",
+        "desc": "Đại lý visa Việt Nam uy tín từ năm 2011."
+      },
+      {
+        "title": "Hơn 200.000 Visa thành công",
+        "desc": "Đảm bảo nhập cảnh với tỷ lệ chấp thuận 99,8%."
+      },
+      {
+        "title": "Chính sách hoàn tiền 100%",
+        "desc": "Hoàn tiền 100% nếu visa bị từ chối."
+      },
+      {
+        "title": "Sàng lọc chuyên gia",
+        "desc": "Chúng tôi kiểm tra thủ công mọi ảnh và tài liệu."
+      }
+    ],
+    "urgent_help": "Cần hỗ trợ khẩn cấp?",
+    "urgent_desc": "Chuyến bay sắp khởi hành? Hồ sơ bị kẹt? Nhận hỗ trợ tức thì từ đội ngũ chuyên trách 24/7 của chúng tôi qua WhatsApp.",
+    "chat_whatsapp": "Chat qua WhatsApp",
+    "guest_reviews": "Đánh giá của khách",
+    "rating_based_on": "Dựa trên hơn 12.480 đánh giá",
+    "review_quote": "“Dịch vụ 4 giờ đáng kinh ngạc. Rất khuyến khích!”"
+  },
+  "ApplyPage": {
+    "PriceBreakdown": {
+      "order_summary": "Tóm tắt đơn hàng",
+      "empty_state": "Hoàn thành tùy chọn visa để xem giá.",
+      "summary": "Tóm tắt",
+      "selected": "Đã chọn",
+      "base_fee": "Phí dịch vụ cơ bản",
+      "processing": "Phí xử lý",
+      "included": "Đã bao gồm",
+      "vip_fast_track": "Dịch vụ Đón VIP tại sân bay",
+      "basic_fast_track": "Hỗ trợ đón khách Cơ bản",
+      "applicants": "Người nộp đơn",
+      "person": "người",
+      "people": "người",
+      "total": "Tổng cộng",
+      "E-Visa 30 ngày, 1 lần nhập cảnh": "E-Visa 30 ngày, 1 lần nhập cảnh",
+      "E-Visa 30 ngày, nhiều lần nhập cảnh": "E-Visa 30 ngày, nhiều lần nhập cảnh",
+      "E-Visa 90 ngày, 1 lần nhập cảnh": "E-Visa 90 ngày, 1 lần nhập cảnh",
+      "E-Visa 90 ngày, nhiều lần nhập cảnh": "E-Visa 90 ngày, nhiều lần nhập cảnh",
+      "VOA 1 tháng nhập cảnh 1 lần": "VOA 1 tháng nhập cảnh 1 lần",
+      "VOA 1 tháng nhập cảnh nhiều lần": "VOA 1 tháng nhập cảnh nhiều lần",
+      "VOA 3 tháng nhập cảnh 1 lần": "VOA 3 tháng nhập cảnh 1 lần",
+      "VOA 3 tháng nhập cảnh nhiều lần": "VOA 3 tháng nhập cảnh nhiều lần"
+    },
+    "ApplyClient": {
+      "loading": "Đang tải hồ sơ…",
+      "pay_with": "Thanh toán bằng",
+      "complete_options": "Vui lòng hoàn thành Tùy chọn Visa trước.",
+      "next_step2": "Tiếp tục: Chi tiết người nộp đơn",
+      "next_step3": "Tiếp tục: Xem lại & Thanh toán"
+    },
+    "ApplicationStepper": {
+      "step_1": "Tùy chọn Visa",
+      "step_2": "Chi tiết người nộp đơn",
+      "step_3": "Xem lại & Thanh toán"
+    },
+    "Step1": {
+      "title": "Tùy chọn Visa",
+      "desc": "Chọn loại visa bạn cần và chi tiết chuyến đi.",
+      "fields": {
+        "visa_type": "Loại Visa",
+        "visa_type_success": "Đã xác nhận loại visa",
+        "select_type": "Chọn loại",
+        "evisa": "E-Visa — Tất cả các cửa khẩu",
+        "voa": "Visa cấp tại sân bay (VOA) — Chỉ đường hàng không",
+        "visa_category": "Hạng Visa",
+        "visa_category_success": "Đã xác nhận hạng visa",
+        "select_category": "Chọn hạng",
+        "applicant_count": "Số lượng người nộp đơn",
+        "applicant_count_success": "Đã xác nhận số người",
+        "select_count": "Chọn số lượng",
+        "person": "Người",
+        "people": "Người",
+        "arrival_date": "Ngày đến",
+        "arrival_date_success": "Đã xác nhận ngày đến",
+        "select_date": "Chọn ngày đến",
+        "port_of_entry": "Cửa khẩu nhập cảnh",
+        "port_of_entry_success": "Đã xác nhận cửa khẩu",
+        "loading_ports": "Đang tải danh sách…",
+        "select_port": "Chọn sân bay / cửa khẩu",
+        "purpose": "Mục đích chuyến đi",
+        "purpose_success": "Đã xác nhận mục đích",
+        "select_purpose": "Chọn mục đích"
+      },
+      "processing_normal_7d_label": "Bình thường · 7 ngày làm việc",
+      "processing_normal_7d_caption": "Xử lý tiêu chuẩn — đã bao gồm trong phí cơ bản",
+      "processing_normal_7d_expectedTime": "Trả kết quả muộn nhất là sau 7 ngày làm việc tính từ ngày tiếp nhận hồ sơ",
+      "processing_urgent_4d_label": "Khẩn cấp · 4 ngày làm việc",
+      "processing_urgent_4d_caption": "Xử lý nhanh hơn",
+      "processing_urgent_4d_note": "Phụ phí thay đổi theo thời hạn visa",
+      "processing_urgent_4d_expectedTime": "Trả kết quả vào 5:30pm sau 4 ngày làm việc, sau khi tiếp nhận hồ sơ",
+      "processing_urgent_3d_label": "Khẩn cấp · 3 ngày làm việc",
+      "processing_urgent_3d_caption": "Hàng đợi ưu tiên",
+      "processing_urgent_3d_note": "Phụ phí thay đổi theo thời hạn visa",
+      "processing_urgent_3d_expectedTime": "Trả kết quả vào 5:30pm sau 3 ngày làm việc, sau khi tiếp nhận hồ sơ",
+      "processing_urgent_2d_label": "Khẩn cấp · 2 ngày làm việc",
+      "processing_urgent_2d_caption": "Hàng đợi ưu tiên",
+      "processing_urgent_2d_note": "Phụ phí thay đổi theo thời hạn visa",
+      "processing_urgent_2d_expectedTime": "Trả kết quả vào 5:30pm sau 2 ngày làm việc, sau khi tiếp nhận hồ sơ",
+      "processing_urgent_1d_label": "Khẩn cấp · 1 ngày làm việc",
+      "processing_urgent_1d_caption": "Xử lý nhận kết quả vào ngày hôm sau",
+      "processing_urgent_1d_expectedTime": "Trả kết quả vào 5:30pm sau 1 ngày làm việc, sau khi tiếp nhận hồ sơ",
+      "processing_urgent_4h_label": "Khẩn cấp · 4 giờ làm việc",
+      "processing_urgent_4h_caption": "Xử lý trong ngày",
+      "processing_urgent_4h_note": "Cần kiểm tra hồ sơ thủ công trước khi xác nhận",
+      "processing_urgent_4h_expectedTime": "Trả kết quả vào 12h trưa (tiếp nhận hồ sơ đến 8h sáng cùng ngày) hoặc 5:30 pm (nhận hồ sơ đến 2:00 pm cùng ngày)",
+      "processing_urgent_2h_label": "Khẩn cấp · 2 giờ làm việc",
+      "processing_urgent_2h_caption": "Xử lý cấp bách",
+      "processing_urgent_2h_note": "Cần kiểm tra hồ sơ thủ công trước khi xác nhận",
+      "processing_urgent_2h_expectedTime": "Trả kết quả sau 2 tiếng tiếp nhận hồ sơ",
+      "processing_urgent_1h_label": "Khẩn cấp · 1 giờ làm việc",
+      "processing_urgent_1h_caption": "Xử lý cấp bách siêu tốc",
+      "processing_urgent_1h_note": "Cần kiểm tra hồ sơ thủ công trước khi xác nhận",
+      "processing_urgent_1h_expectedTime": "Trả kết quả sau 1 tiếng tiếp nhận hồ sơ",
+      "processing_last_minute_label": "Giờ chót / Ngày lễ",
+      "processing_last_minute_caption": "Ngoài giờ làm việc hoặc vào các ngày nghỉ lễ",
+      "processing_last_minute_expectedTime": "Trả kết quả trong 30-60 phút",
+      "processing_weekend_processing_label": "Xử lý cuối tuần (T7, CN)",
+      "processing_weekend_processing_caption": "Liên hệ để biết thời gian cụ thể",
+      "processing_weekend_processing_note": "Phụ phí áp dụng cho dịch vụ cuối tuần",
+      "processing_weekend_processing_expectedTime": "Liên hệ để biết thời gian cụ thể",
+      "badge_popular": "Phổ biến",
+      "badge_review_req": "Cần duyệt",
+      "badge_special_service": "Dịch vụ Đặc biệt",
+      "processing_time_title": "Thời gian xử lý",
+      "processing_time_desc": "Phụ phí được cộng trên mỗi người ngoài phí dịch vụ cơ bản.",
+      "price_included": "Đã bao gồm",
+      "port_han": "HAN — Sân bay Hà Nội",
+      "port_sgn": "SGN — Sân bay Tân Sơn Nhất",
+      "port_dad": "DAD — Sân bay Đà Nẵng",
+      "port_pqc": "PQC – Sân bay Phú Quốc",
+      "port_moc_bai": "Cửa khẩu Mộc Bài (Đường bộ)",
+      "port_hph": "HPH — Sân bay Cát Bi",
+      "port_cxr": "CXR — Sân bay Cam Ranh",
+      "purpose_tourism": "Du lịch",
+      "purpose_business": "Công tác",
+      "purpose_family": "Thăm thân nhân / bạn bè",
+      "purpose_other": "Khác",
+      "cat_evisa_30d_single": "E-Visa · 30 ngày nhập cảnh 1 lần",
+      "cat_evisa_90d_single": "E-Visa · 90 ngày nhập cảnh 1 lần",
+      "cat_evisa_90d_multiple": "E-Visa · 90 ngày nhập cảnh nhiều lần",
+      "cat_voa_1m_single": "VOA · 1 tháng nhập cảnh 1 lần",
+      "cat_voa_1m_multiple": "VOA · 1 tháng nhập cảnh nhiều lần",
+      "cat_voa_3m_single": "VOA · 3 tháng nhập cảnh 1 lần",
+      "cat_voa_3m_multiple": "VOA · 3 tháng nhập cảnh nhiều lần",
+      "cat_code_fasttrack": "Fast Track · Dịch vụ đón tại sân bay",
+      "evisa_30d_single": "30 ngày · Nhập cảnh 1 lần",
+      "evisa_90d_single": "90 ngày · Nhập cảnh 1 lần",
+      "evisa_90d_multiple": "90 ngày · Nhập cảnh nhiều lần",
+      "voa_1m_single": "1 tháng · Nhập cảnh 1 lần",
+      "voa_1m_multiple": "1 tháng · Nhập cảnh nhiều lần",
+      "voa_3m_single": "3 tháng · Nhập cảnh 1 lần",
+      "voa_3m_multiple": "3 tháng · Nhập cảnh nhiều lần"
+    },
+    "Step2": {
+      "title": "Chi tiết người nộp đơn",
+      "desc": "Vui lòng cung cấp chính xác thông tin hộ chiếu để tránh bị từ chối.",
+      "travel_processing_title": "Chi tiết chuyến đi & Xử lý",
+      "arrival_date": "Ngày đến",
+      "select_arrival_date": "Chọn ngày đến",
+      "port_of_entry": "Cửa khẩu nhập cảnh",
+      "select_port": "Chọn cửa khẩu",
+      "contact_info_title": "Thông tin liên hệ",
+      "email": "Địa chỉ Email",
+      "email_placeholder": "E-Visa của bạn sẽ được gửi tới đây",
+      "phone": "Số điện thoại",
+      "back_btn": "Quay lại",
+      "extra_services_title": "Dịch vụ đi kèm",
+      "basic_fasttrack_label": "Hỗ trợ đón khách Cơ bản",
+      "basic_fasttrack_price": "+$35 / người",
+      "basic_fasttrack_desc": "Nhân viên của chúng tôi sẽ đón bạn tại sân bay và hướng dẫn qua cửa kiểm tra hộ chiếu nhanh chóng.",
+      "vip_fasttrack_label": "Đón khách VIP tại sân bay",
+      "vip_fasttrack_price": "+$55 / người",
+      "vip_fasttrack_desc": "Bỏ qua toàn bộ hàng đợi nhập cảnh. Nhân viên chuyên trách đón bạn tại cổng và hỗ trợ thông quan nhanh chóng.",
+      "dropzone_click_drag": "Nhấn hoặc kéo thả ảnh vào đây",
+      "dropzone_drop": "Thả ảnh vào đây..."
+    },
+    "ApplicantCard": {
+      "applicant_number": "Người nộp đơn {index}",
+      "of": "trong {total}",
+      "passport_data_page": "Trang thông tin Hộ chiếu",
+      "passport_data_desc": "Trang có ảnh, tên và số hộ chiếu của bạn.",
+      "portrait_photo": "Ảnh chân dung",
+      "portrait_photo_desc": "Ảnh chân dung 4×6 cm (nền trắng, không kính, chụp trong vòng 6 tháng).",
+      "flight_ticket": "Thông tin chuyến bay/Vé máy bay",
+      "flight_ticket_desc": "Tải lên vé máy bay hoặc thẻ lên máy bay của bạn.",
+      "full_name": "Họ và tên (như trong hộ chiếu)",
+      "full_name_placeholder": "VD: NGUYEN VAN A",
+      "gender": "Giới tính",
+      "select_gender": "Chọn giới tính",
+      "nationality": "Quốc tịch",
+      "select_nationality": "Chọn quốc tịch",
+      "nationality_placeholder": "VD: VN (mã 2 chữ cái)",
+      "date_of_birth": "Ngày sinh",
+      "select_date_of_birth": "Chọn ngày sinh",
+      "passport_number": "Số hộ chiếu",
+      "passport_number_placeholder": "VD: C1234567",
+      "passport_expiry_date": "Ngày hết hạn Hộ chiếu",
+      "select_expiry_date": "Chọn ngày hết hạn",
+      "verify_warning": "⚠ Xác minh lại"
+    },
+    "Step3": {
+      "title": "Xem lại & Thanh toán",
+      "desc": "Vui lòng xem lại thông tin cẩn thận trước khi tiến hành thanh toán.",
+      "summary_title": "Tóm tắt hồ sơ",
+      "visa_type": "Loại Visa",
+      "applicants": "Người nộp đơn",
+      "arrival_date": "Ngày đến",
+      "port_of_entry": "Cửa khẩu nhập cảnh",
+      "purpose": "Mục đích",
+      "processing_time": "Thời gian xử lý",
+      "email": "Email liên hệ",
+      "phone": "Số điện thoại",
+      "extra_services": "Dịch vụ thêm",
+      "vip_fast_track": "Đón tại sân bay VIP",
+      "basic_fast_track": "Hỗ trợ đón khách Cơ bản",
+      "total_due": "Tổng tiền",
+      "terms_prefix": "Tôi xác nhận tất cả thông tin là chính xác. Tôi đồng ý với",
+      "terms_link": "Điều khoản & Điều kiện",
+      "terms_suffix": "và chính sách hoàn tiền.",
+      "back_btn": "Quay lại"
+    }
+  },
+  "EntryGate": {
+    "ResumeDraftModal": {
+      "step1": "Tuỳ chọn Visa",
+      "step2": "Thông tin người nộp đơn",
+      "step3": "Xem lại & Thanh toán",
+      "fast_track": "E-Visa Fast Track",
+      "voa": "Visa nhập cảnh (VOA)",
+      "standard": "E-Visa Tiêu chuẩn",
+      "last_minute": "E-Visa Khẩn cấp",
+      "urgent": "E-Visa Rất Khẩn cấp",
+      "people": "người",
+      "arrival_prefix": "Đến",
+      "title": "Tiếp tục đơn đăng ký?",
+      "desc_prefix": "Bạn đang ở bước",
+      "desc_suffix": "Muốn tiếp tục hay đổi visa khác?",
+      "restart_btn": "Bắt đầu lại",
+      "continue_btn": "Tiếp tục điền",
+      "close_btn": "Đóng"
+    }
+  },
+  "EmergencyInquiryPage": {
+    "pricing_unavailable": "Bảng giá khẩn cấp tạm thời không khả dụng. Vui lòng thử lại sau hoặc liên hệ hỗ trợ.",
+    "title": "Hỗ trợ Khẩn cấp",
+    "subtitle": "Sắp bay? Đội ngũ hỗ trợ khẩn cấp của chúng tôi sẽ phản hồi trong vòng 2 giờ",
+    "home": "Trang chủ",
+    "alert_title": "Hỗ trợ Khẩn cấp",
+    "alert_desc_prefix": "Chỉ sử dụng mẫu này cho các vấn đề cấp bách, khi chuyến bay của bạn sẽ khởi hành trong vòng 72 giờ. Đối với các yêu cầu chung, vui lòng truy cập trang",
+    "alert_desc_link": "Liên hệ",
+    "alert_desc_suffix": "của chúng tôi.",
+    "pricing_title": "Các Cấp độ Xử lý Nhanh",
+    "pricing_desc": "Chọn tốc độ phù hợp với thời gian bay của bạn. Giá đã bao gồm tất cả các khoản phí dịch vụ.",
+    "most_requested": "Được yêu cầu nhiều nhất",
+    "best_for": "Phù hợp cho:",
+    "service_fee": "Phí dịch vụ",
+    "contact_us": "Liên hệ",
+    "whatsapp_btn": "WhatsApp cho chúng tôi",
+    "apply_btn": "Đăng ký ngay",
+    "tier_last_minute_name": "Giờ chót (Kẹt tại sân bay)",
+    "tier_last_minute_timeframe": "Dưới 1 giờ",
+    "tier_last_minute_desc": "Dành cho hành khách đang bị kẹt tại cổng xuất cảnh hoặc sắp lên máy bay.",
+    "tier_last_minute_best": "Kẹt tại sân bay / Máy bay cất cánh <3 giờ",
+    "tier_2h_name": "Siêu khẩn cấp 2 giờ",
+    "tier_2h_timeframe": "Trong vòng 2 giờ làm việc",
+    "tier_2h_desc": "Thông quan siêu tốc cho các chuyến bay trong ngày.",
+    "tier_2h_best": "Khởi hành hôm nay / Bay dưới 12 giờ",
+    "tier_4h_name": "Khẩn cấp 4 giờ (Nửa ngày)",
+    "tier_4h_timeframe": "Trong vòng 4 giờ làm việc",
+    "tier_4h_desc": "Đánh giá và xử lý nhanh chóng cho các hành khách bay chuyến tiếp theo.",
+    "tier_4h_best": "Chuyến bay tối nay hoặc sáng sớm mai",
+    "tier_1d_name": "Khẩn cấp 1 ngày làm việc",
+    "tier_1d_timeframe": "Trong vòng 24 giờ",
+    "tier_1d_desc": "Trả kết quả vào ngày hôm sau, ưu tiên slot xử lý an toàn.",
+    "tier_1d_best": "Bay ngày mai / Bay trong 24-36 giờ",
+    "tier_2d_name": "Khẩn cấp 2 ngày làm việc",
+    "tier_2d_timeframe": "Trong vòng 48 giờ",
+    "tier_2d_desc": "Hồ sơ được theo dõi sát sao, hoàn hảo cho các kế hoạch kinh doanh vào phút chót.",
+    "tier_2d_best": "Bay trong 2 đến 3 ngày tới",
+    "timeline_title": "Quy trình Khẩn cấp 3 bước",
+    "timeline_desc": "Cách chúng tôi xử lý nhanh hồ sơ để bỏ qua sự chậm trễ thông thường của chính phủ.",
+    "step1_title": "Chuẩn bị & Nộp đơn",
+    "step1_desc": "Chuẩn bị bản sao hộ chiếu, ảnh chân dung, cổng đến và giờ bay, sau đó điền form khẩn cấp.",
+    "step2_title": "Xác minh qua WhatsApp",
+    "step2_desc": "Đối với trường hợp cực kỳ cấp bách (2h/4h), vui lòng liên hệ trực tiếp qua WhatsApp (+84-93-6699-869) để xác minh và mở khóa thông quan ưu tiên.",
+    "step3_title": "Nhận PDF E-Visa",
+    "step3_desc": "Đội hỗ trợ làm việc trực tiếp với hải quan. E-Visa sẽ được gửi trực tiếp đến hộp thư của bạn.",
+    "form_success_title": "Đã nhận được yêu cầu khẩn cấp",
+    "form_success_desc1": "Đội khẩn cấp của chúng tôi sẽ liên hệ trong vòng 2 giờ. Xin vui lòng giữ điện thoại bên mình.",
+    "form_success_ref": "Mã số:",
+    "form_success_btn": "Gửi yêu cầu khác",
+    "form_badge_title": "Khẩn cấp — Mục tiêu phản hồi 2 giờ",
+    "form_badge_desc": "Bắt buộc điền mọi thông tin để được xử lý ưu tiên",
+    "form_error": "Không thể gửi yêu cầu khẩn cấp. Vui lòng thử lại hoặc gọi tổng đài.",
+    "form_name_label": "Họ và tên",
+    "form_name_placeholder": "Như hiển thị trên hộ chiếu",
+    "form_booking_label": "Mã đặt vé",
+    "form_booking_placeholder": "FV-12345",
+    "form_email_label": "Email đã dùng đăng ký",
+    "form_email_placeholder": "your@email.com",
+    "form_date_label": "Ngày du lịch",
+    "form_date_placeholder": "Chọn ngày",
+    "form_subject_label": "Vấn đề gặp phải",
+    "form_subject_placeholder": "Chọn loại vấn đề",
+    "form_message_label": "Mô tả tình huống",
+    "form_message_placeholder": "Vui lòng giải thích rõ tình huống của bạn — bao gồm thông tin chuyến bay, giờ khởi hành...",
+    "form_submit_btn": "Gửi yêu cầu khẩn cấp",
+    "opt_urgent": "Chuyến bay khẩn — chưa nhận được visa",
+    "opt_wrong": "Thông tin trên đơn bị sai sót",
+    "opt_payment": "Đã thanh toán nhưng chưa có xác nhận",
+    "opt_airport": "Sự cố tại sân bay / hải quan",
+    "correction_title": "Dịch vụ Sửa lỗi E-Visa",
+    "correction_subtitle": "Bị kẹt ở cổng lên máy bay / Bị từ chối nhập cảnh?",
+    "correction_desc1": "Hãng hàng không và cơ quan kiểm soát biên giới sẽ **nghiêm ngặt từ chối cho phép lên máy bay hoặc nhập cảnh** nếu E-Visa được duyệt của bạn có dù chỉ một ký tự không khớp với trang thông tin hộ chiếu, hoặc nếu bạn cố gắng nhập cảnh tại một cửa khẩu khác.",
+    "correction_errors_title": "Các Lỗi Thường Gặp Nhất Tại Cổng Bay:",
+    "err_1": "Sai lỗi chính tả Họ Tên (sai thứ tự chữ cái, thiếu tên đệm)",
+    "err_2": "Số hộ chiếu hoặc ngày hết hạn không chính xác",
+    "err_3": "Sai cổng nhập cảnh (ví dụ đổi từ Hà Nội sang TP.HCM, v.v.)",
+    "err_4": "Sai ngày sinh hoặc sai quốc tịch",
+    "correction_desc2": "Nếu bạn đang bị kẹt tại cổng bay, đừng hoảng sợ. Chúng tôi cung cấp dịch vụ **Cấp lại & Sửa lỗi Visa Ưu tiên 24/7** kết nối trực tiếp với Cơ quan Quản lý Xuất Nhập Cảnh Việt Nam. Chúng tôi có thể cấp lại tài liệu chấp thuận đã được sửa chữa trong **1 đến 2 giờ**.",
+    "correction_btn": "Khẩn cấp WhatsApp"
+  },
+  "ContactUs": {
+    "form_title": "Gửi Tin Nhắn",
+    "form_subtitle": "Liên Hệ Hỗ Trợ",
+    "full_name_label": "Họ và Tên",
+    "email_label": "Email",
+    "subject_label": "Chủ Đề",
+    "message_label": "Nội Dung",
+    "subject_placeholder": "Chọn chủ đề",
+    "success_title": "Gửi tin nhắn thành công",
+    "success_desc": "Đội ngũ chúng tôi sẽ phản hồi trong vòng 24 giờ. Kiểm tra hộp thư đến của bạn để nhận email xác nhận.",
+    "success_reference": "Mã tham chiếu: {ticketId}",
+    "send_another": "Gửi tin nhắn khác",
+    "send_button": "Gửi Tin Nhắn",
+    "error_generic": "Không thể gửi tin nhắn. Vui lòng thử lại sau.",
+    "subjects": {
+      "payment": "Vấn đề thanh toán",
+      "application": "Câu hỏi về đơn xin",
+      "edit_info": "Chỉnh sửa thông tin đơn",
+      "refund": "Yêu cầu hoàn tiền",
+      "other": "Khác"
+    }
+  },
+  "NotFound": {
+    "title": "Không Tìm Thấy Trang",
+    "description": "Trang bạn đang tìm không tồn tại hoặc đã được chuyển đi.",
+    "back_home": "Về Trang Chủ",
+    "apply_visa": "Đăng Ký Visa"
+  },
+  "Calendar": {
+    "months": [
+      "Tháng Một",
+      "Tháng Hai",
+      "Tháng Ba",
+      "Tháng Tư",
+      "Tháng Năm",
+      "Tháng Sáu",
+      "Tháng Bảy",
+      "Tháng Tám",
+      "Tháng Chín",
+      "Tháng Mười",
+      "Tháng Mười Một",
+      "Tháng Mười Hai"
+    ],
+    "prev_month": "Chuyển đến tháng trước",
+    "next_month": "Chuyển đến tháng sau"
+  },
+  "ChatForm": {
+    "greeting_morning": "Chào buổi sáng",
+    "greeting_afternoon": "Chào buổi chiều",
+    "greeting_evening": "Chào buổi tối",
+    "desc": "Hỏi về điều kiện cấp e-Visa Việt Nam, hồ sơ, lệ phí hoặc hồ sơ của bạn. Trợ lý AI của chúng tôi sẽ hỗ trợ trước — bạn có thể yêu cầu gặp nhân viên hỗ trợ bất kỳ lúc nào.",
+    "label_name": "Tên của bạn *",
+    "placeholder_name": "Nhập tên của bạn",
+    "label_nationality": "Quốc tịch (tuỳ chọn)",
+    "placeholder_nationality": "Chọn quốc tịch…",
+    "empty_nationality": "Không tìm thấy quốc tịch.",
+    "label_interest": "Bạn cần hỗ trợ về vấn đề gì? (tuỳ chọn)",
+    "placeholder_interest": "Chọn một tuỳ chọn…",
+    "opt_evisa": "E-Visa",
+    "opt_voa": "Visa on Arrival (Visa cấp tại sân bay)",
+    "opt_check": "Kiểm tra tình trạng hồ sơ",
+    "opt_urgent": "Visa khẩn cấp (<24h)",
+    "opt_other": "Câu hỏi khác",
+    "btn_start": "Bắt đầu chat"
+  },
+  "ChatSearch": {
+    "placeholder": "Tìm kiếm...",
+    "up": "Lên (Shift+Enter)",
+    "down": "Xuống (Enter)",
+    "close": "Đóng (Esc)"
+  },
+  "ChatMessage": {
+    "sender_you": "Bạn",
+    "sender_ai": "Trợ lý AI",
+    "sender_agent": "Tư vấn viên",
+    "sender_system": "Hệ thống",
+    "download_file": "Tải tài liệu",
+    "replied_you": "Bạn đã trả lời {name}",
+    "replied_other": "{name1} đã trả lời {name2}",
+    "recalled": "Tin nhắn này đã bị thu hồi.",
+    "translation_badge": "BẢN DỊCH",
+    "translate_btn": "Dịch",
+    "tooltip_react": "Thả cảm xúc",
+    "tooltip_reply": "Trả lời",
+    "typing": "Đang soạn tin nhắn",
+    "delivery_seen": "Đã xem",
+    "delivery_sent": "Đã gửi",
+    "day_today": "Hôm nay",
+    "day_yesterday": "Hôm qua"
+  },
+  "ImageUploadZone": {
+    "description": "PNG, JPG tối đa {maxSizeMB}MB",
+    "main_text": "Nhấn hoặc kéo ảnh vào đây",
+    "drop_text": "Thả ảnh vào đây..."
+  },
+  "Chat": {
+    "tooltip_minimize": "Thu nhỏ",
+    "empty_no_match": "Không có tin nhắn nào khớp với \"{query}\"",
+    "empty_start": "Gửi tin nhắn để bắt đầu. Bạn có thể hỏi về các loại visa hoặc giấy tờ yêu cầu.",
+    "error_dismiss": "Đóng",
+    "suggestion_1": "Điều kiện làm Visa Việt Nam",
+    "suggestion_2": "Lệ phí E-Visa",
+    "suggestion_3": "Cách thức nộp đơn",
+    "header_start": "Bắt đầu trò chuyện",
+    "header_desc": "Trợ lý AI · Hỗ trợ e-Visa Việt Nam",
+    "header_connecting": "Đang kết nối với nhân viên hỗ trợ…",
+    "header_connected": "Đã kết nối với {agentName}",
+    "header_agent_support": "Đã kết nối với nhân viên hỗ trợ",
+    "header_experience": "Trải nghiệm của bạn thế nào?",
+    "header_help": "Chúng tôi ở đây để giúp đỡ",
+    "tooltip_new": "Cuộc trò chuyện mới",
+    "tooltip_search": "Tìm kiếm tin nhắn",
+    "tooltip_close": "Đóng đoạn chat",
+    "tray_suggestions": "Đề xuất trả lời nhanh",
+    "tray_collapse": "Thu nhỏ gợi ý",
+    "tray_expand": "Mở rộng gợi ý",
+    "tray_close": "Đóng hoàn toàn",
+    "input_max_images": "Tối đa 5 ảnh cho mỗi tin nhắn",
+    "input_size_exceeded": "Ảnh {fileName} vượt quá dung lượng 15MB",
+    "input_paste_failed": "Không thể xử lý dán ảnh",
+    "input_send_failed": "Gửi tin nhắn hoặc ảnh thất bại. Đang khôi phục lại nội dung.",
+    "input_replying": "Đang trả lời",
+    "input_yourself": "chính bạn",
+    "input_assistant": "Trợ lý FastVisa",
+    "input_cancel_reply": "Hủy trả lời",
+    "input_waiting": "Đang đợi nhân viên hỗ trợ…",
+    "input_placeholder": "Nhập tin nhắn của bạn…",
+    "input_toggle_mode": "Chuyển đổi giữa chế độ AI và Con người",
+    "input_send_msg": "Gửi tin nhắn",
+    "input_send_thumbs": "Gửi biểu tượng thích",
+    "input_hint": "Enter để gửi · Shift+Enter xuống dòng",
+    "handback_system_message": "Đã chuyển lại cho Trợ lý AI Kimi.",
+    "tool_check_visa_status": "Đang tra cứu hồ sơ...",
+    "tool_check_nationality": "Đang kiểm tra quốc tịch...",
+    "tool_fetch_content_url": "Đang đọc thông tin từ trang web...",
+    "tool_get_current_time": "Đang lấy thời gian hiện tại...",
+    "tool_extract_information_from_image": "Đang xử lý hình ảnh...",
+    "tool_calculate_visa_fee": "Đang tính toán chi phí...",
+    "tool_draft_application": "Đang tạo đơn nháp...",
+    "tool_get_faq": "Đang tra cứu cơ sở dữ liệu...",
+    "tool_get_pricing_rules": "Đang tra cứu bảng giá...",
+    "draft_title": "Đã tạo đơn nháp thành công",
+    "draft_desc_1": "Hồ sơ mã",
+    "draft_desc_2": "của bạn đã được lưu nháp.",
+    "draft_btn": "Xem lại & Thanh toán",
+    "ticket_title": "Đã gửi yêu cầu hỗ trợ",
+    "ticket_id": "Mã phiếu (Ticket ID)",
+    "ticket_desc": "Chúng tôi đã tiếp nhận yêu cầu và sẽ phản hồi trong thời gian sớm nhất.",
+    "tool_get_visa_exemptions": "Đang tra cứu miễn thị thực...",
+    "tool_get_ports_of_entry": "Đang tra cứu cửa khẩu...",
+    "tool_get_guideline": "Đang tra cứu hướng dẫn...",
+    "tool_get_extra_services": "Đang tra cứu dịch vụ bổ sung...",
+    "tool_get_support_contacts": "Đang tra cứu liên hệ hỗ trợ...",
+    "tool_get_about_us_info": "Đang tra cứu thông tin công ty...",
+    "tool_get_page_content": "Đang đọc nội dung trang...",
+    "tool_navigate_to_page": "Đang chuyển hướng trang...",
+    "tool_click_ui_element": "Đang thao tác giao diện...",
+    "tool_focus_ui_field": "Đang mở/chọn trường thông tin...",
+    "tool_scroll_page": "Đang cuộn trang..."
+  },
+  "AgentIndicator": {
+    "subscribe_newsletter": "AI đang đăng ký bản tin...",
+    "create_support_ticket": "AI đang tạo yêu cầu hỗ trợ...",
+    "check_visa_status": "AI đang kiểm tra hồ sơ...",
+    "check_nationality": "AI đang kiểm tra thông tin quốc tịch...",
+    "calculate_visa_fee": "AI đang tính toán chi phí...",
+    "get_pricing_rules": "AI đang tra cứu bảng giá...",
+    "get_faq": "AI đang tra cứu cơ sở dữ liệu...",
+    "get_visa_exemptions": "AI đang tra cứu miễn thị thực...",
+    "get_ports_of_entry": "AI đang tra cứu cửa khẩu...",
+    "get_guideline": "AI đang tra cứu hướng dẫn...",
+    "get_extra_services": "AI đang tra cứu dịch vụ bổ sung...",
+    "get_support_contacts": "AI đang tra cứu liên hệ hỗ trợ...",
+    "get_about_us_info": "AI đang tra cứu thông tin công ty...",
+    "get_page_content": "AI đang đọc nội dung trang...",
+    "navigate_to_page": "AI đang chuyển hướng trang...",
+    "click_ui_element": "AI đang thao tác giao diện...",
+    "focus_ui_field": "AI đang mở/chọn trường thông tin...",
+    "scroll_page": "AI đang cuộn trang..."
+  },
+  "Reels": {
+    "highlights": "Tin nổi bật",
+    "hoursAgo": "{hours} giờ trước",
+    "minutesAgo": "{minutes} phút trước",
+    "justNow": "Vừa xong",
+    "badgeNew": "Mới",
+    "morePhotos": "+{count} ảnh",
+    "prev": "Trước",
+    "next": "Tiếp"
+  },
+  "LeaveReview": {
+    "title": "Chia Sẻ Trải Nghiệm",
+    "your_name": "Tên của bạn",
+    "name_placeholder": "Nguyễn Văn A",
+    "nationality": "Quốc tịch",
+    "select_nationality": "Chọn quốc tịch",
+    "no_country": "Không tìm thấy quốc gia",
+    "rating": "Đánh giá",
+    "star": "Sao",
+    "stars": "Sao",
+    "your_review": "Nhận xét của bạn",
+    "review_placeholder": "Chia sẻ trải nghiệm của bạn...",
+    "cancel": "Hủy",
+    "submit": "Gửi Đánh Giá",
+    "submitting": "Đang gửi...",
+    "success": "Gửi đánh giá thành công và đang chờ duyệt!",
+    "error": "Gửi đánh giá thất bại. Vui lòng thử lại.",
+    "validation_name": "Tên phải có ít nhất 2 ký tự",
+    "validation_country": "Vui lòng chọn một quốc tịch hợp lệ",
+    "validation_rating_min": "Vui lòng chọn đánh giá",
+    "validation_content": "Đánh giá phải có ít nhất 10 ký tự"
+  }
+}

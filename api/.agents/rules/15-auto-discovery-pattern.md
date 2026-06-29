@@ -1,0 +1,85 @@
+---
+activation: model_decision
+description: Convention-over-configuration auto-discovery for routes/tasks/transformers.
+globs: ["src/routes/**/*.ts", "src/tasks/**/*.ts", "src/transformers/**/*.ts"]
+---
+
+# Auto-Discovery Pattern
+
+3 nơi áp dụng pattern `readdirSync` + naming convention.
+
+| Folder              | Suffix            | Auto-map key  | File `index.ts`    |
+| ------------------- | ----------------- | ------------- | ------------------ |
+| `src/routes/`       | `.route.ts`       | path segment  | mountRoutes()      |
+| `src/tasks/`        | `.task.ts`        | task name     | tasks[name]        |
+| `src/transformers/` | `.transformer.ts` | resource name | transformers[name] |
+
+## Rule
+
+Thêm file mới ĐÚNG naming convention → tự động được load. **KHÔNG cần sửa `index.ts`** mỗi lần thêm.
+
+## Tasks index template
+
+```typescript
+// src/tasks/index.ts
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
+
+interface TaskHandler {
+    (payload: any): Promise<void>;
+}
+
+const tasks: Record<string, TaskHandler> = {};
+
+const files = readdirSync(__dirname).filter(
+    (f) => f.endsWith(".task.ts") || f.endsWith(".task.js"),
+);
+
+for (const file of files) {
+    const name = file.replace(/\.task\.(ts|js)$/, "");
+    tasks[name] = require(join(__dirname, file)).default;
+    console.log(`✓ Task loaded: ${name}`);
+}
+
+export default tasks;
+```
+
+## Transformers index template
+
+```typescript
+// src/transformers/index.ts
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
+
+const transformers: Record<string, any> = {};
+
+const files = readdirSync(__dirname).filter(
+    (f) => f.endsWith(".transformer.ts") || f.endsWith(".transformer.js"),
+);
+
+for (const file of files) {
+    const name = file.replace(/\.transformer\.(ts|js)$/, "");
+    transformers[name] = require(join(__dirname, file)).default;
+}
+
+export default transformers;
+```
+
+## Anti-pattern
+
+```typescript
+// ❌ NEVER: manual import every task
+import sendVerificationEmail from "./sendVerificationEmail.task";
+import sendPasswordChange from "./sendPasswordChange.task";
+const tasks = { sendVerificationEmail, sendPasswordChange };
+
+// ✅ Auto-discovery
+import tasks from "@/tasks";
+tasks["sendVerificationEmail"](payload);
+```
+
+## Why
+
+- Thêm feature → 1 file, không touch nhiều file
+- Giảm merge conflict
+- Naming convention = self-documenting

@@ -1,0 +1,220 @@
+<h2>Khi trang /apply load xong — 3 badge validation xuất hiện như thế nào?</h2>
+<p class="subtitle">Click "Replay" để xem lại animation. Chọn phong cách bạn thích.</p>
+
+<style>
+  .demo-area {
+    background: #1a1610;
+    border: 1px solid #3a3020;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .field-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #e8d9b8;
+  }
+  .field-input {
+    background: #2a2015;
+    border: 1px solid #4a3a20;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #c8a96e;
+    font-size: 14px;
+  }
+  .badge-slot {
+    overflow: hidden;
+    height: 0;
+    transition: none;
+  }
+  .badge-inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #22c55e;
+    padding-top: 2px;
+    opacity: 0;
+  }
+  .badge-dot {
+    width: 16px;
+    height: 16px;
+    background: #22c55e;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .badge-dot svg { display: block; }
+
+  /* Option A: Simultaneous */
+  .demo-a .badge-slot.show {
+    animation: expandHeight 0.22s ease-out forwards;
+  }
+  .demo-a .badge-slot.show .badge-inner {
+    animation: fadeIn 0.22s ease-out forwards;
+  }
+
+  /* Option B: Staggered */
+  .demo-b .badge-slot:nth-child(1).show {
+    animation: expandHeight 0.22s ease-out 0s forwards;
+  }
+  .demo-b .badge-slot:nth-child(1).show .badge-inner {
+    animation: fadeIn 0.22s ease-out 0s forwards;
+  }
+  .demo-b .badge-slot:nth-child(2).show {
+    animation: expandHeight 0.22s ease-out 0.1s forwards;
+  }
+  .demo-b .badge-slot:nth-child(2).show .badge-inner {
+    animation: fadeIn 0.22s ease-out 0.1s forwards;
+  }
+  .demo-b .badge-slot:nth-child(3).show {
+    animation: expandHeight 0.22s ease-out 0.2s forwards;
+  }
+  .demo-b .badge-slot:nth-child(3).show .badge-inner {
+    animation: fadeIn 0.22s ease-out 0.2s forwards;
+  }
+
+  @keyframes expandHeight {
+    from { height: 0; }
+    to   { height: 22px; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .demo-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #c8a96e;
+    margin-bottom: 12px;
+  }
+  .replay-btn {
+    background: #2a2015;
+    border: 1px solid #4a3a20;
+    color: #c8a96e;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background 0.15s;
+  }
+  .replay-btn:hover { background: #3a3020; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+
+<div class="two-col">
+  <!-- Option A -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)" style="cursor:default; padding: 0; border: none; background: transparent;">
+    <div class="demo-area">
+      <div class="demo-label">A — Đồng thời (Simultaneous)</div>
+      <button class="replay-btn" onclick="event.stopPropagation(); replayA()">↺ Replay</button>
+      <div id="demo-a" class="demo-a">
+        <div class="form-field">
+          <div class="field-label">Visa Type</div>
+          <div class="field-input">E-Visa — All border crossings</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Visa type confirmed</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="field-label">Visa Category</div>
+          <div class="field-input">30 Days · Single Entry — $55/person</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Visa category confirmed</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="field-label">Number of Applicants</div>
+          <div class="field-input">1 Person</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Number of applicants confirmed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content" style="margin-top: 8px; padding: 0 4px;">
+      <h3 style="margin:0 0 4px;">A — Đồng thời</h3>
+      <p style="margin:0;">Cả 3 badge xuất hiện cùng lúc, mượt mà bằng height animation. Nhanh, gọn.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)" style="cursor:default; padding: 0; border: none; background: transparent;">
+    <div class="demo-area">
+      <div class="demo-label">B — Lần lượt (Staggered)</div>
+      <button class="replay-btn" onclick="event.stopPropagation(); replayB()">↺ Replay</button>
+      <div id="demo-b" class="demo-b">
+        <div class="form-field">
+          <div class="field-label">Visa Type</div>
+          <div class="field-input">E-Visa — All border crossings</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Visa type confirmed</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="field-label">Visa Category</div>
+          <div class="field-input">30 Days · Single Entry — $55/person</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Visa category confirmed</div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="field-label">Number of Applicants</div>
+          <div class="field-input">1 Person</div>
+          <div class="badge-slot">
+            <div class="badge-inner"><div class="badge-dot"><svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 5.5L4 7.5L8 3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>Number of applicants confirmed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content" style="margin-top: 8px; padding: 0 4px;">
+      <h3 style="margin:0 0 4px;">B — Lần lượt (100ms delay)</h3>
+      <p style="margin:0;">Badge 1 → 2 → 3 xuất hiện với độ trễ 100ms, tạo cảm giác cascade nhẹ nhàng.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function triggerDemo(demoId) {
+  const demo = document.getElementById(demoId);
+  const slots = demo.querySelectorAll('.badge-slot');
+  slots.forEach(s => s.classList.remove('show'));
+  void demo.offsetWidth;
+  setTimeout(() => {
+    slots.forEach(s => s.classList.add('show'));
+  }, 400);
+}
+
+function replayA() {
+  const demo = document.getElementById('demo-a');
+  const slots = demo.querySelectorAll('.badge-slot');
+  slots.forEach(s => s.classList.remove('show'));
+  void demo.offsetWidth;
+  setTimeout(() => slots.forEach(s => s.classList.add('show')), 100);
+}
+
+function replayB() {
+  const demo = document.getElementById('demo-b');
+  const slots = demo.querySelectorAll('.badge-slot');
+  slots.forEach(s => s.classList.remove('show'));
+  void demo.offsetWidth;
+  setTimeout(() => slots.forEach(s => s.classList.add('show')), 100);
+}
+
+// Auto-play both on load
+setTimeout(() => { triggerDemo('demo-a'); triggerDemo('demo-b'); }, 800);
+</script>

@@ -1,0 +1,304 @@
+---
+activation: model_decision
+description: [MANUAL] i18next setup for multi-language API responses (vi, en, ...).
+---
+
+# i18n Setup (i18next)
+
+## Dependencies
+
+```bash
+npm install i18next i18next-fs-backend i18next-http-middleware
+npm install -D @types/i18next
+```
+
+## Folder structure
+
+```
+src/
+├── locales/
+│   ├── vi/                       # Default
+│   │   ├── common.json           # errors, success, validation
+│   │   ├── auth.json
+│   │   ├── product.json
+│   │   ├── user.json
+│   │   └── email.json            # Email subjects/CTAs
+│   └── en/
+│       ├── common.json
+│       ├── auth.json
+│       ├── product.json
+│       ├── user.json
+│       └── email.json
+└── configs/
+    └── i18n.ts
+```
+
+## i18next init (src/configs/i18n.ts)
+
+```typescript
+import i18next from "i18next";
+import Backend from "i18next-fs-backend";
+import middleware from "i18next-http-middleware";
+import path from "path";
+
+const SUPPORTED_LOCALES = ["vi", "en"] as const;
+export type Locale = (typeof SUPPORTED_LOCALES)[number];
+
+i18next
+    .use(Backend)
+    .use(middleware.LanguageDetector)
+    .init({
+        fallbackLng: "vi", // Vietnamese first
+        supportedLngs: SUPPORTED_LOCALES,
+        preload: SUPPORTED_LOCALES,
+        ns: ["common", "auth", "product", "user", "email"],
+        defaultNS: "common",
+        backend: {
+            loadPath: path.join(
+                process.cwd(),
+                "src/locales/{{lng}}/{{ns}}.json",
+            ),
+        },
+        detection: {
+            order: ["querystring", "header", "cookie"],
+            lookupQuerystring: "lng",
+            lookupHeader: "accept-language",
+            lookupCookie: "i18next",
+            caches: ["cookie"],
+        },
+        interpolation: {
+            escapeValue: false, // Not needed for backend
+        },
+        // Show key name if translation missing (in dev)
+        returnNull: false,
+        returnEmptyString: false,
+    });
+
+export default i18next;
+export { middleware as i18nextMiddleware };
+```
+
+## Apply in app.ts
+
+```typescript
+// src/app.ts
+import i18next, { i18nextMiddleware } from "@/configs/i18n";
+import responseMiddleware from "@/middlewares/response";
+
+app.use(i18nextMiddleware.handle(i18next)); // BEFORE responseMiddleware
+app.use(responseMiddleware);
+```
+
+## Translation files
+
+```json
+// src/locales/vi/common.json
+{
+    "errors": {
+        "internal_server": "Lỗi hệ thống. Vui lòng thử lại sau.",
+        "not_found": "Không tìm thấy dữ liệu",
+        "forbidden": "Bạn không có quyền truy cập",
+        "unauthorized": "Vui lòng đăng nhập để tiếp tục",
+        "validation_failed": "Dữ liệu không hợp lệ",
+        "rate_limit": "Bạn đã thực hiện quá nhiều yêu cầu. Vui lòng thử lại sau {{seconds}} giây.",
+        "duplicate_entry": "Dữ liệu đã tồn tại",
+        "fk_constraint": "Dữ liệu liên quan không hợp lệ",
+        "database_error": "Lỗi truy cập dữ liệu",
+        "external_service": "Dịch vụ ngoài tạm thời không khả dụng"
+    },
+    "validation": {
+        "email": {
+            "required": "Email không được để trống",
+            "invalid": "Email không hợp lệ"
+        },
+        "password": {
+            "required": "Mật khẩu không được để trống",
+            "too_short": "Mật khẩu phải có ít nhất 8 ký tự",
+            "need_uppercase": "Mật khẩu phải có ít nhất 1 chữ HOA",
+            "need_digit": "Mật khẩu phải có ít nhất 1 chữ số",
+            "confirm_mismatch": "Mật khẩu xác nhận không khớp"
+        },
+        "name": {
+            "required": "Tên không được để trống",
+            "too_short": "Tên phải từ 2 ký tự trở lên",
+            "too_long": "Tên không vượt quá 50 ký tự"
+        },
+        "id": {
+            "invalid": "ID không hợp lệ"
+        }
+    },
+    "success": {
+        "created": "Tạo mới thành công",
+        "updated": "Cập nhật thành công",
+        "deleted": "Xoá thành công"
+    }
+}
+```
+
+```json
+// src/locales/en/common.json
+{
+    "errors": {
+        "internal_server": "Internal server error. Please try again later.",
+        "not_found": "Not found",
+        "forbidden": "You don't have permission to access this resource",
+        "unauthorized": "Authentication required",
+        "validation_failed": "Invalid input",
+        "rate_limit": "Too many requests. Please try again in {{seconds}} seconds.",
+        "duplicate_entry": "Resource already exists",
+        "fk_constraint": "Invalid related data",
+        "database_error": "Database error",
+        "external_service": "External service temporarily unavailable"
+    },
+    "validation": {
+        "email": {
+            "required": "Email is required",
+            "invalid": "Invalid email"
+        },
+        "password": {
+            "required": "Password is required",
+            "too_short": "Password must be at least 8 characters",
+            "need_uppercase": "Password must contain at least 1 uppercase letter",
+            "need_digit": "Password must contain at least 1 digit",
+            "confirm_mismatch": "Passwords don't match"
+        },
+        "name": {
+            "required": "Name is required",
+            "too_short": "Name must be at least 2 characters",
+            "too_long": "Name must not exceed 50 characters"
+        },
+        "id": {
+            "invalid": "Invalid ID"
+        }
+    },
+    "success": {
+        "created": "Created successfully",
+        "updated": "Updated successfully",
+        "deleted": "Deleted successfully"
+    }
+}
+```
+
+```json
+// src/locales/vi/auth.json
+{
+    "login": {
+        "success": "Đăng nhập thành công"
+    },
+    "register": {
+        "success": "Đăng ký thành công. Vui lòng kiểm tra email để xác thực.",
+        "email_exists": "Email đã được sử dụng"
+    },
+    "invalid_credentials": "Email hoặc mật khẩu không đúng",
+    "token_expired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "token_revoked": "Phiên đăng nhập đã bị thu hồi",
+    "verify": {
+        "success": "Xác thực email thành công",
+        "invalid_token": "Token xác thực không hợp lệ hoặc đã hết hạn"
+    },
+    "reset_password": {
+        "request_sent": "Email khôi phục mật khẩu đã được gửi",
+        "success": "Đặt lại mật khẩu thành công"
+    }
+}
+```
+
+## Locale detection priorities
+
+1. `?lng=en` query string (test/share URL)
+2. `Accept-Language: en` HTTP header (browser default)
+3. `i18next` cookie (persist user choice)
+4. Fallback: `vi`
+
+## TypeScript type-safety for translation keys
+
+```typescript
+// src/types/i18next.d.ts
+import "i18next";
+import common from "../locales/vi/common.json";
+import auth from "../locales/vi/auth.json";
+
+declare module "i18next" {
+    interface CustomTypeOptions {
+        defaultNS: "common";
+        resources: {
+            common: typeof common;
+            auth: typeof auth;
+        };
+    }
+}
+```
+
+Now TypeScript autocompletes `req.t("auth.login.success")` and errors on typos.
+
+## Usage examples
+
+### In service (throw with i18n key)
+
+```typescript
+throw new EmailExistError("auth.register.email_exists");
+// errorHandler → req.t("auth.register.email_exists") → "Email đã được sử dụng" (vi)
+//                                                    → "Email already in use" (en)
+```
+
+### In controller (translate inline)
+
+```typescript
+export const verify = async (req: Request, res: Response) => {
+    await authService.verifyEmail(req.body.token);
+    res.success(null, httpCodes.ok, { message: req.t("auth.verify.success") });
+};
+```
+
+### Interpolation
+
+```json
+{ "rate_limit": "Vui lòng thử lại sau {{seconds}} giây." }
+```
+
+```typescript
+const msg = req.t("errors.rate_limit", { seconds: 60 });
+// → "Vui lòng thử lại sau 60 giây."
+```
+
+### Plural
+
+```json
+{
+    "items_count_one": "1 sản phẩm",
+    "items_count_other": "{{count}} sản phẩm"
+}
+```
+
+```typescript
+req.t("items_count", { count: 5 }); // → "5 sản phẩm"
+req.t("items_count", { count: 1 }); // → "1 sản phẩm"
+```
+
+## Email templates with i18n
+
+```typescript
+// src/services/mail.service.ts
+async sendVerificationEmail(user: { email: string; locale?: Locale }) {
+    const t = i18next.getFixedT(user.locale ?? "vi", "email")
+    return this.send({
+        to: user.email,
+        subject: t("verify.subject"),                    // "Xác thực email"
+        template: `auth/verify.${user.locale ?? "vi"}`,  // verify.vi.ejs / verify.en.ejs
+        templateData: {
+            t,                                            // Pass t function to EJS
+            verifyUrl: `${process.env.APP_BASE_URL}/verify?token=${...}`,
+        },
+    })
+}
+```
+
+## Rules
+
+1. **NEVER** hardcode user-facing text in services/controllers — always use i18n keys
+2. Keys follow `<namespace>.<feature>.<action>` (e.g. `auth.register.success`)
+3. Use namespace separation: errors in `common.json`, auth-specific in `auth.json`
+4. **Add to BOTH `vi` AND `en` simultaneously** — never let `en` lag behind
+5. Use interpolation `{{var}}` for dynamic values
+6. Store user's preferred locale in DB (e.g. `users.preferred_locale`) for emails/notifications
+7. Test with `Accept-Language: en` to catch missing translations

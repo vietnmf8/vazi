@@ -1,0 +1,115 @@
+<h2>Câu hỏi 1: Khi user nhấn "Apply Now" (Hero/Header) sau khi đã từng vào /apply</h2>
+<p class="subtitle">Hiện tại <code>has_visited_apply = true</code> trong sessionStorage → modal bị skip hoàn toàn → user bị đưa thẳng vào Step 2. Bạn muốn luồng nào?</p>
+
+<style>
+  .flow-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .flow-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .flow-card:hover { border-color: #6366f1; background: #f8f8ff; }
+  .flow-card.selected { border-color: #6366f1; background: #eef2ff; }
+  .flow-card h3 { margin: 0 0 14px; font-size: 15px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
+  .badge-recommended { background: #dcfce7; color: #166534; }
+  .badge-simple { background: #dbeafe; color: #1e40af; }
+  .badge-current { background: #fee2e2; color: #991b1b; }
+  .step-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .step-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #475569; line-height: 1.4; }
+  .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .dot-blue { background: #dbeafe; color: #1d4ed8; }
+  .dot-green { background: #dcfce7; color: #15803d; }
+  .dot-orange { background: #ffedd5; color: #c2410c; }
+  .dot-red { background: #fee2e2; color: #b91c1c; }
+  .dot-purple { background: #ede9fe; color: #6d28d9; }
+  .arrow { text-align: center; color: #94a3b8; font-size: 13px; margin: 3px 0 0 26px; }
+  .tradeoff { margin-top: 14px; padding: 10px 12px; border-radius: 8px; font-size: 12px; line-height: 1.5; }
+  .tradeoff-a { background: #dbeafe; color: #1e40af; }
+  .tradeoff-b { background: #dcfce7; color: #166534; }
+  .tradeoff-c { background: #fee2e2; color: #991b1b; }
+  .letter-badge { font-size: 28px; font-weight: 800; color: #6366f1; margin-bottom: 8px; }
+</style>
+
+<div class="flow-wrapper">
+
+  <!-- OPTION A -->
+  <div class="flow-card option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Luôn về Visa Options (Step 1) <span class="badge badge-simple">Đơn giản</span></h3>
+      <ul class="step-list">
+        <li><span class="step-dot dot-blue">1</span>User nhấn "Apply Now" bất kỳ</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-blue">2</span>Skip modal (has_visited = true)</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-green">3</span><b>Force về /apply Step 1</b> (reset currentStep trong draft về 1, giữ nguyên data đã điền)</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-green">4</span>User thấy Visa Options — có thể đổi lựa chọn</li>
+      </ul>
+      <div class="tradeoff tradeoff-a">
+        ✅ Đơn giản nhất, không friction<br>
+        ⚠️ Mất context bước đang dở nếu user chỉ muốn "check lại" chứ không muốn reset
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="flow-card option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Hiện dialog "Resume hay bắt đầu lại?" <span class="badge badge-recommended">Recommended</span></h3>
+      <ul class="step-list">
+        <li><span class="step-dot dot-blue">1</span>User nhấn "Apply Now" bất kỳ</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-purple">2</span><b>Hiện dialog nhỏ</b>: draft state hiện tại (visa type + bước đang dở)</li>
+        <div class="arrow">↓</div>
+        <li>
+          <span class="step-dot dot-green">→</span>
+          <span>Nút <b>"Tiếp tục"</b> → /apply (giữ draft, về đúng step cũ)</span>
+        </li>
+        <li>
+          <span class="step-dot dot-orange">→</span>
+          <span>Nút <b>"Bắt đầu lại"</b> → /apply?reset=1 (clear draft, về Step 1)</span>
+        </li>
+      </ul>
+      <div class="tradeoff tradeoff-b">
+        ✅ Tường minh, user tự quyết định<br>
+        ✅ Không làm mất tiến trình hợp lệ (nếu user chỉ muốn quay lại điền tiếp)<br>
+        ⚠️ Thêm 1 click — nhưng dialog đã quen nên không confused
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="flow-card option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Giữ nguyên (hành vi hiện tại) <span class="badge badge-current">Bug hiện tại</span></h3>
+      <ul class="step-list">
+        <li><span class="step-dot dot-blue">1</span>User nhấn "Apply Now" bất kỳ</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-blue">2</span>Skip modal (has_visited = true)</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-red">3</span>Draft restore → currentStep = 2 (Fast Track)</li>
+        <div class="arrow">↓</div>
+        <li><span class="step-dot dot-red">4</span>User thấy Applicant Details — bối rối!</li>
+      </ul>
+      <div class="tradeoff tradeoff-c">
+        ❌ User confused: không thấy Visa Options<br>
+        ❌ Không có cách thoát trực quan khỏi Fast Track flow
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top: 20px; font-size: 13px;">Click vào option để chọn, sau đó trả lời trong terminal.</p>

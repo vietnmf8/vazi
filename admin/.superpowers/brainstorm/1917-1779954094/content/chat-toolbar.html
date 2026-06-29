@@ -1,0 +1,200 @@
+<h2>Chat Toolbar — 3 States (Facebook Messenger style)</h2>
+<p class="subtitle">Xác nhận flow và các icon sẽ dùng. Bấm để chọn phần nào cần điều chỉnh.</p>
+
+<style>
+  .toolbar-demo {
+    background: #1a1a2e;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    border: 1px solid #2d2d4e;
+  }
+  .toolbar-label {
+    color: #d97706;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-family: monospace;
+  }
+  .toolbar-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #0f0f1a;
+    border-top: 1px solid #2d2d4e;
+    padding: 10px 12px;
+    border-radius: 0 0 12px 12px;
+  }
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #d97706;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    transition: background 0.2s;
+  }
+  .icon-btn:hover { background: #1e1e3a; }
+  .chat-input-box {
+    flex: 1;
+    background: #1e1e3a;
+    border-radius: 20px;
+    border: 1px solid #2d2d4e;
+    padding: 8px 12px;
+    color: #e2e8f0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+  }
+  .input-placeholder { color: #475569; flex: 1; }
+  .send-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #d97706;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px; flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(217,119,6,0.4);
+  }
+  .like-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 22px; flex-shrink: 0;
+    color: #d97706;
+  }
+  .plus-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: #1e1e3a;
+    border: 1.5px solid #334155;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px; flex-shrink: 0;
+    color: #94a3b8;
+    transition: transform 0.3s;
+  }
+  .plus-btn.open { transform: rotate(45deg); color: #ef4444; }
+  .dropdown-above {
+    background: #1a1a2e;
+    border: 1px solid #2d2d4e;
+    border-radius: 12px;
+    padding: 8px 0;
+    margin-bottom: 8px;
+    width: 240px;
+  }
+  .dropdown-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px; cursor: pointer; color: #e2e8f0;
+    font-size: 14px;
+  }
+  .dropdown-item:hover { background: #2d2d4e; }
+  .d-icon { font-size: 20px; color: #d97706; width: 28px; text-align: center; }
+  .chat-messages {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 80px;
+  }
+  .msg-ai {
+    background: #1e1e3a;
+    color: #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 12px 12px 12px 4px;
+    font-size: 13px;
+    max-width: 80%;
+    align-self: flex-start;
+  }
+  .msg-user {
+    background: #d97706;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 12px 12px 4px 12px;
+    font-size: 13px;
+    max-width: 80%;
+    align-self: flex-end;
+  }
+  .state-note {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 6px;
+    padding: 0 4px;
+    font-family: monospace;
+  }
+</style>
+
+<!-- STATE 1 -->
+<div class="toolbar-demo">
+  <div class="toolbar-label">🟢 State 1 — Input trống (chưa gõ)</div>
+  <div class="chat-messages">
+    <div class="msg-ai">Xin chào! Tôi có thể giúp gì cho bạn? 👋</div>
+  </div>
+  <div class="toolbar-row">
+    <button class="icon-btn" title="Ghi âm">🎤</button>
+    <button class="icon-btn" title="Đính kèm file">📎</button>
+    <button class="icon-btn" title="Nhãn dán">🏷️</button>
+    <button class="icon-btn" title="GIF">GIF</button>
+    <div class="chat-input-box">
+      <span class="input-placeholder">Aa</span>
+      <span style="color:#94a3b8;font-size:16px;cursor:pointer">😊</span>
+    </div>
+    <div class="like-btn">👍</div>
+  </div>
+  <div class="state-note">→ Icons: Mic · Attachment · Sticker · GIF — phải input. Phải cùng: Like (thumb) khi chưa có text</div>
+</div>
+
+<!-- STATE 2 -->
+<div class="toolbar-demo">
+  <div class="toolbar-label">✏️ State 2 — Đang gõ (input có nội dung)</div>
+  <div class="chat-messages">
+    <div class="msg-ai">Xin chào! Tôi có thể giúp gì cho bạn? 👋</div>
+  </div>
+  <div class="toolbar-row">
+    <button class="plus-btn">+</button>
+    <div class="chat-input-box" style="flex:1">
+      <span style="color:#e2e8f0;flex:1">Tôi muốn hỏi về visa...</span>
+      <span style="color:#94a3b8;font-size:16px;cursor:pointer">😊</span>
+    </div>
+    <div class="send-btn">➤</div>
+  </div>
+  <div class="state-note">→ 4 icons rút thành 1 nút (+). Input mở rộng. Like → Send (filled, màu vàng chủ đạo)</div>
+</div>
+
+<!-- STATE 3 -->
+<div class="toolbar-demo">
+  <div class="toolbar-label">🔵 State 3 — Bấm (+) → Dropdown bật lên</div>
+  <div style="padding: 0 12px 0 12px">
+    <div class="dropdown-above">
+      <div class="dropdown-item"><span class="d-icon">🎤</span> Gửi clip âm thanh</div>
+      <div class="dropdown-item"><span class="d-icon">📎</span> Đính kèm file (tối đa 10MB)</div>
+      <div class="dropdown-item"><span class="d-icon">🏷️</span> Chọn nhãn dán</div>
+      <div class="dropdown-item"><span class="d-icon">GIF</span> Chọn file GIF</div>
+    </div>
+  </div>
+  <div class="toolbar-row">
+    <button class="plus-btn open">+</button>
+    <div class="chat-input-box" style="flex:1;opacity:0.5">
+      <span class="input-placeholder">Aa</span>
+      <span style="color:#94a3b8;font-size:16px">😊</span>
+    </div>
+    <div class="like-btn">👍</div>
+  </div>
+  <div class="state-note">→ (+) xoay 45° thành (×). Dropdown căn trái với (+). Input mất focus. Click input → đóng dropdown</div>
+</div>
+
+<div class="section" style="background:#1e2a1a;border:1px solid #2d4a2d;border-radius:12px;padding:16px;margin-top:8px">
+  <h3 style="color:#4ade80;margin:0 0 8px">🤔 Câu hỏi cần xác nhận</h3>
+  <p style="color:#94a3b8;font-size:13px;margin:4px 0">1. Các chức năng <strong>Mic / GIF / Sticker</strong> — chỉ UI (show toast "coming soon") hay cần implement thật?</p>
+  <p style="color:#94a3b8;font-size:13px;margin:4px 0">2. <strong>File attachment</strong> — hiện đã có logic upload thật trong ChatInput.tsx. Giữ nguyên chức năng, chỉ đổi UI?</p>
+  <p style="color:#94a3b8;font-size:13px;margin:4px 0">3. Icon Send: dùng <code>SendHorizontal</code> (filled-look) hay <code>Send</code> từ lucide? Màu <code>--color-primary</code> (vàng) trên nền trong suốt?</p>
+</div>

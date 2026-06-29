@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Animation Style</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a0f;
+    color: #e0e0f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 32px 24px;
+    min-height: 100vh;
+  }
+  h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 13px; margin-bottom: 28px; line-height: 1.6; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .col-card {
+    background: #111118;
+    border: 1.5px solid #22222e;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+  .col-card:hover { border-color: #444; }
+  .col-card.selected { border-color: #7c3aed; background: #14101e; }
+  .col-card .choice-letter {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #22222e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #888;
+  }
+  .col-card.selected .choice-letter { background: #7c3aed; color: white; }
+
+  .col-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .col-desc { font-size: 12px; color: #888; margin-bottom: 18px; line-height: 1.5; }
+
+  /* Input mock */
+  .field-wrap { margin-bottom: 8px; }
+  .field-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; font-weight: 600; }
+  .mock-input {
+    width: 100%;
+    padding: 9px 13px;
+    border-radius: 8px;
+    border: 1.5px solid #22c55e;
+    background: #141a14;
+    color: #e0e0f0;
+    font-size: 13px;
+    display: flex; align-items: center;
+  }
+
+  /* Badge base */
+  .vbadge {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 500;
+    width: fit-content;
+    color: #22c55e;
+    background: rgba(34,197,94,0.09);
+    overflow: hidden;
+  }
+  .vbadge-icon {
+    width: 16px; height: 16px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800; flex-shrink: 0;
+    background: #22c55e; color: white;
+  }
+
+  /* --- OPTION A: Slide + Fade --- */
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); max-height: 0; }
+    to   { opacity: 1; transform: translateY(0);    max-height: 40px; }
+  }
+  .anim-a { animation: slideDown 0.25s ease-out forwards; }
+
+  /* --- OPTION B: Spring Pop --- */
+  @keyframes springPop {
+    0%   { opacity: 0; transform: translateY(-6px) scale(0.9); }
+    60%  { opacity: 1; transform: translateY(2px) scale(1.03); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .anim-b { animation: springPop 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+  /* --- OPTION C: Expand height (Live Chat style) --- */
+  @keyframes expandHeight {
+    from { opacity: 0; transform: translateY(-4px); clip-path: inset(0 0 100% 0); }
+    to   { opacity: 1; transform: translateY(0);    clip-path: inset(0 0 0% 0); }
+  }
+  .anim-c { animation: expandHeight 0.3s cubic-bezier(0.25,1,0.5,1) forwards; }
+
+  /* Replay button */
+  .replay-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #1e1e2a; border: 1px solid #333; border-radius: 8px;
+    color: #aaa; font-size: 11px; padding: 5px 12px;
+    cursor: pointer; margin-top: 10px;
+    transition: background 0.15s;
+  }
+  .replay-btn:hover { background: #252535; color: #fff; }
+
+  .selected-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #7c3aed;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    z-index: 100;
+  }
+  .selected-bar.visible { transform: translateY(0); }
+
+  .rec-tag {
+    background: rgba(245,158,11,0.15);
+    color: #f59e0b;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Câu hỏi 3: Animation style của validation badge?</h2>
+<p class="subtitle">Nhấn "▶ Replay" để xem animation. Click card để chọn. Cả 3 đều là slide-down nhưng với feel khác nhau.</p>
+
+<div class="cols">
+
+  <!-- Option A -->
+  <div class="col-card" id="card-a" onclick="selectCard('a')">
+    <div class="choice-letter" id="letter-a">A</div>
+    <div class="col-title">Subtle Slide + Fade</div>
+    <div class="col-desc">Nhẹ nhàng, trượt xuống 8px + fade in. Duration 250ms ease-out. Không gây chú ý quá nhiều.</div>
+
+    <div class="field-wrap">
+      <div class="field-label">Visa Type</div>
+      <div class="mock-input">E-Visa — All border crossings</div>
+    </div>
+    <div id="badge-a" class="vbadge anim-a" style="margin-top:5px;">
+      <div class="vbadge-icon">✓</div>
+      Visa type confirmed
+    </div>
+
+    <button class="replay-btn" onclick="replay('a', event)">▶ Replay</button>
+  </div>
+
+  <!-- Option B -->
+  <div class="col-card" id="card-b" onclick="selectCard('b')">
+    <div class="choice-letter" id="letter-b">B</div>
+    <div class="col-title">Spring Pop <span class="rec-tag">⭐ Recommended</span></div>
+    <div class="col-desc">Nảy nhẹ khi xuất hiện — scale từ 0.9 lên 1.03 rồi settle về 1. Duration 350ms cubic-bezier spring. Tương tự reaction badge trong Live Chat.</div>
+
+    <div class="field-wrap">
+      <div class="field-label">Visa Type</div>
+      <div class="mock-input">E-Visa — All border crossings</div>
+    </div>
+    <div id="badge-b" class="vbadge anim-b" style="margin-top:5px;">
+      <div class="vbadge-icon">✓</div>
+      Visa type confirmed
+    </div>
+
+    <button class="replay-btn" onclick="replay('b', event)">▶ Replay</button>
+  </div>
+
+  <!-- Option C -->
+  <div class="col-card" id="card-c" onclick="selectCard('c')">
+    <div class="choice-letter" id="letter-c">C</div>
+    <div class="col-title">Clip-path Reveal</div>
+    <div class="col-desc">Badge "wipe in" từ top xuống bottom bằng clip-path. Cảm giác như form đang mở rộng ra. Duration 300ms ease-out. Tinh tế hơn, ít bounce.</div>
+
+    <div class="field-wrap">
+      <div class="field-label">Visa Type</div>
+      <div class="mock-input">E-Visa — All border crossings</div>
+    </div>
+    <div id="badge-c" class="vbadge anim-c" style="margin-top:5px;">
+      <div class="vbadge-icon">✓</div>
+      Visa type confirmed
+    </div>
+
+    <button class="replay-btn" onclick="replay('c', event)">▶ Replay</button>
+  </div>
+
+</div>
+
+<div class="selected-bar" id="selected-bar"></div>
+
+<script>
+  let selected = null;
+
+  function selectCard(choice) {
+    ['a','b','c'].forEach(c => {
+      document.getElementById('card-' + c).classList.remove('selected');
+      document.getElementById('letter-' + c).textContent = c.toUpperCase();
+    });
+    document.getElementById('card-' + choice).classList.add('selected');
+    document.getElementById('letter-' + choice).textContent = '✓';
+    selected = choice;
+    const names = {a: 'A — Subtle Slide + Fade', b: 'B — Spring Pop', c: 'C — Clip-path Reveal'};
+    const bar = document.getElementById('selected-bar');
+    bar.textContent = 'Đã chọn: ' + names[choice] + ' — Nhấn Enter hoặc cho tôi biết trong terminal';
+    bar.classList.add('visible');
+
+    // send event
+    try {
+      fetch('/__interact', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({type:'click', choice, text: names[choice], timestamp: Date.now()/1000|0})
+      });
+    } catch(e){}
+  }
+
+  function replay(id, e) {
+    e.stopPropagation();
+    const badge = document.getElementById('badge-' + id);
+    const cls = 'anim-' + id;
+    badge.classList.remove(cls);
+    badge.style.opacity = '0';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        badge.style.opacity = '';
+        badge.classList.add(cls);
+      });
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'a' || e.key === 'A') selectCard('a');
+    if (e.key === 'b' || e.key === 'B') selectCard('b');
+    if (e.key === 'c' || e.key === 'C') selectCard('c');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,736 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+/// Khách / admin — password_hash null khi guest checkout chưa đăng ký
+model User {
+  id                       String                    @id @default(uuid()) @db.VarChar(36)
+  sequenceNo               Int                       @unique @default(autoincrement()) @map("sequence_no")
+  email                    String                    @unique
+  passwordHash             String?                   @map("password_hash") @db.VarChar(255)
+  fullName                 String                    @map("full_name") @db.VarChar(255)
+  phone                    String                    @db.VarChar(64)
+  role                     UserRole                  @default(ADMIN)
+  accountStatus            AccountStatus             @default(PENDING) @map("account_status")
+  emailVerifiedAt          DateTime?                 @map("email_verified_at")
+  avatarUrl                String?                   @map("avatar_url") @db.VarChar(512)
+  resetPasswordToken       String?                   @map("reset_password_token") @db.VarChar(255)
+  resetPasswordExpires     DateTime?                 @map("reset_password_expires")
+  createdAt                DateTime                  @default(now()) @map("created_at")
+  updatedAt                DateTime                  @updatedAt @map("updated_at")
+  applicationDrafts        ApplicationDraft[]
+  visaApplicationAuditLogs VisaApplicationAuditLog[]
+  visaApplications         VisaApplication[]
+
+  @@index([role])
+  @@map("users")
+}
+
+/// Cửa khẩu / sân bay lookup — roadmap bổ sung; code dùng FK từ đơn
+model Port {
+  id                String             @id @default(uuid()) @db.VarChar(36)
+  sequenceNo        Int                @unique @default(autoincrement()) @map("sequence_no")
+  code              String             @unique @db.VarChar(16)
+  name              String             @db.VarChar(255)
+  isActive          Boolean            @default(true) @map("is_active")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  portType          PortEntryType      @default(AIRPORT) @map("entry_type")
+  applicationDrafts ApplicationDraft[]
+  visaApplications  VisaApplication[]
+
+  @@map("ports")
+}
+
+/// Nháp đơn visa trước thanh toán — hồ sơ chính thức chỉ tạo sau PayPal capture
+model ApplicationDraft {
+  id                 String         @id @default(cuid()) @db.VarChar(64)
+  userId             String?        @map("user_id") @db.VarChar(36)
+  portId             String         @map("port_id") @db.VarChar(36)
+  contactEmail       String         @map("contact_email")
+  contactPhone       String         @map("contact_phone") @db.VarChar(64)
+  visaType           VisaType       @map("visa_type")
+  visaCategory       String         @map("visa_category") @db.VarChar(64)
+  purposeOfVisit     PurposeOfVisit @map("purpose_of_visit")
+  arrivalDate        DateTime       @map("arrival_date") @db.Date
+  processingTime     String         @map("processing_time") @db.VarChar(64)
+  extraServices      Json?          @map("extra_services")
+  applicantCount     Int            @map("applicant_count")
+  totalAmount        Decimal        @map("total_amount") @db.Decimal(12, 2)
+  /// JSON mảng applicant — chuyển sang bảng `applicants` khi capture thành công
+  applicantsPayload  Json           @map("applicants_payload")
+  abandonedEmailSent Boolean        @default(false) @map("abandoned_email_sent")
+  expiresAt          DateTime       @map("expires_at")
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
+  guestId            String?        @map("guest_id") @db.VarChar(128)
+  port               Port           @relation(fields: [portId], references: [id])
+  user               User?          @relation(fields: [userId], references: [id])
+
+  @@index([expiresAt])
+  @@index([createdAt])
+  @@index([portId], map: "application_drafts_port_id_fkey")
+  @@index([userId], map: "application_drafts_user_id_fkey")
+  @@map("application_drafts")
+}
+
+/// Đơn visa tổng — chỉ tồn tại sau thanh toán PayPal thành công
+model VisaApplication {
+  id                     String                    @id @default(cuid()) @db.VarChar(64)
+  sequenceNo             Int                       @unique @default(autoincrement()) @map("sequence_no")
+  /// Mã hồ sơ khách VN-… — gán ngay khi tạo hồ sơ sau PayPal capture
+  applicationCode        String?                   @unique @map("application_code") @db.VarChar(64)
+  userId                 String?                   @map("user_id") @db.VarChar(36)
+  portId                 String?                   @map("port_id") @db.VarChar(36)
+  contactEmail           String                    @map("contact_email")
+  contactPhone           String                    @map("contact_phone") @db.VarChar(64)
+  visaType               VisaType                  @map("visa_type")
+  visaCategory           String                    @map("visa_category") @db.VarChar(64)
+  purposeOfVisit         PurposeOfVisit            @map("purpose_of_visit")
+  arrivalDate            DateTime                  @map("arrival_date") @db.Date
+  /// Giữ String để linh hoạt key từ form (NORMAL, URGENT_4H, …) khớp pricing_rules
+  processingTime         String                    @map("processing_time") @db.VarChar(64)
+  extraServices          Json?                     @map("extra_services")
+  applicantCount         Int                       @map("applicant_count")
+  totalAmount            Decimal                   @map("total_amount") @db.Decimal(12, 2)
+  status                 VisaApplicationStatus     @default(PAID)
+  createdAt              DateTime                  @default(now()) @map("created_at")
+  updatedAt              DateTime                  @updatedAt @map("updated_at")
+  /// public_id Cloudinary (`resource_type: raw`) khi có PDF eVisa — signed download URL TTL ở API
+  resultDocumentPublicId String?                   @map("result_document_public_id") @db.VarChar(512)
+  pickupPointImagePublicId String?                 @map("pickup_point_image_public_id") @db.VarChar(512)
+  applicants             Applicant[]
+  payments               Payment[]
+  auditLogs              VisaApplicationAuditLog[]
+  port                   Port?                     @relation(fields: [portId], references: [id])
+  user                   User?                     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([portId])
+  @@index([applicationCode])
+  @@index([createdAt])
+  @@index([contactEmail])
+  @@index([applicantCount, createdAt])
+  @@index([totalAmount, createdAt])
+  @@map("visa_applications")
+}
+
+/// Lịch sử chỉnh sửa đơn visa bởi admin — audit trail production
+model VisaApplicationAuditLog {
+  id            String          @id @default(cuid()) @db.VarChar(36)
+  applicationId String          @map("application_id") @db.VarChar(64)
+  adminUserId   String          @map("admin_user_id") @db.VarChar(36)
+  action        String          @db.VarChar(32)
+  changedFields Json            @map("changed_fields")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  adminUser     User            @relation(fields: [adminUserId], references: [id])
+  application   VisaApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([applicationId])
+  @@index([adminUserId])
+  @@map("visa_application_audit_logs")
+}
+
+model Applicant {
+  id                 String          @id @default(uuid()) @db.VarChar(36)
+  applicationId      String          @map("application_id") @db.VarChar(64)
+  fullName           String          @map("full_name") @db.VarChar(255)
+  gender             String          @db.VarChar(32)
+  nationality        String          @db.VarChar(64)
+  dateOfBirth        DateTime        @map("date_of_birth") @db.Date
+  passportNumber     String          @map("passport_number") @db.VarChar(64)
+  passportExpiryDate DateTime        @map("passport_expiry_date") @db.Date
+  passportImageUrl   String          @map("passport_image_url") @db.VarChar(512)
+  portraitImageUrl   String?         @map("portrait_image_url") @db.VarChar(512)
+  /// URL vé máy bay hoặc thẻ lên máy bay
+  flightTicketUrl    String?         @map("flight_ticket_url") @db.VarChar(512)
+  application        VisaApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([applicationId])
+  @@map("applicants")
+}
+
+model PricingRule {
+  id              String                   @id @default(uuid()) @db.VarChar(36)
+  ruleType        PricingRuleType          @map("rule_type")
+  key             String                   @db.VarChar(128)
+  price           Decimal                  @db.Decimal(12, 2)
+  isActive        Boolean                  @default(true) @map("is_active")
+  trainingPhrases Json?                    @map("training_phrases")
+  createdAt       DateTime                 @default(now()) @map("created_at")
+  updatedAt       DateTime                 @updatedAt @map("updated_at")
+  translations    PricingRuleTranslation[]
+
+  @@unique([ruleType, key])
+  @@index([ruleType, isActive])
+  @@map("pricing_rules")
+}
+
+model Payment {
+  id            String          @id @default(uuid()) @db.VarChar(36)
+  applicationId String          @map("application_id") @db.VarChar(64)
+  transactionId String          @map("transaction_id") @db.VarChar(255)
+  paymentMethod String          @map("payment_method") @db.VarChar(64)
+  amount        Decimal         @db.Decimal(12, 2)
+  status        PaymentStatus   @default(PENDING)
+  createdAt     DateTime        @default(now()) @map("created_at")
+  application   VisaApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([applicationId])
+  @@index([status])
+  @@map("payments")
+}
+
+model Nationality {
+  id            String                   @id @default(uuid()) @db.VarChar(36)
+  sequenceNo    Int                      @unique @default(autoincrement()) @map("sequence_no")
+  countryName   String                   @map("country_name") @db.VarChar(128)
+  countryCode   String                   @unique @map("country_code") @db.VarChar(2)
+  exemptionDays Int                      @map("exemption_days")
+  group         NationalityGroup         @default(NORMAL)
+  translations  NationalityTranslation[]
+
+  @@map("nationalities")
+}
+
+/// Ticket hỗ trợ — @@map theo roadmap; nội dung mirror contact_inquiries trong doc
+model SupportTicket {
+  id            String              @id @default(uuid()) @db.VarChar(36)
+  fullName      String              @map("full_name") @db.VarChar(255)
+  email         String
+  subject       String              @db.VarChar(255)
+  message       String              @db.Text
+  status        SupportTicketStatus @default(OPEN)
+  createdAt     DateTime            @default(now()) @map("created_at")
+  resolvedAt    DateTime?           @map("resolved_at")
+  /// Mã đơn VN-YYYYMMDD-XXXXX khi khách nhập kèm ticket — optional
+  bookingNumber String?             @map("booking_number") @db.VarChar(64)
+
+  @@index([status])
+  @@index([email])
+  @@map("support_tickets")
+}
+
+model ChatSession {
+  id           String            @id @default(uuid()) @db.VarChar(36)
+  guestId      String            @map("guest_id") @db.VarChar(128)
+  status       ChatSessionStatus @default(AI_HANDLING)
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @default(now()) @updatedAt @map("updated_at")
+  closedAt     DateTime?         @map("closed_at")
+  guestName    String            @map("guest_name") @db.VarChar(120)
+  nationality  String?           @db.VarChar(64)
+  visaInterest String?           @map("visa_interest") @db.VarChar(64)
+  context      Json?             @map("context")
+  deletedAt    DateTime?         @map("deleted_at")
+  messages     ChatMessage[]
+  survey       ChatSurvey?
+
+  @@index([guestId])
+  @@index([status])
+  @@index([deletedAt])
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id               String             @id @default(uuid()) @db.VarChar(36)
+  sessionId        String             @map("session_id") @db.VarChar(36)
+  senderType       ChatMessageSender  @map("sender_type")
+  originalText     String             @map("original_text") @db.Text
+  translatedText   String?            @map("translated_text") @db.Text
+  originalLanguage String?            @map("original_language") @db.VarChar(10)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  deliveryStatus   ChatDeliveryStatus @default(SENT) @map("delivery_status")
+  fileName         String?            @map("file_name") @db.VarChar(255)
+  fileUrl          String?            @map("file_url") @db.VarChar(512)
+  messageType      ChatMessageType    @default(TEXT) @map("message_type")
+  replyToId        String?            @map("reply_to_id") @db.VarChar(36)
+  revokedAt        DateTime?          @map("revoked_at")
+  reactions        Json?              @map("reactions")
+  images           Json?              @map("images")
+  documents        Json?              @map("documents")
+  replyTo          ChatMessage?       @relation("MessageReply", fields: [replyToId], references: [id])
+  replies          ChatMessage[]      @relation("MessageReply")
+  session          ChatSession        @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([replyToId], map: "chat_messages_reply_to_id_fkey")
+  @@map("chat_messages")
+}
+
+/// Đánh giá sau khi kết thúc phiên chat — 1 session chỉ có 1 survey
+model ChatSurvey {
+  id        String      @id @default(uuid()) @db.VarChar(36)
+  sessionId String      @unique @map("session_id") @db.VarChar(36)
+  rating    Int
+  comment   String?     @db.Text
+  createdAt DateTime    @default(now()) @map("created_at")
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("chat_surveys")
+}
+
+model Article {
+  id           String               @id @default(uuid()) @db.VarChar(36)
+  slug         String               @unique @db.VarChar(255)
+  title        String               @db.VarChar(255)
+  subtitle     String?              @db.VarChar(512)
+  content      String               @db.Text
+  category     String?              @db.VarChar(128)
+  type         String               @db.VarChar(64)
+  imageUrl     String?              @map("image_url") @db.VarChar(512)
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @updatedAt @map("updated_at")
+  displayOrder Int                  @default(0) @map("display_order")
+  metadata     Json?                @map("metadata")
+  translations ArticleTranslation[]
+
+  @@map("articles")
+}
+
+model TeamMember {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  name         String   @db.VarChar(255)
+  role         String   @db.VarChar(128)
+  description  String   @db.Text
+  imageUrl     String   @map("image_url") @db.VarChar(512)
+  thumbBg      String   @map("thumb_bg") @db.VarChar(32)
+  displayOrder Int      @default(0) @map("display_order")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("team_members")
+}
+
+model Review {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  sequenceNo  Int      @unique @default(autoincrement()) @map("sequence_no")
+  authorName  String   @map("author_name") @db.VarChar(255)
+  countryCode String   @map("country_code") @db.VarChar(2)
+  avatarUrl   String?  @map("avatar_url") @db.VarChar(512)
+  content     String   @db.Text
+  rating      Int      @default(5)
+  isActive    Boolean  @default(false) @map("is_active")
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([isActive])
+  @@map("reviews")
+}
+
+model Faq {
+  id              String           @id @default(uuid()) @db.VarChar(36)
+  category        String           @db.VarChar(128)
+  question        String           @db.Text
+  answer          String           @db.Text
+  displayOrder    Int              @default(0) @map("display_order")
+  isActive        Boolean          @default(true) @map("is_active")
+  trainingPhrases Json?            @map("training_phrases")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  translations    FaqTranslation[]
+
+  @@map("faqs")
+}
+
+model GlobalSetting {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  key       String   @unique @db.VarChar(128)
+  value     Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("global_settings")
+}
+
+model NationalityTranslation {
+  id            String      @id @default(uuid()) @db.VarChar(36)
+  nationalityId String      @map("nationality_id") @db.VarChar(36)
+  languageCode  String      @map("language_code") @db.VarChar(10)
+  countryName   String      @map("country_name") @db.VarChar(128)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  nationality   Nationality @relation(fields: [nationalityId], references: [id], onDelete: Cascade)
+
+  @@unique([nationalityId, languageCode], map: "nationality_translations_nat_lang_unique")
+  @@map("nationality_translations")
+}
+
+model StepGuideline {
+  id           String                     @id @default(uuid()) @db.VarChar(36)
+  stepNumber   Int                        @map("step_number")
+  icon         String?                    @db.VarChar(64)
+  displayOrder Int                        @default(0) @map("display_order")
+  isActive     Boolean                    @default(true) @map("is_active")
+  createdAt    DateTime                   @default(now()) @map("created_at")
+  updatedAt    DateTime                   @updatedAt @map("updated_at")
+  translations StepGuidelineTranslation[]
+
+  @@map("step_guidelines")
+}
+
+model StepGuidelineTranslation {
+  id              String        @id @default(uuid()) @db.VarChar(36)
+  stepGuidelineId String        @map("step_guideline_id") @db.VarChar(36)
+  languageCode    String        @map("language_code") @db.VarChar(10)
+  title           String        @db.VarChar(255)
+  description     String        @db.Text
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  stepGuideline   StepGuideline @relation(fields: [stepGuidelineId], references: [id], onDelete: Cascade)
+
+  @@unique([stepGuidelineId, languageCode], map: "step_guideline_trans_step_lang_unique")
+  @@map("step_guideline_translations")
+}
+
+model PricingRuleTranslation {
+  id            String      @id @default(uuid()) @db.VarChar(36)
+  pricingRuleId String      @map("pricing_rule_id") @db.VarChar(36)
+  languageCode  String      @map("language_code") @db.VarChar(10)
+  name          String      @db.VarChar(255)
+  processing    String?     @db.VarChar(255)
+  features      Json?
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+  pricingRule   PricingRule @relation(fields: [pricingRuleId], references: [id], onDelete: Cascade)
+
+  @@unique([pricingRuleId, languageCode], map: "pricing_rule_trans_rule_lang_unique")
+  @@map("pricing_rule_translations")
+}
+
+model ArticleTranslation {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  articleId    String   @map("article_id") @db.VarChar(36)
+  languageCode String   @map("language_code") @db.VarChar(10)
+  title        String   @db.VarChar(255)
+  subtitle     String?  @db.VarChar(512)
+  content      String   @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  article      Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, languageCode], map: "article_translations_art_lang_unique")
+  @@map("article_translations")
+}
+
+model FaqTranslation {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  faqId        String   @map("faq_id") @db.VarChar(36)
+  languageCode String   @map("language_code") @db.VarChar(10)
+  question     String   @db.Text
+  answer       String   @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  faq          Faq      @relation(fields: [faqId], references: [id], onDelete: Cascade)
+
+  @@unique([faqId, languageCode], map: "faq_translations_faq_lang_unique")
+  @@map("faq_translations")
+}
+
+/// Danh sách quốc gia được miễn visa vào Việt Nam — thay thế countriesData hardcode trong VisaExemptionsGuide.tsx
+model VisaExemptionCountry {
+  id            String   @id @default(uuid()) @db.VarChar(36)
+  sequenceNo    Int      @unique @default(autoincrement()) @map("sequence_no")
+  countryCode   String   @unique @map("country_code") @db.VarChar(8)
+  exemptionDays Int      @map("exemption_days")
+  displayOrder  Int      @default(0) @map("display_order")
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([isActive, displayOrder])
+  @@map("visa_exemption_countries")
+}
+
+/// Luật nhập cảnh chi tiết theo quốc gia cho Eligibility Checker
+model EligibilityRule {
+  id              String                       @id @default(uuid()) @db.VarChar(36)
+  countryCode     String                       @unique @map("country_code") @db.VarChar(2)
+  isActive        Boolean                      @default(true) @map("is_active")
+  trainingPhrases Json?                        @map("training_phrases")
+  createdAt       DateTime                     @default(now()) @map("created_at")
+  updatedAt       DateTime                     @updatedAt @map("updated_at")
+  translations    EligibilityRuleTranslation[]
+
+  @@map("eligibility_rules")
+}
+
+model EligibilityRuleTranslation {
+  id                String          @id @default(uuid()) @db.VarChar(36)
+  eligibilityRuleId String          @map("eligibility_rule_id") @db.VarChar(36)
+  languageCode      String          @map("language_code") @db.VarChar(10)
+  status            String          @db.VarChar(255)
+  stay              String          @db.VarChar(255)
+  fee               String          @db.VarChar(255)
+  processing        String          @db.VarChar(255)
+  requirements      Json
+  note              String?         @db.Text
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+  eligibilityRule   EligibilityRule @relation(fields: [eligibilityRuleId], references: [id], onDelete: Cascade)
+
+  @@unique([eligibilityRuleId, languageCode], map: "elig_rule_trans_rule_lang_unique")
+  @@map("eligibility_rule_translations")
+}
+
+model NewsletterSubscription {
+  id                 String    @id @default(uuid()) @db.VarChar(36)
+  sequenceNo         Int       @unique @default(autoincrement()) @map("sequence_no")
+  email              String    @unique
+  isActive           Boolean   @default(true) @map("is_active")
+  subscribedAt       DateTime  @default(now()) @map("subscribed_at")
+  lastCampaignSentAt DateTime? @map("last_campaign_sent_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  @@map("newsletter_subscriptions")
+}
+
+/// Bình luận công khai — hỗ trợ nested replies qua self-referential parentId
+model Comment {
+  id                String    @id @default(uuid()) @db.VarChar(36)
+  content           String?   @db.Text
+  authorName        String    @map("author_name") @db.VarChar(100)
+  authorEmail       String    @map("author_email") @db.VarChar(255)
+  authorNationality String?   @map("author_nationality") @db.VarChar(2)
+  authorToken       String    @map("author_token") @db.VarChar(64)
+  parentId          String?   @map("parent_id") @db.VarChar(36)
+  helpfulCount      Int       @default(0) @map("helpful_count")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  images            Json?     @map("images")
+  originalLanguage  String?   @map("original_language") @db.VarChar(10)
+  translatedContent String?   @map("translated_content") @db.Text
+  deletedAt         DateTime? @map("deleted_at")
+  parent            Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies           Comment[] @relation("CommentReplies")
+
+  @@index([parentId])
+  @@index([authorToken])
+  @@map("comments")
+}
+
+model PageSetting {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  key       String   @unique @db.VarChar(128)
+  value     Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("page_settings")
+}
+
+/// Intent NLP — định nghĩa các intent chatbot nhận diện và action tương ứng
+model NlpIntent {
+  id            String         @id @default(uuid()) @db.VarChar(36)
+  name          String         @unique @db.VarChar(128)
+  actionPayload Json           @map("action_payload")
+  isActive      Boolean        @default(true) @map("is_active")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  utterances    NlpUtterance[]
+
+  @@index([isActive])
+  @@map("nlp_intents")
+}
+
+/// Câu mẫu huấn luyện NLP — liên kết với intent, hỗ trợ đa ngôn ngữ
+model NlpUtterance {
+  id             String    @id @default(uuid()) @db.VarChar(36)
+  intentId       String    @map("intent_id") @db.VarChar(36)
+  text           String    @db.VarChar(512)
+  language       String    @default("vi") @db.VarChar(8)
+  isSeeded       Boolean   @default(false) @map("is_seeded")
+  usedInTraining Boolean   @default(false) @map("used_in_training")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  intent         NlpIntent @relation(fields: [intentId], references: [id], onDelete: Cascade)
+
+  @@unique([intentId, text])
+  @@index([intentId, usedInTraining])
+  @@index([language, usedInTraining])
+  @@index([createdAt])
+  @@map("nlp_utterances")
+}
+
+/// Metadata model NLP đã train — theo dõi version, path và thống kê training
+model NlpModelMeta {
+  id             String   @id @default(uuid()) @db.VarChar(36)
+  version        Int      @unique @default(autoincrement())
+  modelPath      String   @map("model_path") @db.VarChar(512)
+  utteranceCount Int      @map("utterance_count")
+  intentCount    Int      @map("intent_count")
+  trainedAt      DateTime @default(now()) @map("trained_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("nlp_model_metas")
+}
+
+model BackgroundJob {
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  type      String    @db.VarChar(64)
+  payload   Json
+  status    JobStatus @default(PENDING)
+  error     String?   @db.Text
+  attempts  Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@map("background_jobs")
+}
+
+model NewsletterCampaign {
+  id          String    @id @default(uuid()) @db.VarChar(36)
+  sequenceNo  Int       @unique @default(autoincrement()) @map("sequence_no")
+  subject     String    @db.VarChar(255)
+  htmlContent String    @map("html_content") @db.LongText
+  lastUsedAt  DateTime? @map("last_used_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@map("newsletter_campaigns")
+}
+
+model Reel {
+  id           String         @id @default(uuid()) @db.VarChar(36)
+  title        String?        @db.VarChar(255)
+  authorName   String         @map("author_name") @db.VarChar(128)
+  authorAvatar String?        @map("author_avatar") @db.VarChar(512)
+  media        Json           @map("media")
+  isActive     Boolean        @default(true) @map("is_active")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  reactions    ReelReaction[]
+
+  @@map("reels")
+}
+
+model ReelReaction {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  reelId    String   @map("reel_id") @db.VarChar(36)
+  emoji     String   @db.VarChar(16)
+  guestId   String?  @map("guest_id") @db.VarChar(128)
+  createdAt DateTime @default(now()) @map("created_at")
+  reel      Reel     @relation(fields: [reelId], references: [id], onDelete: Cascade)
+
+  @@index([reelId])
+  @@map("reel_reactions")
+}
+
+/// Phiên truy cập của khách vãng lai, dùng để dọn rác sau 24h
+model GuestSession {
+  id         String   @id @db.VarChar(128)
+  lastActive DateTime @default(now()) @map("last_active")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([lastActive])
+  @@map("guest_sessions")
+}
+
+/// Vai trò tài khoản — phân quyền admin vs khách
+enum UserRole {
+  ADMIN       @map("ADMIN")
+  SUPER_ADMIN @map("SUPER_ADMIN")
+}
+
+/// Trạng thái tài khoản cho luồng đăng ký/duyệt
+enum AccountStatus {
+  PENDING  @map("PENDING")
+  APPROVED @map("APPROVED")
+  REJECTED @map("REJECTED")
+}
+
+enum VisaType {
+  E_VISA @map("E_VISA")
+  VOA    @map("VOA")
+}
+
+enum VisaApplicationStatus {
+  COMPLETED  @map("COMPLETED")
+  PROCESSING @map("PROCESSING")
+  PAID       @map("PAID")
+  REJECTED   @map("REJECTED")
+  PENDING    @map("PENDING")
+}
+
+enum PricingRuleType {
+  BASE_FEE        @map("BASE_FEE")
+  PROCESSING_TIME @map("PROCESSING_TIME")
+  EXTRA_SERVICE   @map("EXTRA_SERVICE")
+}
+
+enum PaymentStatus {
+  PENDING  @map("PENDING")
+  SUCCESS  @map("SUCCESS")
+  FAILED   @map("FAILED")
+  REFUNDED @map("REFUNDED")
+}
+
+enum SupportTicketStatus {
+  OPEN        @map("OPEN")
+  IN_PROGRESS @map("IN_PROGRESS")
+  RESOLVED    @map("RESOLVED")
+  CLOSED      @map("CLOSED")
+}
+
+enum ChatSessionStatus {
+  AI_HANDLING      @map("AI_HANDLING")
+  HUMAN_HANDLING   @map("HUMAN_HANDLING")
+  CLOSED           @map("CLOSED")
+  CLOSED_BY_CLIENT @map("CLOSED_BY_CLIENT")
+}
+
+enum ChatMessageSender {
+  BOT      @map("BOT")
+  CUSTOMER @map("CUSTOMER")
+  ADMIN    @map("ADMIN")
+  SYSTEM   @map("SYSTEM")
+}
+
+enum ChatMessageType {
+  TEXT   @map("TEXT")
+  FILE   @map("FILE")
+  IMAGE  @map("IMAGE")
+  SYSTEM @map("SYSTEM")
+}
+
+enum ChatDeliveryStatus {
+  SENT      @map("SENT")
+  DELIVERED @map("DELIVERED")
+  SEEN      @map("SEEN")
+}
+
+/// Mục đích nhập cảnh — chuẩn hoá để API validate rõ ràng (form check Stage 2)
+enum PurposeOfVisit {
+  TOURIST  @map("TOURIST")
+  BUSINESS @map("BUSINESS")
+  OTHER    @map("OTHER")
+}
+
+/// Loại cửa nhập cảnh — master data GET /ports trả `type` cho UI
+enum PortEntryType {
+  AIRPORT     @map("AIRPORT")
+  BORDER_GATE @map("BORDER_GATE")
+}
+
+enum NationalityGroup {
+  POPULAR   @map("POPULAR")
+  GOOD      @map("GOOD")
+  NORMAL    @map("NORMAL")
+  BLACKLIST @map("BLACKLIST")
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}

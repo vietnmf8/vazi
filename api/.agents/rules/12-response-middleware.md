@@ -1,0 +1,97 @@
+---
+activation: model_decision
+description: Standardized response envelope via middleware.
+globs: src/middlewares/**/*.ts
+---
+
+# Response Middleware Convention
+
+Mọi response của project đi qua middleware này — đảm bảo envelope nhất quán.
+
+## Middleware implementation
+
+```typescript
+// src/middlewares/response.ts
+import { Request, Response, NextFunction } from "express";
+import { httpCodes } from "@/configs/constants";
+
+declare module "express-serve-static-core" {
+    interface Response {
+        success: (data: any, status?: number, passProps?: object) => void;
+        error: (error: any, status?: number) => void;
+        paginate: (result: { rows: any[]; pagination: any }) => void;
+    }
+}
+
+/**
+ * Middleware chuẩn hoá response cho TOÀN BỘ project.
+ * Mọi controller PHẢI dùng res.success() / res.error() / res.paginate()
+ * KHÔNG được dùng res.json() / res.send() trực tiếp.
+ */
+export default function responseMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) {
+    res.success = (data, status = httpCodes.ok, passProps = {}) => {
+        res.status(status).json({
+            success: true,
+            data,
+            error: null,
+            ...passProps,
+        });
+    };
+
+    res.error = (error, status = httpCodes.serverError) => {
+        res.status(status).json({
+            success: false,
+            data: null,
+            error: typeof error === "string" ? { message: error } : error,
+        });
+    };
+
+    res.paginate = ({ rows, pagination }) => {
+        res.status(httpCodes.ok).json({
+            success: true,
+            data: rows,
+            error: null,
+            pagination, // { current_page, total, per_page, from, to, has_more? }
+        });
+    };
+
+    next();
+}
+```
+
+## Mount order trong app.ts
+
+```typescript
+app.use(express.json());
+app.use(cors());
+app.use(responseMiddleware); // ← TRƯỚC routes
+app.use("/api", routes);
+app.use(notFoundHandler);
+app.use(errorHandler); // ← errorHandler dùng res.error()
+```
+
+## Vietnamese messages (FE-facing)
+
+```typescript
+// ✅ Message hiển thị cho user → tiếng Việt
+throw new EmailExistError("Email đã tồn tại trong hệ thống");
+
+// ✅ Log/debug message → tiếng Anh
+logger.error("Failed to connect MySQL", { error });
+
+// ✅ Internal error code → tiếng Anh
+throw new AppError("DB_CONNECTION_FAILED", 500);
+// errorHandler map sang "Lỗi kết nối hệ thống. Vui lòng thử lại sau."
+```
+
+## Rules
+
+1. **NEVER** dùng `res.json()` / `res.send()` / `res.status().json()` trực tiếp trong controller
+2. Status code lấy từ `@/configs/constants` (`httpCodes.created`, etc.)
+3. Error message **bằng tiếng Việt** nếu sẽ hiển thị cho user
+4. Internal/log message bằng tiếng Anh
+5. Production không leak `err.stack` / Prisma `err.meta` ra client (handle trong errorHandler)

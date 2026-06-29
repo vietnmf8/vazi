@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Design — AboutTeam</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f; color: #f0f0f0; padding: 20px;
+  }
+  h1 { font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+  .sub { font-size: 11px; color: #666; text-align: center; margin-bottom: 20px; }
+
+  /* ════════════════════════════════════════
+     DESKTOP MOCKUP
+  ════════════════════════════════════════ */
+  .label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #555; margin-bottom: 8px; }
+  .label span { background: #E87613; color: #fff; padding: 2px 7px; border-radius: 3px; margin-right: 6px; font-size: 9px; }
+
+  .desktop-mock {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 14px 14px;
+    border-radius: 12px;
+    overflow: visible;
+    border: 1.5px solid #e0ddd8;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  /* ── CTA strip above ── */
+  .cta-strip {
+    border-bottom: 1px solid #e8e5e0;
+    padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,.6);
+    border-radius: 12px 12px 0 0;
+    backdrop-filter: blur(4px);
+  }
+  .cta-text h3 { font-size: 13px; font-weight: 700; color: #111; }
+  .cta-text p  { font-size: 10px; color: #888; margin-top: 2px; }
+  .cta-btn {
+    background: #111; color: #fff; font-size: 9px; font-weight: 700;
+    padding: 7px 16px; border-radius: 10px; white-space: nowrap;
+    display: flex; align-items: center; gap: 5px; flex-shrink: 0; margin-left: 20px;
+  }
+  .cta-btn svg { width: 11px; height: 11px; }
+
+  /* ── Section label ── */
+  .section-tag {
+    padding: 18px 28px 0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-tag .pill {
+    background: rgba(232,118,19,.12); color: #E87613;
+    font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .section-tag h2 { font-size: 16px; font-weight: 800; color: #111; letter-spacing: -.02em; }
+
+  /* ── Character selection layout ── */
+  .char-layout {
+    display: grid; grid-template-columns: 5fr 7fr;
+    min-height: 360px; position: relative;
+    padding: 16px 28px 0;
+    gap: 0;
+    overflow: visible;
+  }
+
+  /* Left: portrait column */
+  .portrait-col {
+    position: relative; display: flex;
+    align-items: flex-end; justify-content: center;
+    overflow: visible; padding-bottom: 0; min-height: 340px;
+  }
+  .portrait-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 200px; height: 200px; background: #E87613;
+    border-radius: 50%; filter: blur(70px); opacity: .16;
+    pointer-events: none; z-index: 1;
+  }
+  .portrait-figure {
+    position: absolute; bottom: -40px; /* bleed into footer */
+    width: 200px; height: 380px;
+    background: linear-gradient(160deg, #5e5e72 0%, #3c3c50 60%, #2a2a3c 100%);
+    border-radius: 10px 10px 0 0; z-index: 3;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 30px; overflow: hidden;
+  }
+  .portrait-figure::before { content: '👤'; font-size: 72px; opacity: .35; }
+  /* Transparent bottom edge — simulating cutout */
+  .portrait-figure::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 10px;
+    background: transparent;
+  }
+  /* Subtle shadow under figure */
+  .portrait-shadow {
+    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+    width: 180px; height: 16px;
+    background: rgba(0,0,0,.18); border-radius: 50%; filter: blur(8px);
+    z-index: 2;
+  }
+
+  /* Right: info column */
+  .info-col {
+    padding: 12px 0 20px 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .info-top {}
+  .char-name { font-size: 38px; font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; color: #0f0f0f; line-height: .95; }
+  .char-role { font-size: 16px; font-weight: 700; color: #E87613; text-transform: uppercase; letter-spacing: .05em; margin-top: 6px; }
+  .char-desc { font-size: 11px; color: #666; line-height: 1.7; margin-top: 12px; max-width: 340px; }
+
+  /* Thumbnail selector */
+  .thumb-area { margin-top: 28px; padding-top: 20px; border-top: 1.5px solid #e8e4de; }
+  .thumbs { display: flex; gap: 12px; align-items: flex-end; }
+  .thumb {
+    width: 60px; height: 80px; border-radius: 3px;
+    background: #4A88C8; overflow: hidden; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; position: relative;
+    filter: grayscale(1); opacity: .45;
+    transition: all .3s;
+  }
+  .thumb.active {
+    filter: grayscale(0); opacity: 1;
+    transform: scale(1.12) translateY(-4px);
+    box-shadow: 0 0 0 2.5px #E87613, 0 0 0 5px #FBFBF9, 0 0 16px rgba(232,118,19,.35);
+    z-index: 2;
+  }
+  .thumb span { color: rgba(255,255,255,.7); }
+
+  /* ── Footer mock ── */
+  .footer-mock {
+    background: #111; height: 50px;
+    border-radius: 0 0 12px 12px; position: relative; z-index: 10;
+    display: flex; align-items: center; padding: 0 28px;
+    margin-top: -2px;
+  }
+  .footer-mock-text { font-size: 9px; color: #444; }
+  .footer-mock-links { margin-left: auto; display: flex; gap: 16px; }
+  .footer-mock-links span { font-size: 9px; color: #555; }
+  .bleed-label {
+    position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+    background: rgba(232,118,19,.15); color: #E87613;
+    font-size: 8px; font-weight: 700; padding: 2px 8px; border-radius: 3px;
+    letter-spacing: .05em;
+  }
+
+  /* ════════════════════════════════════════
+     MOBILE MOCKUP
+  ════════════════════════════════════════ */
+  .mobile-section { margin-top: 8px; }
+  .phones-row { display: flex; gap: 16px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .phone-label { font-size: 9px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+  .phone {
+    width: 130px; background: #FBFBF9; border-radius: 18px;
+    border: 2px solid #333; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,.5);
+    position: relative;
+  }
+  .phone-body {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 10px 10px;
+    padding: 14px 12px 0; position: relative; overflow: visible;
+  }
+  .p-cta {
+    background: rgba(255,255,255,.7); border: 1px solid #e8e5e0;
+    border-radius: 8px; padding: 8px 9px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .p-cta-text { font-size: 6px; font-weight: 700; color: #111; }
+  .p-cta-btn { background: #111; color: #fff; font-size: 5.5px; font-weight: 700; padding: 3px 7px; border-radius: 4px; }
+  .p-name { font-size: 13px; font-weight: 900; text-transform: uppercase; color: #111; letter-spacing: -.02em; line-height: 1; }
+  .p-role { font-size: 7px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .p-desc { font-size: 6px; color: #666; line-height: 1.5; margin-top: 6px; }
+  .p-thumbs { display: flex; gap: 5px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #e0ddd8; }
+  .p-thumb { width: 22px; height: 30px; background: #4A88C8; border-radius: 2px; opacity: .4; filter: grayscale(1); display: flex; align-items: center; justify-content: center; font-size: 9px; }
+  .p-thumb.act { opacity: 1; filter: grayscale(0); box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9; transform: scale(1.1) translateY(-2px); }
+  .p-cutout-zone { position: relative; height: 80px; overflow: visible; display: flex; justify-content: center; align-items: flex-end; margin-top: 10px; }
+  .p-glow { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: #E87613; border-radius: 50%; filter: blur(22px); opacity: .2; z-index: 1; }
+  .p-cutout {
+    width: 56px; height: 110px; position: absolute; bottom: -26px;
+    background: linear-gradient(160deg, #5e5e72, #3c3c50); border-radius: 5px 5px 0 0;
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; z-index: 5;
+  }
+  .p-cutout::before { content: '👤'; font-size: 22px; opacity: .5; }
+  .phone-footer { background: #111; height: 26px; display: flex; align-items: center; padding: 0 10px; position: relative; z-index: 10; }
+  .phone-footer span { font-size: 6.5px; color: #444; }
+  .phone-footer .mark { margin-left: auto; font-size: 6px; color: #E87613; font-weight: 700; }
+
+  /* ════════════════════════════════════════
+     ANIMATION DIAGRAM
+  ════════════════════════════════════════ */
+  .anim-section { margin-top: 20px; }
+  .anim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; align-items: center; }
+  .anim-step {
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+    padding: 10px 10px; text-align: center;
+  }
+  .anim-step .step-num { font-size: 8px; color: #E87613; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .anim-step h4 { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .anim-step p { font-size: 9px; color: #777; line-height: 1.4; }
+  .anim-arrow { text-align: center; font-size: 16px; color: #444; }
+  .code-pill { background: #111; border: 1px solid #333; border-radius: 4px; padding: 1px 5px; font-family: monospace; font-size: 8px; color: #a8d8a8; }
+</style>
+</head>
+<body>
+
+<h1>Final Design — AboutTeam Redesign</h1>
+<p class="sub">Approve design trước khi viết spec</p>
+
+<!-- ══ DESKTOP ══ -->
+<div class="label" style="margin-bottom:10px;"><span>DESKTOP</span> Split 5:7 — Character Selection UI</div>
+<div class="desktop-mock">
+
+  <!-- CTA Strip on top -->
+  <div class="cta-strip">
+    <div class="cta-text">
+      <h3>Have questions about Vietnam Visa requirements?</h3>
+      <p>Specialists are always ready to review your files and provide custom solutions.</p>
+    </div>
+    <div class="cta-btn">
+      Contact Our Team
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </div>
+  </div>
+
+  <!-- Section heading -->
+  <div class="section-tag">
+    <span class="pill">Expert Assistance</span>
+    <h2>Our Core Team</h2>
+  </div>
+
+  <!-- Character layout -->
+  <div class="char-layout">
+    <!-- Portrait -->
+    <div class="portrait-col">
+      <div class="portrait-glow"></div>
+      <div class="portrait-shadow"></div>
+      <div class="portrait-figure"></div>
+    </div>
+    <!-- Info -->
+    <div class="info-col">
+      <div class="info-top">
+        <div class="char-name">Nguyễn<br>Văn A</div>
+        <div class="char-role">Marketing Master</div>
+        <div class="char-desc">
+          Chuyên gia hoạch định chiến lược với khả năng thấu hiểu tâm lý khách hàng. Kẻ thù của những chiến dịch nhàm chán, luôn mang đến những ý tưởng bùng nổ và tối ưu hóa tỷ lệ chuyển đổi.
+        </div>
+      </div>
+      <div class="thumb-area">
+        <div class="thumbs">
+          <div class="thumb active"><span>👤</span></div>
+          <div class="thumb"><span>👤</span></div>
+          <div class="thumb"><span>👤</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer mock — covers feet of character -->
+  <div class="footer-mock">
+    <span class="footer-mock-text">© 2025 FastVisa · All rights reserved</span>
+    <div class="footer-mock-links">
+      <span>Privacy</span><span>Terms</span><span>Contact</span>
+    </div>
+    <div class="bleed-label">↑ Footer che chân nhân vật</div>
+  </div>
+</div>
+
+<!-- ══ MOBILE ══ -->
+<div class="label mobile-section"><span>MOBILE</span> &lt;640px — Selector + Cutout canh giữa</div>
+<div class="phones-row" style="margin-top:12px;">
+
+  <!-- State 1: Member 1 active -->
+  <div class="phone-wrap">
+    <div class="phone-label">Nhân vật 1 active</div>
+    <div class="phone">
+      <div class="phone-body">
+        <div class="p-cta">
+          <div class="p-cta-text">Have questions?</div>
+          <div class="p-cta-btn">Contact →</div>
+        </div>
+        <div class="p-name">Nguyễn Văn A</div>
+        <div class="p-role">Marketing Master</div>
+        <div class="p-desc">Chuyên gia hoạch định chiến lược, ý tưởng bùng nổ...</div>
+        <div class="p-thumbs">
+          <div class="p-thumb act">👤</div>
+          <div class="p-thumb">👤</div>
+          <div class="p-thumb">👤</div>
+        </div>
+        <div class="p-cutout-zone">
+          <div class="p-glow"></div>
+          <div class="p-cutout"></div>
+        </div>
+      </div>
+      <div class="phone-footer"><span>© FastVisa</span><span class="mark">↑ Footer</span></div>
+    </div>
+  </div>
+
+  <!-- Transition arrow -->
+  <div style="display:flex;align-items:center;padding-top:40px;font-size:20px;color:#333;">→</div>
+
+  <!-- State 2: switching (animating) -->
+  <div class="phone-wrap">
+    <div class="phone-label">Đang chuyển...</div>
+    <div class="phone" style="opacity:.85;">
+      <div class="phone-body" style="filter: blur(1px);">
+        <div class="p-cta"><div class="p-cta-text">Have questions?</div><div class="p-cta-btn">Contact →</div></div>
+        <div class="p-name" style="opacity:.3; transform:translateX(8px);">Nguyễn Văn A</div>
+        <div class="p-role" style="opacity:.3;">Marketing Master</div>
+        <div class="p-desc" style="opacity:.2;">...</div>
+        <div class="p-thumbs">
+          <div class="p-thumb">👤</div>
+          <div class="p-thumb act" style="transform:scale(1.1) translateY(-2px);">👤</div>
+          <div class="p-thumb">👤</div>
+        </div>
+        <div class="p-cutout-zone" style="opacity:.2;">
+          <div class="p-cutout" style="transform:translateX(10px) scale(.95);"></div>
+        </div>
+      </div>
+      <div class="phone-footer"><span>© FastVisa</span><span class="mark">↑ Footer</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;padding-top:40px;font-size:20px;color:#333;">→</div>
+
+  <!-- State 3: Member 2 active -->
+  <div class="phone-wrap">
+    <div class="phone-label">Nhân vật 2 active</div>
+    <div class="phone">
+      <div class="phone-body">
+        <div class="p-cta"><div class="p-cta-text">Have questions?</div><div class="p-cta-btn">Contact →</div></div>
+        <div class="p-name">Trần Thị B</div>
+        <div class="p-role">UX/UI Wizard</div>
+        <div class="p-desc">Bậc thầy thị giác, giao diện mượt mà và đầy tính nghệ thuật...</div>
+        <div class="p-thumbs">
+          <div class="p-thumb">👤</div>
+          <div class="p-thumb act">👤</div>
+          <div class="p-thumb">👤</div>
+        </div>
+        <div class="p-cutout-zone">
+          <div class="p-glow"></div>
+          <div class="p-cutout"></div>
+        </div>
+      </div>
+      <div class="phone-footer"><span>© FastVisa</span><span class="mark">↑ Footer</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ ANIMATION FLOW ══ -->
+<div class="anim-section">
+  <div class="label" style="margin-bottom:10px;margin-top:20px;"><span>ANIMATION</span> Framer Motion AnimatePresence — Character Switch</div>
+  <div class="anim-grid">
+    <div class="anim-step">
+      <div class="step-num">① User click</div>
+      <h4>Thumbnail tap</h4>
+      <p>Click thumbnail → set <span class="code-pill">activeId</span></p>
+    </div>
+    <div class="anim-step">
+      <div class="step-num">② Exit</div>
+      <h4>Fade out cũ</h4>
+      <p>Portrait + info: <span class="code-pill">opacity→0</span> <span class="code-pill">x→-20</span> <span class="code-pill">blur→4px</span></p>
+    </div>
+    <div class="anim-step">
+      <div class="step-num">③ Enter</div>
+      <h4>Fade in mới</h4>
+      <p>Portrait + info: <span class="code-pill">opacity→1</span> <span class="code-pill">x→0</span> <span class="code-pill">blur→0</span></p>
+    </div>
+    <div class="anim-step">
+      <div class="step-num">④ Done</div>
+      <h4>State ổn định</h4>
+      <p>Thumbnail active: <span class="code-pill">ring-orange</span> <span class="code-pill">scale-110</span> <span class="code-pill">glow</span></p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

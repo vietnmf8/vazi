@@ -1,0 +1,2 @@
+ALTER TABLE newsletter_campaigns ADD COLUMN sequence_no INT NOT NULL AUTO_INCREMENT UNIQUE;
+ALTER TABLE newsletter_subscriptions ADD COLUMN sequence_no INT NOT NULL AUTO_INCREMENT UNIQUE;

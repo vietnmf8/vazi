@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Layout Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #f0f0f0;
+    padding: 24px;
+  }
+  h1 { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+  .sub { font-size: 12px; color: #888; text-align: center; margin-bottom: 28px; }
+
+  .options-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .opt {
+    background: #1a1a1a;
+    border: 2px solid #2a2a2a;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .opt:hover { border-color: #E87613; }
+  .opt.selected { border-color: #E87613; box-shadow: 0 0 0 1px #E87613, 0 0 20px rgba(232,118,19,0.2); }
+
+  .opt-header {
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid #2a2a2a;
+    background: #141414;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .letter {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #E87613; color: #fff;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .opt-header h3 { font-size: 12px; font-weight: 700; color: #fff; }
+
+  /* Phone frame */
+  .phone {
+    margin: 14px auto;
+    width: 120px;
+    background: #FBFBF9;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #333;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  /* Option A: Stacked — portrait top, info + thumbs below */
+  .phone-a { }
+  .ph-portrait-top {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(160deg, #c8c3bb 0%, #a8a39b 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .ph-portrait-top::before { content: '👤'; font-size: 36px; opacity: 0.3; }
+  .glow-small {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    background: #E87613;
+    border-radius: 50%;
+    filter: blur(25px);
+    opacity: 0.25;
+  }
+  .ph-info {
+    padding: 8px 8px 6px;
+  }
+  .ph-name { font-size: 9px; font-weight: 900; text-transform: uppercase; color: #111; letter-spacing: -0.02em; }
+  .ph-role { font-size: 7px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
+  .ph-desc { font-size: 6px; color: #666; line-height: 1.5; margin-top: 4px; }
+  .ph-thumbs {
+    display: flex; gap: 4px;
+    padding: 6px 8px 8px;
+    border-top: 1px solid #e8e5e0;
+    margin-top: 4px;
+  }
+  .ph-thumb {
+    width: 24px; height: 32px;
+    background: #4A88C8;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    opacity: 0.4;
+    filter: grayscale(1);
+  }
+  .ph-thumb.active {
+    opacity: 1; filter: grayscale(0);
+    box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9;
+    transform: scale(1.08) translateY(-2px);
+  }
+
+  /* Option B: No portrait on mobile — info + thumbs only */
+  .ph-noportrait {
+    padding: 10px 8px 6px;
+    background: #FBFBF9;
+  }
+  .ph-mini-thumb-row {
+    display: flex; gap: 4px; margin-bottom: 8px;
+  }
+  .ph-mini-thumb {
+    width: 28px; height: 36px;
+    background: #4A88C8;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    opacity: 0.4; filter: grayscale(1);
+    flex-shrink: 0;
+  }
+  .ph-mini-thumb.active {
+    opacity: 1; filter: grayscale(0);
+    box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9;
+    transform: scale(1.08);
+  }
+  .ph-horizontal {
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .ph-small-portrait {
+    width: 50px; height: 70px; flex-shrink: 0;
+    background: linear-gradient(160deg, #c8c3bb 0%, #a8a39b 100%);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ph-small-portrait::before { content: '👤'; opacity: 0.3; }
+  .ph-small-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 30px; height: 30px;
+    background: #E87613; border-radius: 50%;
+    filter: blur(12px); opacity: 0.3;
+  }
+
+  /* option descriptions */
+  .opt-body { padding: 10px 14px 14px; }
+  .opt-body p { font-size: 11px; color: #888; line-height: 1.6; }
+  .tag-rec {
+    display: inline-block; margin-top: 8px;
+    font-size: 9px; font-weight: 700;
+    background: rgba(232,118,19,0.15); color: #E87613;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .tag-ok {
+    display: inline-block; margin-top: 8px;
+    font-size: 9px;
+    background: rgba(148,163,184,0.1); color: #94a3b8;
+    padding: 2px 8px; border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Mobile Layout — 3 Options</h1>
+<p class="sub">Desktop luôn là split 5:7. Câu hỏi: mobile (<640px) hiển thị như thế nào?</p>
+
+<div class="options-row">
+
+  <!-- Option A: Stacked -->
+  <div class="opt" data-choice="A" onclick="toggleSelect(this)">
+    <div class="opt-header">
+      <div class="letter">A</div>
+      <h3>Stacked — portrait trên, info dưới</h3>
+    </div>
+    <div style="background:#1a1a1a; padding: 10px; display:flex; justify-content:center;">
+      <div class="phone phone-a">
+        <div class="ph-portrait-top">
+          <div class="glow-small"></div>
+        </div>
+        <div class="ph-info">
+          <div class="ph-name">Nguyễn Văn A</div>
+          <div class="ph-role">Marketer</div>
+          <div class="ph-desc">Chuyên gia chiến lược với khả năng thấu hiểu tâm lý khách hàng...</div>
+        </div>
+        <div class="ph-thumbs">
+          <div class="ph-thumb active">👤</div>
+          <div class="ph-thumb">👤</div>
+          <div class="ph-thumb">👤</div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Portrait chiếm nửa trên, phần thông tin + thumbnail ở dưới. Giữ trọn vẹn visual impact của ảnh.</p>
+      <span class="tag-rec">★ Đề xuất</span>
+    </div>
+  </div>
+
+  <!-- Option B: No portrait -->
+  <div class="opt" data-choice="B" onclick="toggleSelect(this)">
+    <div class="opt-header">
+      <div class="letter">B</div>
+      <h3>Ẩn portrait — chỉ thumbnail + info</h3>
+    </div>
+    <div style="background:#1a1a1a; padding: 10px; display:flex; justify-content:center;">
+      <div class="phone">
+        <div class="ph-noportrait">
+          <div class="ph-mini-thumb-row">
+            <div class="ph-mini-thumb active">👤</div>
+            <div class="ph-mini-thumb">👤</div>
+            <div class="ph-mini-thumb">👤</div>
+          </div>
+          <div class="ph-name" style="font-size:9px;">Nguyễn Văn A</div>
+          <div class="ph-role" style="font-size:7px; color:#E87613;">Marketer</div>
+          <div class="ph-desc" style="font-size:6px; color:#666; margin-top:4px; line-height:1.5;">Chuyên gia chiến lược, ý tưởng bùng nổ...</div>
+          <div style="margin-top:8px; background:#111; color:#fff; font-size:6px; font-weight:700; padding:4px 8px; display:inline-block; text-transform:uppercase; letter-spacing:0.1em;">View Profile →</div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Mobile không hiện ảnh lớn. Thumbnail nhỏ làm selector. Gọn, nhanh — nhưng mất đi visual character.</p>
+      <span class="tag-ok">Đơn giản nhất</span>
+    </div>
+  </div>
+
+  <!-- Option C: Small portrait + info side by side -->
+  <div class="opt" data-choice="C" onclick="toggleSelect(this)">
+    <div class="opt-header">
+      <div class="letter">C</div>
+      <h3>Portrait nhỏ + info — side by side</h3>
+    </div>
+    <div style="background:#1a1a1a; padding: 10px; display:flex; justify-content:center;">
+      <div class="phone">
+        <div class="ph-noportrait">
+          <div class="ph-horizontal">
+            <div class="ph-small-portrait">
+              <div class="ph-small-glow"></div>
+            </div>
+            <div style="flex:1;">
+              <div class="ph-name" style="font-size:8px;">Nguyễn Văn A</div>
+              <div class="ph-role" style="font-size:6px; color:#E87613;">Marketer</div>
+              <div class="ph-desc" style="font-size:6px; color:#666; margin-top:3px; line-height:1.4;">Chuyên gia chiến lược, ý tưởng bùng nổ và tối ưu hóa...</div>
+            </div>
+          </div>
+          <div class="ph-mini-thumb-row" style="margin-top:10px; padding-top:8px; border-top:1px solid #e8e5e0;">
+            <div class="ph-mini-thumb active">👤</div>
+            <div class="ph-mini-thumb">👤</div>
+            <div class="ph-mini-thumb">👤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Portrait thu nhỏ bên trái, text bên phải. Thumbnail chạy ngang bên dưới. Giữ layout tinh thần split nhưng compact hơn.</p>
+      <span class="tag-ok">Trung dung</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const text = el.querySelector('h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<h2>Câu hỏi 2: Field nào hiện ✅ success ngay khi mount?</h2>
+<p class="subtitle">Step 1 có 4 field luôn có default hợp lệ: Visa Type (E-Visa), Visa Category (30-day single), Applicants (1 person), Processing Time (7 days). Chọn mức độ "noisiness" phù hợp.</p>
+
+<style>
+  .demo-form {
+    background: #0f0f11;
+    border: 1px solid #2a2a35;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 14px;
+  }
+  .field-group {
+    margin-bottom: 14px;
+  }
+  .field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #a0a0b0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .mock-input {
+    width: 100%;
+    padding: 9px 13px;
+    border-radius: 8px;
+    border: 1.5px solid #2a2a35;
+    background: #1a1a22;
+    color: #e0e0f0;
+    font-size: 13px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .mock-input.input-success { border-color: #22c55e; }
+  .mock-input.empty { color: #55556a; border-color: #2a2a35; }
+
+  .vbadge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 500;
+    margin-top: 4px;
+    width: fit-content;
+  }
+  .vbadge.success { color: #22c55e; background: rgba(34,197,94,0.09); }
+  .vbadge-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 800; flex-shrink: 0;
+  }
+  .vbadge-icon.ok { background: #22c55e; color: white; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .section-divider {
+    font-size: 10px;
+    color: #555566;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 14px 0 10px;
+    border-bottom: 1px solid #22222e;
+    padding-bottom: 6px;
+  }
+
+  .count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(34,197,94,0.12);
+    color: #22c55e;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+  }
+
+  .dimmed { opacity: 0.4; font-style: italic; font-size: 11px; }
+</style>
+
+<div class="options">
+
+  <!-- Option A: Tất cả -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Tất cả 4 field <span class="count-pill">✅ ×4</span></h3>
+      <p>Hiện success cho Visa Type, Visa Category, Applicants, và Processing Time. Nhiều xanh, nhưng rõ ràng 100% form đã sẵn sàng ở đâu.</p>
+
+      <div class="demo-form">
+        <div class="grid-2">
+          <div class="field-group">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input input-success">E-Visa — All border crossings</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Visa type confirmed</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Visa Category</div>
+            <div class="mock-input input-success">30-day Single Entry</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Category selected</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Number of Applicants</div>
+            <div class="mock-input input-success">1 Person</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> 1 applicant confirmed</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input empty">Select arrival date</div>
+            <span class="dimmed">chưa chọn — không hiện gì</span>
+          </div>
+        </div>
+        <div class="section-divider">Processing Time (bên dưới, component riêng)</div>
+        <div class="field-group">
+          <div class="mock-input input-success" style="justify-content:center;font-weight:600;">⏱ Standard Processing — 7 Business Days</div>
+          <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Processing time selected</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Chỉ "quyết định quan trọng" -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Chỉ Visa Type + Visa Category <span class="count-pill">✅ ×2</span></h3>
+      <p>Chỉ hiện success cho 2 field mang tính "quyết định lớn". Applicant Count và Processing Time thường đúng ngay → không cần xác nhận thêm.</p>
+
+      <div class="demo-form">
+        <div class="grid-2">
+          <div class="field-group">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input input-success">E-Visa — All border crossings</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Visa type confirmed</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Visa Category</div>
+            <div class="mock-input input-success">30-day Single Entry</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Category selected</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Number of Applicants</div>
+            <div class="mock-input">1 Person</div>
+            <span class="dimmed">không hiện badge — đã rõ ràng</span>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input empty">Select arrival date</div>
+            <span class="dimmed">chưa chọn — không hiện gì</span>
+          </div>
+        </div>
+        <div class="section-divider">Processing Time — không hiện badge</div>
+        <div class="field-group">
+          <div class="mock-input" style="justify-content:center;font-weight:600;">⏱ Standard Processing — 7 Business Days</div>
+          <span class="dimmed">không hiện badge — default rõ ràng</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: Tất cả field nào user đã "decide" (kể cả sau khi change) ⭐ -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Tất cả field có giá trị — show success <span style="color:#f59e0b;font-size:11px;margin-left:8px;">⭐ Recommended</span></h3>
+      <p>Bất kỳ field nào có giá trị hợp lệ (default hoặc user đã chọn) đều show ✅. Logic đơn giản: <code>value && valid → success</code>. Nhất quán, dễ hiểu.</p>
+
+      <div class="demo-form">
+        <div class="grid-2">
+          <div class="field-group">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input input-success">E-Visa — All border crossings</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Visa type confirmed</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Visa Category</div>
+            <div class="mock-input input-success">30-day Single Entry</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Category selected</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Number of Applicants</div>
+            <div class="mock-input input-success">1 Person</div>
+            <div class="vbadge success"><div class="vbadge-icon ok">✓</div> 1 applicant confirmed</div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input empty">Select arrival date</div>
+            <span class="dimmed">chưa chọn — không hiện gì</span>
+          </div>
+        </div>
+
+        <div class="section-divider">Sau khi user chọn Port of Entry</div>
+        <div class="field-group">
+          <div class="mock-input input-success">✈ Noi Bai International Airport (HAN)</div>
+          <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Entry port confirmed</div>
+        </div>
+
+        <div class="section-divider">Processing Time — có value → hiện luôn</div>
+        <div class="field-group">
+          <div class="mock-input input-success" style="justify-content:center;font-weight:600;">⏱ Standard Processing — 7 Business Days</div>
+          <div class="vbadge success"><div class="vbadge-icon ok">✓</div> Processing time selected</div>
+        </div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Logic nhất quán — không cần whitelist field</li>
+          <li>Mỗi field user "điền xong" → ngay lập tức xác nhận</li>
+          <li>Cảm giác form đang tiến triển rõ ràng</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Processing Time ít quan trọng hơn nhưng cũng có badge</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

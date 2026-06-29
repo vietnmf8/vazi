@@ -1,0 +1,44 @@
+---
+description: Multi-process architecture — separate HTTP server, queue worker, and scheduler.
+globs: ["src/server.ts", "src/worker.ts", "src/scheduler.ts", "src/app.ts"]
+alwaysApply: false
+---
+
+# Multi-Process Architecture
+
+Project tách thành 3 process độc lập (single responsibility):
+
+| Entry point   | Purpose                            | Run command                 |
+| ------------- | ---------------------------------- | --------------------------- |
+| `server.ts`   | HTTP API (Express)                 | `npm run dev` / `npm start` |
+| `queue.ts`    | Worker poll DB queue every 3s      | `npm run queue`             |
+| `schedule.ts` | Cron jobs (backup, cleanup tokens) | `npm run schedule`          |
+
+## Rules
+
+1. **KHÔNG** nhồi queue/schedule logic vào `server.ts`. Mỗi process chạy riêng.
+2. Chỉ 2 file được phép `import "dotenv/config"`: `server.ts` và `queue.ts` (và `schedule.ts` nếu có).
+3. **KHÔNG** dùng `process.env.X` trong `services/`, `controllers/` — chỉ trong `configs/*.ts`.
+4. Mỗi process có lifecycle riêng: graceful shutdown, error handling, restart policy.
+
+## package.json scripts
+
+```json
+{
+    "scripts": {
+        "dev": "tsx watch src/server.ts",
+        "queue": "tsx watch src/queue.ts",
+        "schedule": "tsx watch src/schedule.ts",
+        "build": "tsc",
+        "start": "node dist/server.js",
+        "start:queue": "node dist/queue.js",
+        "start:schedule": "node dist/schedule.js"
+    }
+}
+```
+
+## Why
+
+- Crash server không ảnh hưởng queue/schedule
+- Scale queue worker riêng (multiple instances)
+- Production deploy bằng PM2/Docker mỗi process 1 container

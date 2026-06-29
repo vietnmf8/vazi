@@ -1,0 +1,96 @@
+{
+    "auth": {
+        "invalid_credentials": "Invalid email or password.",
+        "forbidden_role": "This account cannot access the admin panel.",
+        "email_not_allowed": "This email is not allowed to sign in.",
+        "jwt_not_configured": "Authentication is not configured.",
+        "token_missing": "Missing authentication token.",
+        "token_invalid": "Invalid or expired token."
+    },
+    "admin": {
+        "support_ticket_not_found": "Support ticket not found."
+    },
+    "payments": {
+        "paypal_not_configured": "PayPal credentials (client id / secret) are not fully configured.",
+        "paypal_oauth_failed": "Could not retrieve PayPal access token — check sandbox/live and credentials.",
+        "paypal_api_error": "PayPal rejected the request — please retry or contact support.",
+        "session_url_missing": "PayPal did not return a checkout link — order configuration may be invalid.",
+        "paypal_order_not_approvable": "PayPal order is not approved yet or has expired.",
+        "paypal_order_missing_custom_id": "Missing application id (custom_id) on the PayPal order.",
+        "paypal_capture_failed": "Could not complete PayPal capture.",
+        "paypal_capture_incomplete": "Capture response is incomplete — cannot confirm payment.",
+        "paypal_vnd_per_usd_invalid": "PAYPAL_VND_PER_USD is missing or invalid.",
+        "paypal_webhook_not_configured": "PayPal webhook id is not configured.",
+        "paypal_webhook_headers_missing": "Missing PayPal webhook transmission headers.",
+        "paypal_webhook_verification_failed": "PayPal webhook signature verification failed.",
+        "application_not_payable": "Draft not found or expired — payment cannot be started.",
+        "draft_not_found": "Application draft not found or has expired.",
+        "draft_invalid": "Application draft data is invalid.",
+        "invalid_amount": "Payment amount is invalid.",
+        "paypal_order_id": {
+            "invalid": "Invalid PayPal order id or token field."
+        }
+    },
+    "applications": {
+        "retry_payment_not_allowed": "Retry payment is not allowed — draft not found or expired.",
+        "status_transition_invalid": "This status transition is not allowed.",
+        "nationality_not_eligible_evisa": "Nationality is not eligible for e-visa."
+    },
+    "chat": {
+        "session_not_found": "Chat session does not exist or has expired.",
+        "pusher_not_configured": "Realtime chat is not configured (Soketi/Pusher).",
+        "gemini_not_configured": "AI assistant is not enabled — missing GEMINI_API_KEY.",
+        "rate_limited": "You are sending messages too quickly — please wait a moment.",
+        "ai_failed": "Could not get a reply from the AI assistant — please try again.",
+        "translate_failed": "Translation failed — please try again later."
+    },
+    "errors": {
+        "validation_failed": "Invalid input.",
+        "post_not_found": "Post not found or not published.",
+        "exemption_not_found": "No nationality / exemption data for this country code.",
+        "application_not_found": "Visa application not found.",
+        "application_code_generation_failed": "Could not generate application code — please try again.",
+        "not_found": "Resource not found.",
+        "unauthorized": "You must sign in to continue.",
+        "forbidden": "You do not have permission for this action."
+    },
+    "validation": {
+        "id": {
+            "required": "Id is required.",
+            "invalid": "Invalid id."
+        },
+            "required": "Subject is required."
+        },
+        "message": {
+            "required": "Message is required."
+        },
+        "country_code": {
+            "length": "Country code must be ISO 3166-1 alpha-2.",
+            "invalid": "Invalid country code."
+        },
+        "chat": {
+            "session_id": {
+                "short": "session_id must be at least 8 characters.",
+                "long": "session_id must not exceed 64 characters."
+            },
+            "user_name": {
+                "required": "Display name is required.",
+                "max": "Display name must not exceed 120 characters."
+            },
+            "message": {
+                "required": "Message is required.",
+                "max": "Message must not exceed 8000 characters."
+            },
+            "sender": {
+                "invalid": "Invalid sender value (USER or ADMIN)."
+            },
+            "text": {
+                "required": "Text to translate is required.",
+                "max": "Translation text must not exceed 5000 characters."
+            },
+            "lang": {
+                "invalid": "Invalid language code."
+            }
+        }
+    }
+}

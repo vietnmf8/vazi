@@ -1,0 +1,116 @@
+<h2>Section 2: UI States — Applicant Card</h2>
+<p class="subtitle">3 trạng thái mới cần implement. Xem và confirm trước khi đi vào code.</p>
+
+<style>
+  .state-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+  .state-box { background: #0f172a; border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; }
+  .state-label { background: #1e293b; padding: 10px 14px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .state-body { padding: 14px; font-family: system-ui, sans-serif; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .field { }
+  .field-label { font-size: 9px; color: #64748b; margin-bottom: 3px; }
+  .field-input { height: 28px; border-radius: 6px; padding: 0 10px; font-size: 11px; display: flex; align-items: center; border: 1px solid #334155; background: #0f172a; color: #e2e8f0; }
+  .field-input.shimmer { background: linear-gradient(90deg,#1e3a5f 25%,#1e293b 50%,#1e3a5f 75%); background-size: 200%; animation: shimmer 1.4s infinite; border: 1px solid #1e3a5f; color: transparent; }
+  .field-input.high { border-color: #22c55e44; }
+  .field-input.low { border-color: #f59e0b; color: #fbbf24; }
+  .field-label.low { color: #f59e0b; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; padding: 2px 7px; border-radius: 99px; margin-bottom: 8px; font-weight: 600; }
+  .badge.processing { background: #1e3a5f; color: #60a5fa; }
+  .badge.success { background: #14532d; color: #4ade80; }
+  .badge.warn { background: #431407; color: #fb923c; }
+  .passport-thumb { background: linear-gradient(135deg,#1d4ed8,#2563eb); border-radius: 6px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 10px; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .dot.blue { background: #60a5fa; animation: pulse 1.2s infinite; }
+  .dot.green { background: #4ade80; }
+  .dot.amber { background: #fb923c; }
+</style>
+
+<div class="state-grid">
+
+  <!-- State 1: Extracting -->
+  <div class="state-box">
+    <div class="state-label" style="color:#60a5fa;">State 1 — Extracting</div>
+    <div class="state-body">
+      <div class="passport-thumb">🛂</div>
+      <div class="badge processing"><span class="dot blue"></span> AI đang đọc passport...</div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input shimmer">placeholder</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input shimmer">placeholder</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input shimmer">placeholder</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input shimmer">placeholder</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input shimmer">placeholder</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input shimmer">placeholder</div></div>
+      </div>
+      <div style="font-size:9px;color:#475569;margin-top:6px;">Fields bị disable, không thể nhập trong lúc đang extract</div>
+    </div>
+  </div>
+
+  <!-- State 2: All high confidence -->
+  <div class="state-box">
+    <div class="state-label" style="color:#4ade80;">State 2 — Filled (All Clear)</div>
+    <div class="state-body">
+      <div class="passport-thumb">🛂</div>
+      <div class="badge success"><span class="dot green"></span> 6/6 fields extracted</div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input high">MARDY JUGALBOT</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input high">Male</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input high">Philippine</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input high">04 May 1982</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input high">P82576038</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input high">23 Nov 2031</div></div>
+      </div>
+      <div style="font-size:9px;color:#475569;margin-top:6px;">Viền xanh nhạt = MRZ checksum pass. Tất cả fields vẫn editable.</div>
+    </div>
+  </div>
+
+  <!-- State 3: Some low confidence -->
+  <div class="state-box">
+    <div class="state-label" style="color:#fb923c;">State 3 — Needs Review</div>
+    <div class="state-body">
+      <div class="passport-thumb">🛂</div>
+      <div class="badge warn"><span class="dot amber"></span> 2 fields need verification</div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input high">MARDY JUGALBOT</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input high">Male</div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input high">Philippine</div></div>
+        <div class="field">
+          <div class="field-label low">Date of Birth * ⚠ Verify</div>
+          <div class="field-input low">04 May 1982</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label low">Passport No. * ⚠ Verify</div>
+          <div class="field-input low">P82576038</div>
+        </div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input high">23 Nov 2031</div></div>
+      </div>
+      <div style="font-size:9px;color:#475569;margin-top:6px;">Viền amber = MRZ checksum không match. User cần verify field đó.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>State 4 — Error (extraction failed hoàn toàn)</h3>
+  <div style="background:#0f172a;border:1px solid #7f1d1d;border-radius:10px;padding:14px;display:flex;align-items:flex-start;gap:12px;max-width:400px;">
+    <span style="font-size:20px;flex-shrink:0;">⚠️</span>
+    <div>
+      <div style="font-size:12px;color:#fca5a5;font-weight:600;margin-bottom:4px;">Could not read passport</div>
+      <div style="font-size:11px;color:#64748b;">The image may be too blurry or at an angle. Please fill the fields manually.</div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;">Toast notification xuất hiện dưới góc màn hình. Fields vẫn trống và user điền tay bình thường.</div>
+</div>

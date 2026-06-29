@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Fix Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #f0f0f0; padding: 24px; }
+  h1 { font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+  .sub { font-size: 11px; color: #666; text-align: center; margin-bottom: 20px; line-height: 1.5; }
+
+  /* Problem illustration */
+  .problem-box {
+    background: #1a1a1a; border: 1px solid #333; border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 20px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .problem-label { font-size: 9px; font-weight: 700; color: #E87613; text-transform: uppercase; letter-spacing:.08em; margin-bottom: 4px; }
+  .problem-box p { font-size: 11px; color: #888; line-height: 1.5; }
+
+  /* Options grid */
+  .options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .opt {
+    background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px;
+    overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+  }
+  .opt:hover { border-color: #E87613; }
+  .opt.selected { border-color: #E87613; box-shadow: 0 0 0 1px #E87613, 0 0 20px rgba(232,118,19,.2); }
+  .opt-header { padding: 9px 12px 8px; border-bottom: 1px solid #222; background: #111; display: flex; align-items: center; gap: 7px; }
+  .letter { width: 20px; height: 20px; border-radius: 50%; background: #E87613; color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .opt-header h3 { font-size: 11px; font-weight: 700; color: #fff; }
+  .preview { padding: 10px; }
+  .opt-body { padding: 8px 12px 12px; }
+  .opt-body p { font-size: 10px; color: #888; line-height: 1.5; }
+  .tag-rec { display: inline-block; margin-top: 6px; font-size: 8px; font-weight: 700; background: rgba(232,118,19,.15); color: #E87613; padding: 2px 7px; border-radius: 3px; }
+  .tag-ok { display: inline-block; margin-top: 6px; font-size: 8px; background: rgba(148,163,184,.1); color: #94a3b8; padding: 2px 7px; border-radius: 3px; }
+
+  /* ─── Page simulation wrappers ─── */
+  /* Dark mode page bg */
+  .page-dark { background: #131210; border-radius: 8px; overflow: hidden; padding: 10px; }
+  /* Light mode page bg */
+  .page-light { background: #f5f4f0; border-radius: 8px; overflow: hidden; padding: 10px; }
+
+  /* Character section sim */
+  .char-section {
+    border-radius: 10px; padding: 10px 10px 0;
+    display: grid; grid-template-columns: 5fr 7fr;
+    min-height: 110px; position: relative; overflow: visible;
+  }
+  /* A: Transparent */
+  .char-section-a { background: transparent; }
+  /* B: CSS var surface */
+  .char-section-b-dark { background: #1c1b18; background-image: radial-gradient(circle, #2a2926 1px, transparent 1px); background-size: 10px 10px; }
+  .char-section-b-light { background: #f0ede8; background-image: radial-gradient(circle, #d8d4cd 1px, transparent 1px); background-size: 10px 10px; }
+  /* C: Gradient fade from page */
+  .char-section-c-dark { background: linear-gradient(135deg, #1e1c19 0%, #181613 100%); background-image: radial-gradient(circle, #2a2926 1px, transparent 1px); background-size: 10px 10px; }
+  .char-section-c-light { background: linear-gradient(135deg, #f5f2ed 0%, #ede9e3 100%); background-image: radial-gradient(circle, #d8d4cd 1px, transparent 1px); background-size: 10px 10px; }
+
+  /* Portrait sim */
+  .portrait-sim {
+    position: relative; overflow: visible;
+    display: flex; align-items: flex-end; justify-content: center;
+    min-height: 110px;
+  }
+  .glow-sim {
+    position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%);
+    width: 60px; height: 60px; background: #E87613; border-radius: 50%;
+    filter: blur(20px); opacity: .2; pointer-events: none;
+  }
+  .portrait-img {
+    position: absolute; bottom: -16px;
+    width: 50px; height: 90px;
+    border-radius: 4px 4px 0 0; overflow: hidden;
+    z-index: 3;
+  }
+  .portrait-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* Info sim */
+  .info-sim { padding: 8px 8px 8px 10px; }
+  .sim-name { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: -.02em; line-height: 1; }
+  .sim-name-dark { color: #f0ede8; }
+  .sim-name-light { color: #111; }
+  .sim-role { font-size: 7px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .sim-desc { font-size: 6px; line-height: 1.5; margin-top: 4px; }
+  .sim-desc-dark { color: #888; }
+  .sim-desc-light { color: #666; }
+  .thumbs-sim { display: flex; gap: 3px; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,.08); }
+  .thumbs-sim-light { border-top-color: rgba(0,0,0,.1); }
+  .th { width: 16px; height: 22px; border-radius: 1px; background: #4A88C8; overflow: hidden; }
+  .th img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .th.act { box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px transparent; transform: scale(1.1) translateY(-2px); }
+
+  /* Footer sim */
+  .footer-sim-dark { background: #0f0e0c; height: 20px; display: flex; align-items: center; padding: 0 8px; position: relative; z-index: 10; }
+  .footer-sim-light { background: #fff; height: 20px; border-top: 1px solid #e5e2dc; display: flex; align-items: center; padding: 0 8px; position: relative; z-index: 10; }
+  .footer-sim-dark span, .footer-sim-light span { font-size: 6px; color: #666; }
+
+  /* Mode label */
+  .mode-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .mode-label { font-size: 8px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing:.06em; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<h1>Background Fix — 3 Phương Án</h1>
+<p class="sub">Vấn đề: nền cứng #FBFBF9 không tương thích dark mode<br>Xem Dark Mode (trái) và Light Mode (phải) cho mỗi option</p>
+
+<!-- Problem -->
+<div class="problem-box">
+  <div>
+    <div class="problem-label">⚠ Vấn đề hiện tại</div>
+    <p>Background section hardcode <code style="color:#E87613">#FBFBF9</code> → trắng bóc trong dark mode. Cần một cách render background phù hợp cả light và dark mode.</p>
+  </div>
+</div>
+
+<div class="options">
+
+  <!-- A: Transparent -->
+  <div class="opt" data-choice="A" onclick="toggleSelect(this)">
+    <div class="opt-header"><div class="letter">A</div><h3>Transparent — không nền</h3></div>
+    <div class="preview">
+      <div class="mode-pair">
+        <!-- Dark -->
+        <div>
+          <div class="mode-label">🌙 Dark</div>
+          <div class="page-dark">
+            <div class="char-section char-section-a" style="overflow:visible;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-dark">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-dark">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim">
+                  <div class="th act"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=50&h=80&fit=crop" alt=""></div>
+                  <div class="th"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=50&h=80&fit=crop" alt=""></div>
+                  <div class="th"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=50&h=80&fit=crop" alt=""></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-dark"><span>© FastVisa</span></div>
+          </div>
+        </div>
+        <!-- Light -->
+        <div>
+          <div class="mode-label">☀ Light</div>
+          <div class="page-light">
+            <div class="char-section char-section-a" style="overflow:visible;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-light">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-light">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim thumbs-sim-light">
+                  <div class="th act"></div>
+                  <div class="th"></div>
+                  <div class="th"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-light"><span>© FastVisa</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Không có background riêng. Nhân vật float trực tiếp trên nền page. Dot pattern bị xoá — glow vẫn giữ.</p>
+      <span class="tag-rec">★ Tối giản nhất</span>
+    </div>
+  </div>
+
+  <!-- B: Dark-mode aware surface + dot pattern -->
+  <div class="opt" data-choice="B" onclick="toggleSelect(this)">
+    <div class="opt-header"><div class="letter">B</div><h3>Surface màu — dot pattern theo mode</h3></div>
+    <div class="preview">
+      <div class="mode-pair">
+        <div>
+          <div class="mode-label">🌙 Dark</div>
+          <div class="page-dark">
+            <div class="char-section char-section-b-dark" style="overflow:visible; border-radius:10px 10px 0 0;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-dark">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-dark">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim">
+                  <div class="th act"></div><div class="th"></div><div class="th"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-dark"><span>© FastVisa</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="mode-label">☀ Light</div>
+          <div class="page-light">
+            <div class="char-section char-section-b-light" style="overflow:visible; border-radius:10px 10px 0 0;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-light">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-light">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim thumbs-sim-light">
+                  <div class="th act"></div><div class="th"></div><div class="th"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-light"><span>© FastVisa</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Dùng CSS variable <code>var(--color-surface-2)</code> cho background — tự động switch light/dark. Giữ dot pattern.</p>
+      <span class="tag-rec">★ Đề xuất — nhất quán design system</span>
+    </div>
+  </div>
+
+  <!-- C: Gradient từ surface ra transparent -->
+  <div class="opt" data-choice="C" onclick="toggleSelect(this)">
+    <div class="opt-header"><div class="letter">C</div><h3>Gradient — fade dần ra trong suốt</h3></div>
+    <div class="preview">
+      <div class="mode-pair">
+        <div>
+          <div class="mode-label">🌙 Dark</div>
+          <div class="page-dark">
+            <div class="char-section char-section-c-dark" style="overflow:visible; border-radius:10px 10px 0 0;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-dark">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-dark">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim">
+                  <div class="th act"></div><div class="th"></div><div class="th"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-dark"><span>© FastVisa</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="mode-label">☀ Light</div>
+          <div class="page-light">
+            <div class="char-section char-section-c-light" style="overflow:visible; border-radius:10px 10px 0 0;">
+              <div class="portrait-sim">
+                <div class="glow-sim"></div>
+                <div class="portrait-img"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=160&fit=crop" alt=""></div>
+              </div>
+              <div class="info-sim">
+                <div class="sim-name sim-name-light">Văn A</div>
+                <div class="sim-role">Marketing</div>
+                <div class="sim-desc sim-desc-light">Chuyên gia chiến lược...</div>
+                <div class="thumbs-sim thumbs-sim-light">
+                  <div class="th act"></div><div class="th"></div><div class="th"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer-sim-light"><span>© FastVisa</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="opt-body">
+      <p>Background có gradient nhẹ tạo depth. Giống Surface nhưng softer, blend dần vào page. Phức tạp hơn B một chút.</p>
+      <span class="tag-ok">Tinh tế — nhưng khó test kỹ</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.opt').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const text = el.querySelector('h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cutout Portrait Options</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #f0f0f0;
+    padding: 24px;
+  }
+  h1 { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+  .sub { font-size: 12px; color: #888; text-align: center; margin-bottom: 28px; line-height: 1.6; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .card {
+    background: #1a1a1a;
+    border: 2px solid #2a2a2a;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { border-color: #E87613; }
+  .card.selected { border-color: #E87613; box-shadow: 0 0 0 1px #E87613, 0 0 24px rgba(232,118,19,0.2); }
+
+  .card-header {
+    padding: 10px 14px 9px;
+    border-bottom: 1px solid #2a2a2a;
+    background: #141414;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .letter {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #E87613; color: #fff;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-header h3 { font-size: 11px; font-weight: 700; color: #fff; }
+
+  .card-preview { padding: 12px; background: #111; }
+  .card-body { padding: 10px 14px 14px; }
+  .card-body p { font-size: 11px; color: #888; line-height: 1.6; }
+  .tag-rec {
+    display: inline-block; margin-top: 8px;
+    font-size: 9px; font-weight: 700;
+    background: rgba(232,118,19,0.15); color: #E87613;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .tag-ok {
+    display: inline-block; margin-top: 8px;
+    font-size: 9px;
+    background: rgba(148,163,184,0.1); color: #94a3b8;
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* ═══════════════════════════════
+     MOCKUP A: Character bleed bottom into footer
+     Section has normal height, character PNG overflows bottom
+     Footer covers the feet
+     ═══════════════════════════════ */
+  .mock-a {
+    width: 100%;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  /* Page bg */
+  .mock-a-page {
+    background: #FBFBF9;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    min-height: 160px;
+    position: relative;
+    /* subtle dot pattern */
+    background-image: radial-gradient(circle, #d8d4cf 1px, transparent 1px);
+    background-size: 12px 12px;
+    background-color: #FBFBF9;
+  }
+  /* Left col: character cutout bleeds below */
+  .mock-a-char {
+    position: relative;
+    overflow: visible; /* important: let character bleed */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 0;
+    min-height: 160px;
+    z-index: 2;
+  }
+  .char-cutout-a {
+    /* Simulating a PNG cutout person */
+    position: absolute;
+    bottom: -28px; /* bleed below section */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 170px;
+    z-index: 3;
+  }
+  .char-body-a {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 8px 8px 2px 2px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12px;
+  }
+  .char-body-a::before { content: '👤'; font-size: 28px; opacity: 0.5; }
+  .char-body-a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    /* No gradient — transparent bottom since it's a cutout */
+  }
+  .char-glow-a {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 80px;
+    background: #E87613;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Right col: info */
+  .mock-a-info {
+    padding: 14px 12px 14px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+  }
+  .mini-name { font-size: 13px; font-weight: 900; text-transform: uppercase; color: #111; letter-spacing: -0.02em; line-height:1; }
+  .mini-role { font-size: 7px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .mini-desc { font-size: 6px; color: #666; line-height: 1.5; margin-top: 6px; }
+  .mini-btn {
+    margin-top: 8px;
+    display: inline-block;
+    background: #111; color: #fff;
+    font-size: 6px; font-weight: 700;
+    padding: 4px 8px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    box-shadow: 2px 2px 0 #E87613;
+  }
+  .mini-thumbs {
+    display: flex; gap: 4px;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+    margin-top: 8px;
+  }
+  .mini-thumb {
+    width: 18px; height: 24px;
+    background: #4A88C8;
+    border-radius: 1px;
+    opacity: 0.4; filter: grayscale(1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px;
+  }
+  .mini-thumb.act {
+    opacity: 1; filter: grayscale(0);
+    box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9;
+    transform: scale(1.1) translateY(-2px);
+  }
+  /* Footer overlay */
+  .mock-footer {
+    background: #1a1a1a;
+    height: 36px;
+    position: relative;
+    z-index: 10;
+    display: flex; align-items: center;
+    padding: 0 12px;
+    margin-top: -2px;
+  }
+  .mock-footer-text { font-size: 8px; color: #555; }
+  .footer-badge {
+    background: rgba(232,118,19,0.15);
+    color: #E87613;
+    font-size: 7px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: auto;
+    letter-spacing: 0.05em;
+  }
+
+  /* ═══════════════════════════════
+     MOCKUP B: Character very tall, bleeds BOTH up and down
+     Section is short (info only), character floats dramatically
+     ═══════════════════════════════ */
+  .mock-b-wrapper {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .mock-b-page {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d8d4cf 1px, transparent 1px);
+    background-size: 12px 12px;
+    background-color: #FBFBF9;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    min-height: 110px;
+    position: relative;
+    overflow: visible;
+  }
+  .mock-b-char {
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+  }
+  .char-cutout-b {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 62px;
+    height: 190px; /* very tall — bleeds up out of section too */
+    z-index: 3;
+    top: -60px; /* also bleed upward */
+  }
+  .char-body-b {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 8px 8px 2px 2px;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 20px;
+    position: relative;
+  }
+  .char-body-b::before { content: '👤'; font-size: 32px; opacity: 0.45; }
+  .char-glow-b {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px; height: 70px;
+    background: #E87613;
+    border-radius: 50%;
+    filter: blur(28px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .mock-b-info {
+    padding: 12px 12px 10px 8px;
+    background: transparent;
+  }
+  /* Section above B (previous section) */
+  .mock-b-prev {
+    background: #f0ede8;
+    height: 55px;
+    border-radius: 8px 8px 0 0;
+    display: flex; align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid #e0ddd8;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+  }
+  .mock-b-prev-text { font-size: 8px; color: #999; font-style: italic; }
+
+  /* ═══════════════════════════════
+     MOCKUP C: Character absolute, full-height, LEFT SIDE
+     Section uses overflow: hidden on left but footer still covers
+     Character sticks to bottom-left of viewport area
+     ═══════════════════════════════ */
+  .mock-c-wrapper { position: relative; border-radius: 8px; overflow: hidden; }
+  .mock-c-page {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d8d4cf 1px, transparent 1px);
+    background-size: 12px 12px;
+    background-color: #FBFBF9;
+    min-height: 170px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    overflow: hidden; /* clip at section boundary */
+  }
+  /* Left: character positioned absolute, fills full height, anchored bottom */
+  .mock-c-char {
+    position: relative;
+    overflow: visible;
+    min-height: 170px;
+  }
+  .char-cutout-c {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 76px;
+    height: 195px; /* taller than section */
+    z-index: 3;
+    overflow: hidden; /* clip top overflow */
+    /* only clip top, bottom goes into footer */
+  }
+  .char-body-c {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 195px;
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 8px 8px 0 0;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 16px;
+  }
+  .char-body-c::before { content: '👤'; font-size: 30px; opacity: 0.45; }
+  .char-glow-c {
+    position: absolute;
+    bottom: 60px; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 80px;
+    background: #E87613; border-radius: 50%;
+    filter: blur(30px); opacity: 0.2;
+  }
+  .mock-c-info {
+    padding: 14px 12px 12px 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Cutout Portrait — 3 Cách Xử Lý</h1>
+<p class="sub">Ảnh tách nền (PNG cutout) + Footer che phần dưới của nhân vật.<br>Bạn muốn mức độ "bleed" như thế nào?</p>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card" data-choice="A" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <div class="letter">A</div>
+      <h3>Bleed nhẹ — chân chìm vào Footer</h3>
+    </div>
+    <div class="card-preview">
+      <div class="mock-a">
+        <div class="mock-a-page">
+          <div class="mock-a-char">
+            <div class="char-glow-a"></div>
+            <div class="char-cutout-a">
+              <div class="char-body-a"></div>
+            </div>
+          </div>
+          <div class="mock-a-info">
+            <div>
+              <div class="mini-name">Nguyễn Văn A</div>
+              <div class="mini-role">Marketer</div>
+              <div class="mini-desc">Chuyên gia hoạch định chiến lược với khả năng thấu hiểu tâm lý khách hàng...</div>
+              <div class="mini-btn">View Profile →</div>
+            </div>
+            <div class="mini-thumbs">
+              <div class="mini-thumb act">👤</div>
+              <div class="mini-thumb">👤</div>
+              <div class="mini-thumb">👤</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-footer">
+          <span class="mock-footer-text">© 2025 FastVisa. All rights reserved.</span>
+          <span class="footer-badge">Footer che chân nhân vật</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Section có chiều cao bình thường. PNG cutout <code>overflow: visible</code> về phía dưới ~30–50px. Footer (dark background) phủ lên, tạo hiệu ứng nhân vật "đứng trên" footer.</p>
+      <span class="tag-rec">★ Đề xuất — clean, dễ implement</span>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card" data-choice="B" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <div class="letter">B</div>
+      <h3>Bleed mạnh — nhân vật vượt lên section trên</h3>
+    </div>
+    <div class="card-preview">
+      <div class="mock-b-wrapper">
+        <div class="mock-b-prev">
+          <span class="mock-b-prev-text">← Section phía trên (AboutFeatures)</span>
+        </div>
+        <div class="mock-b-page" style="overflow:visible; position:relative;">
+          <div class="mock-b-char">
+            <div class="char-glow-b"></div>
+            <div class="char-cutout-b">
+              <div class="char-body-b"></div>
+            </div>
+          </div>
+          <div class="mock-b-info">
+            <div class="mini-name" style="font-size:11px;">Nguyễn Văn A</div>
+            <div class="mini-role">Marketer</div>
+            <div class="mini-desc" style="margin-top:4px;">Chuyên gia chiến lược...</div>
+            <div class="mini-thumbs" style="margin-top:8px;">
+              <div class="mini-thumb act">👤</div>
+              <div class="mini-thumb">👤</div>
+              <div class="mini-thumb">👤</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-footer">
+          <span class="mock-footer-text">© 2025 FastVisa</span>
+          <span class="footer-badge">Footer + section trên cùng che</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Nhân vật PNG rất cao, nhô lên cả section phía trên lẫn chìm vào footer phía dưới. Visual impact cực mạnh, cinematic. Nhưng phức tạp hơn — cần quản lý <code>z-index</code> và layout cẩn thận.</p>
+      <span class="tag-ok">Dramatic — cần test kỹ</span>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card" data-choice="C" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <div class="letter">C</div>
+      <h3>Clip trên, bleed dưới — section tự giới hạn</h3>
+    </div>
+    <div class="card-preview">
+      <div class="mock-c-wrapper">
+        <div class="mock-c-page">
+          <div class="mock-c-char">
+            <div class="char-glow-c"></div>
+            <div class="char-cutout-c">
+              <div class="char-body-c"></div>
+            </div>
+          </div>
+          <div class="mock-c-info">
+            <div class="mini-name">Nguyễn Văn A</div>
+            <div class="mini-role">Marketer</div>
+            <div class="mini-desc">Chuyên gia hoạch định chiến lược...</div>
+            <div class="mini-btn" style="margin-top:6px;">View Profile →</div>
+            <div class="mini-thumbs" style="margin-top:10px;">
+              <div class="mini-thumb act">👤</div>
+              <div class="mini-thumb">👤</div>
+              <div class="mini-thumb">👤</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-footer">
+          <span class="mock-footer-text">© 2025 FastVisa</span>
+          <span class="footer-badge">Footer che chân</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Section clip phần đầu nhân vật (nếu ảnh quá cao), nhưng phần chân vẫn bleed xuống footer. Chiều cao section do info-col quyết định. Cân bằng giữa A và B.</p>
+      <span class="tag-ok">Flexible height</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const text = el.querySelector('h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Final Choice</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #f0f0f0; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+  .sub { font-size: 12px; color: #888; text-align: center; margin-bottom: 28px; line-height: 1.6; }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 700px; margin: 0 auto; }
+  .card {
+    background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 14px;
+    overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+  }
+  .card:hover { border-color: #E87613; }
+  .card.selected { border-color: #E87613; box-shadow: 0 0 0 1px #E87613, 0 0 24px rgba(232,118,19,.2); }
+  .card-header {
+    padding: 10px 14px 9px; border-bottom: 1px solid #2a2a2a; background: #141414;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .letter { width: 22px; height: 22px; border-radius: 50%; background: #E87613; color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .card-header h3 { font-size: 12px; font-weight: 700; color: #fff; }
+  .card-preview { padding: 14px; background: #111; display: flex; justify-content: center; gap: 10px; }
+  .card-body { padding: 10px 14px 14px; }
+  .card-body p { font-size: 11px; color: #888; line-height: 1.6; }
+  .tag-rec { display: inline-block; margin-top: 8px; font-size: 9px; font-weight: 700; background: rgba(232,118,19,.15); color: #E87613; padding: 2px 8px; border-radius: 4px; }
+  .tag-ok  { display: inline-block; margin-top: 8px; font-size: 9px; background: rgba(148,163,184,.1); color: #94a3b8; padding: 2px 8px; border-radius: 4px; }
+
+  /* phone shell */
+  .phone { width: 120px; background: #FBFBF9; border-radius: 16px; border: 2px solid #333; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.5); flex-shrink: 0; }
+  .phone-footer { background: #1a1a1a; height: 26px; display: flex; align-items: center; padding: 0 8px; position: relative; z-index: 10; }
+  .phone-footer span { font-size: 6px; color: #444; }
+  .footer-mark { margin-left: auto; font-size: 6px; color: #E87613; font-weight: 700; }
+
+  /* ─── OPTION A: selector mode, cutout bottom ─── */
+  .body-a {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 10px 10px;
+    padding: 12px 10px 0;
+    position: relative; overflow: visible;
+  }
+  .a-name { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #111; letter-spacing: -.02em; line-height: 1; }
+  .a-role { font-size: 6px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .a-desc { font-size: 6px; color: #666; line-height: 1.5; margin-top: 5px; }
+  .a-thumbs { display: flex; gap: 4px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e0ddd8; }
+  .a-thumb { width: 20px; height: 26px; background: #4A88C8; border-radius: 2px; opacity: .4; filter: grayscale(1); display: flex; align-items: center; justify-content: center; font-size: 8px; }
+  .a-thumb.act { opacity: 1; filter: grayscale(0); box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9; transform: scale(1.1) translateY(-2px); }
+  .a-cutout-zone { position: relative; height: 72px; overflow: visible; display: flex; justify-content: center; align-items: flex-end; margin-top: 8px; }
+  .a-glow { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); width: 56px; height: 56px; background: #E87613; border-radius: 50%; filter: blur(20px); opacity: .2; z-index: 1; }
+  .a-cutout { width: 52px; height: 100px; position: absolute; bottom: -26px; background: linear-gradient(160deg,#5a5a6a,#3a3a4a); border-radius: 5px 5px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 8px; z-index: 5; }
+  .a-cutout::before { content: '👤'; font-size: 20px; opacity: .5; }
+
+  /* ─── OPTION B: 3 stacked cards (scroll implied) ─── */
+  .phone-b-scroll { width: 120px; background: #FBFBF9; border-radius: 16px; border: 2px solid #333; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.5); flex-shrink: 0; }
+  .body-b { background: #FBFBF9; }
+  .member-card {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 8px 8px;
+    border-bottom: 1px solid #eae7e2;
+    background: #FBFBF9;
+  }
+  .member-card:last-child { border-bottom: none; }
+  .member-card.active-card { background: #fff; }
+  .member-photo {
+    width: 36px; height: 48px; flex-shrink: 0;
+    background: #4A88C8;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .member-photo.active-photo {
+    box-shadow: 0 0 0 1.5px #E87613;
+  }
+  /* cutout effect on the active photo */
+  .member-photo .photo-person {
+    position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+    font-size: 22px; line-height: 1;
+  }
+  .member-info { flex: 1; min-width: 0; }
+  .m-name { font-size: 8px; font-weight: 800; text-transform: uppercase; color: #111; letter-spacing: -.01em; }
+  .m-role { font-size: 6px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
+  .m-desc { font-size: 5.5px; color: #777; line-height: 1.5; margin-top: 3px; }
+  .scroll-hint { background: #f0ede8; height: 18px; display: flex; align-items: center; justify-content: center; }
+  .scroll-hint span { font-size: 6px; color: #bbb; }
+</style>
+</head>
+<body>
+
+<h1>Mobile — Chọn 1 trong 2</h1>
+<p class="sub">Desktop luôn là Character Selection (split 5:7, cutout bleed footer).<br>Chỉ mobile mới có sự khác biệt này.</p>
+
+<div class="cards">
+
+  <!-- OPTION A: Selector giữ nguyên, cutout ở dưới -->
+  <div class="card" data-choice="A" onclick="toggleSelect(this)">
+    <div class="card-header"><div class="letter">A</div><h3>Giữ selector — cutout canh giữa dưới</h3></div>
+    <div class="card-preview">
+      <div class="phone">
+        <div class="body-a">
+          <div class="a-name">Nguyễn Văn A</div>
+          <div class="a-role">Marketer</div>
+          <div class="a-desc">Chuyên gia hoạch định chiến lược với khả năng thấu hiểu tâm lý khách hàng.</div>
+          <div class="a-thumbs">
+            <div class="a-thumb act">👤</div>
+            <div class="a-thumb">👤</div>
+            <div class="a-thumb">👤</div>
+          </div>
+          <div class="a-cutout-zone">
+            <div class="a-glow"></div>
+            <div class="a-cutout"></div>
+          </div>
+        </div>
+        <div class="phone-footer"><span>© FastVisa</span><span class="footer-mark">↑ che chân</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Vẫn là interactive selector — bấm thumbnail để đổi nhân vật. Cutout canh giữa, bleed vào footer. UX nhất quán với desktop.</p>
+      <span class="tag-rec">★ UX nhất quán</span>
+    </div>
+  </div>
+
+  <!-- OPTION B: 3 static cards -->
+  <div class="card" data-choice="B" onclick="toggleSelect(this)">
+    <div class="card-header"><div class="letter">B</div><h3>3 khối tĩnh — ảnh + tên + vị trí + mô tả</h3></div>
+    <div class="card-preview">
+      <div class="phone-b-scroll phone">
+        <div class="body-b">
+          <!-- Card 1 active -->
+          <div class="member-card active-card">
+            <div class="member-photo active-photo" style="background:#4A88C8;">
+              <div class="photo-person">👤</div>
+            </div>
+            <div class="member-info">
+              <div class="m-name">Nguyễn Văn A</div>
+              <div class="m-role">Marketer</div>
+              <div class="m-desc">Chuyên gia hoạch định chiến lược, ý tưởng bùng nổ...</div>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="member-card">
+            <div class="member-photo" style="background:#4A88C8; opacity:.7;">
+              <div class="photo-person">👤</div>
+            </div>
+            <div class="member-info">
+              <div class="m-name" style="color:#888;">Trần Thị B</div>
+              <div class="m-role" style="color:#cba06a;">UX/UI Wizard</div>
+              <div class="m-desc">Bậc thầy thị giác, giao diện mượt mà...</div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="member-card">
+            <div class="member-photo" style="background:#4A88C8; opacity:.7;">
+              <div class="photo-person">👤</div>
+            </div>
+            <div class="member-info">
+              <div class="m-name" style="color:#888;">Lê Văn C</div>
+              <div class="m-role" style="color:#cba06a;">Tech Paladin</div>
+              <div class="m-desc">Kiến trúc mở rộng, bảo mật tuyệt đối...</div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-hint"><span>↑ scroll</span></div>
+        <div class="phone-footer"><span>© FastVisa</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>3 khối tĩnh: mỗi thành viên có ảnh nhỏ (thumbnail từ cutout) + tên + role + mô tả. Không interactive, không cutout bleed — đơn giản, dễ đọc trên mobile.</p>
+      <span class="tag-ok">Đơn giản — không interactive</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const text = el.querySelector('h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+</body>
+</html>

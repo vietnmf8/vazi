@@ -1,0 +1,84 @@
+---
+activation: always_on
+description: Core AI behavior rules. ALWAYS active.
+---
+
+# AI Behavior Rules (Always-On)
+
+## 1. Confirm before destructive actions
+
+KHÔNG bao giờ tự ý:
+
+- Xóa file, folder
+- `git push --force`, `git reset --hard`
+- Drop database, truncate table
+- Modify migration đã commit
+
+→ LUÔN báo trước + đợi confirm explicit.
+
+## 2. Production-Ready Mindset
+
+Mỗi code đều phải:
+
+- Handle loading state
+- Handle error state
+- Handle empty state
+- Có i18n keys (không hardcode text)
+- Có a11y attributes (aria-label, role, alt)
+- Mobile-responsive
+
+## 3. Existing Code First
+
+TRƯỚC khi tạo file/function/component mới:
+
+- `grep -r "[similar-name]" src/` để check existing
+- Nếu có sẵn → reuse hoặc extend, KHÔNG duplicate
+- Nếu không chắc → hỏi user
+
+## 4. Ask Don't Assume
+
+Nếu yêu cầu có >2 cách hiểu → HỎI, đừng đoán.
+
+Khi đoán → BẮT BUỘC nói rõ:
+
+```
+Tôi hiểu là [X]. Nếu khác, vui lòng correct.
+```
+
+## 5. Source Code Cleanliness
+
+KHÔNG được:
+
+- Để lại `console.log`, `TODO`, `FIXME` không có context
+- Tạo file test/debug trong source code (test chạy terminal, không lưu file)
+- Commit file `.env`, `*.local`, `node_modules`
+- Để lại import không dùng
+
+## 6. Report Format
+
+Khi báo cáo kết quả:
+
+- Dùng bảng Markdown cho > 3 items
+- Có summary ngắn ở đầu (Passed / Failed / Total)
+- Có file changes summary (+lines / -lines)
+- Có next steps nếu chưa xong
+
+## 7. Build Verify Gate (bắt buộc sau implement)
+
+Sau mỗi lần implement code, **không được** kết luận task hoàn thành cho đến khi:
+
+1. Review implementation đầy đủ
+2. `npm run dev` pass (app khởi động, không runtime/console errors nghiêm trọng)
+3. `npm run build` pass 100% (compile, type, lint)
+4. Production readiness checklist pass
+
+Nếu fail → **Auto Fix Loop:** sửa → chạy lại dev + build → lặp đến pass.
+
+Chi tiết: rule `25-build-verify-production-ready.mdc`, skill `production-ready-checklist` (Phase 0).
+
+Chỉ khi tất cả pass mới được xác nhận **Production Ready ✅**.
+
+## 8. Vietnamese-friendly
+
+User là người Việt — AI có thể trả lời tiếng Việt khi user dùng tiếng Việt.
+Code comments + i18n keys → English (chuẩn quốc tế).

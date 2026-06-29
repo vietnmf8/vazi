@@ -1,0 +1,146 @@
+<h2>Câu hỏi 2: Khi AI không chắc chắn về một field — hiển thị thế nào?</h2>
+<p class="subtitle">Thực tế, AI đôi khi đọc sai ngày sinh hoặc số passport do ảnh mờ / góc chụp lệch. Chọn cách xử lý phù hợp.</p>
+
+<div class="cards">
+
+  <!-- Option A: Silent fill -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;padding:14px;">
+        <div style="font-size:10px;color:#22c55e;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;display:inline-block;"></span>
+          Fields filled — please review before continuing
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Full Name *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">MARDY JUGALBOT</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Passport Number *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">P82576038</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Date of Birth *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">04 May 1982</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Expiry Date *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">23 Nov 2031</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Nationality *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Philippine</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Gender</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Male</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Silent fill, không có indicator</h3>
+      <p>AI điền hết vào form, không phân biệt field nào chắc/không chắc. User tự review và chỉnh sửa nếu sai.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>UI gọn gàng nhất</li><li>Không distract user</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>User có thể bỏ qua field AI đọc sai</li><li>Không có cue nào để review kỹ</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Color-coded confidence -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;padding:14px;">
+        <div style="font-size:10px;color:#22c55e;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;background:#22c55e;border-radius:50%;display:inline-block;"></span>
+          6/6 fields extracted — 1 field needs review
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Full Name *</div>
+            <div style="background:#0f172a;border:1.5px solid #22c55e55;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">MARDY JUGALBOT</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Passport Number *</div>
+            <div style="background:#0f172a;border:1.5px solid #22c55e55;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">P82576038</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Date of Birth * <span style="color:#f59e0b;font-size:9px;">⚠ Please verify</span></div>
+            <div style="background:#0f172a;border:1.5px solid #f59e0b;border-radius:6px;padding:7px 10px;font-size:11px;color:#fbbf24;position:relative;">
+              04 May 1982
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Expiry Date *</div>
+            <div style="background:#0f172a;border:1.5px solid #22c55e55;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">23 Nov 2031</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Nationality *</div>
+            <div style="background:#0f172a;border:1.5px solid #22c55e55;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Philippine</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Gender</div>
+            <div style="background:#0f172a;border:1.5px solid #22c55e55;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Male</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Amber highlight cho field AI không chắc</h3>
+      <p>Field confidence cao → viền xanh nhạt. Field AI không chắc (ảnh mờ, khó đọc) → viền vàng + label "⚠ Please verify". User biết đâu cần kiểm tra kỹ.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Hướng sự chú ý đúng chỗ</li><li>Tăng trust vào AI</li><li>Giảm lỗi điền sai</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>UI phức tạp hơn một chút</li><li>Phải truyền confidence score từ API</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: Leave uncertain fields empty -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;padding:14px;">
+        <div style="font-size:10px;color:#f59e0b;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;background:#f59e0b;border-radius:50%;display:inline-block;"></span>
+          5/6 fields extracted — Date of Birth needs manual input
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Full Name *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">MARDY JUGALBOT</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Passport Number *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">P82576038</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Date of Birth * <span style="color:#ef4444;font-size:9px;">● Not extracted</span></div>
+            <div style="background:#0f172a;border:1.5px dashed #ef444488;border-radius:6px;padding:7px 10px;font-size:11px;color:#475569;font-style:italic;">Select date of birth</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Expiry Date *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">23 Nov 2031</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Nationality *</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Philippine</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#64748b;margin-bottom:3px;">Gender</div>
+            <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:7px 10px;font-size:11px;color:#e2e8f0;">Male</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Bỏ trống field không chắc, yêu cầu điền tay</h3>
+      <p>Chỉ điền những field AI đọc được chắc chắn. Field AI không đủ tự tin → để trống + dashed border đỏ + label "Not extracted".</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>AI không bao giờ ghi sai vào form</li><li>Rõ ràng field nào cần làm thủ công</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Conservative — đôi khi vẫn cần điền nhiều field</li><li>Mất đi một phần giá trị tự động hóa</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

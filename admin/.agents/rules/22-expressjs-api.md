@@ -1,0 +1,62 @@
+---
+activation: model_decision
+description: "[REFERENCE] ExpressJS API conventions for the api/ project. Read this when integrating admin with the API — do NOT apply Express patterns to Next.js admin code."
+globs: []
+---
+
+# ExpressJS API Standards
+
+## Project Structure (separate from Next.js)
+
+```
+/api  (deployed to api.yoursite.com)
+├── src/
+│   ├── routes/        # REST endpoints
+│   ├── middleware/    # auth, cors, rate-limit
+│   ├── services/      # business logic, calls Prisma
+│   ├── validators/    # Zod schemas (share with frontend via npm workspace)
+│   └── index.ts       # Express app
+```
+
+## CORS for Dashboard (Next.js on www, API on api subdomain)
+
+```ts
+app.use(
+    cors({
+        origin: process.env.ALLOWED_ORIGINS!.split(","),
+        credentials: true, // for cookies/auth
+    }),
+);
+```
+
+## REST Conventions
+
+- `GET /api/v1/users?cursor=&limit=20` → paginated list
+- `GET /api/v1/users/:id`
+- `POST /api/v1/users` → 201 + Location header
+- `PATCH /api/v1/users/:id` (NOT PUT — partial update)
+- `DELETE /api/v1/users/:id` → 204
+- Bulk: `POST /api/v1/users/bulk` with `{ ids: [] }`
+
+## Validation (Zod first, then handler)
+
+```ts
+import { z } from "zod";
+const CreateUser = z.object({ email: z.string().email(), name: z.string().min(2) });
+router.post("/users", validate(CreateUser), async (req, res) => { ... });
+```
+
+## Error Format (consistent for frontend)
+
+```ts
+// All errors return: { error: { code, message, details? } }
+// 400: VALIDATION_ERROR, 401: UNAUTHORIZED, 403: FORBIDDEN
+// 404: NOT_FOUND, 409: CONFLICT, 422: UNPROCESSABLE, 500: INTERNAL
+```
+
+## Forbidden
+
+- ❌ Returning raw Prisma errors (leak schema)
+- ❌ Auth in handler (use middleware)
+- ❌ Direct DB queries in route handler (use service layer)
+- ❌ Sync handlers (always async, catch errors)

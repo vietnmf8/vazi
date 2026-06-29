@@ -1,0 +1,16 @@
+---
+activation: model_decision
+description: Data Grid and Table Conventions for Admin Dashboard
+globs: ["**/app/**/*.tsx", "**/components/**/*.tsx"]
+---
+<data-grid-conventions>
+
+<rules>
+- Use robust Data Table libraries (e.g., TanStack Table or Shadcn Data Table) for complex admin grids.
+- Implement Server-side pagination, sorting, and filtering for large datasets to optimize performance.
+- Include debounced search inputs to avoid spamming the backend API.
+- Use clear visual indicators for sorting directions and active filters.
+- Support bulk actions (e.g., multi-select rows for deletion) intuitively.
+</rules>
+
+</data-grid-conventions>

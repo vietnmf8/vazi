@@ -1,0 +1,321 @@
+---
+activation: model_decision
+description: AI Agent loop pattern — chatbot with tool use, JSON Schema enforcement, MAX_TURNS guard.
+globs: ["src/services/chatbot/**/*.ts", "src/configs/ai.config.ts"]
+---
+
+# AI Agent Loop (In-Project Chatbot)
+
+## Architecture
+
+```
+User input → ChatBotService.handleMessage()
+    ↓
+Loop while turns < MAX_TURNS:
+    1. think() — Call AI with system prompt + context + history + user input
+    2. Parse AI response (structured JSON via response_format)
+    3. If action === "respond" → break, return AI's text to user
+    4. Else: runTool(action, payload) → append result to toolHistory
+    5. Increment turns
+    ↓
+Save conversation + message to DB
+    ↓
+Trigger Pusher event for realtime
+```
+
+## AI config (src/configs/ai.config.ts)
+
+```typescript
+export default {
+    provider: process.env.AI_PROVIDER ?? "openai", // openai | anthropic | groq
+    apiKey: process.env.AI_API_KEY ?? "",
+    model: process.env.AI_MODEL ?? "gpt-4o-mini",
+    maxTurns: parseInt(process.env.AI_MAX_TURNS ?? "10", 10),
+    temperature: parseFloat(process.env.AI_TEMPERATURE ?? "0.3"),
+    timeout: parseInt(process.env.AI_TIMEOUT_MS ?? "30000", 10),
+
+    // JSON Schema enforcement — AI MUST output this shape
+    responseFormat: {
+        type: "json_schema" as const,
+        json_schema: {
+            name: "agent_action",
+            strict: true,
+            schema: {
+                type: "object",
+                properties: {
+                    thought: {
+                        type: "string",
+                        description: "Reasoning behind chosen action",
+                    },
+                    action: {
+                        type: "string",
+                        enum: [
+                            "read_file",
+                            "write_file",
+                            "bash",
+                            "fetch_url",
+                            "respond",
+                        ],
+                    },
+                    payload: {
+                        type: "object",
+                        description: "Action-specific params",
+                    },
+                },
+                required: ["thought", "action", "payload"],
+                additionalProperties: false,
+            },
+        },
+    },
+
+    // Security: whitelist commands per OS
+    bashWhitelist: {
+        windows: ["dir", "cd", "ver", "whoami", "echo", "type"],
+        linux: [
+            "ls",
+            "pwd",
+            "uname",
+            "df",
+            "whoami",
+            "echo",
+            "cat",
+            "head",
+            "tail",
+        ],
+    },
+
+    workspaceRoot: process.env.AI_WORKSPACE ?? "./workspace",
+};
+```
+
+## Agent service (src/services/chatbot/agent.service.ts)
+
+```typescript
+import OpenAI from "openai";
+import aiConfig from "@/configs/ai.config";
+import { resolveWorkspacePath } from "@/utils/path-security";
+import { ExternalServiceError, BusinessError } from "@/utils/errors";
+import * as Sentry from "@sentry/node";
+
+interface AgentAction {
+    thought: string;
+    action: "read_file" | "write_file" | "bash" | "fetch_url" | "respond";
+    payload: any;
+}
+
+interface ToolResult {
+    action: string;
+    output: string;
+    error?: string;
+}
+
+class AgentService {
+    private openai = new OpenAI({ apiKey: aiConfig.apiKey });
+
+    async handleMessage(
+        systemPrompt: string,
+        userInput: string,
+        conversationHistory: any[] = [],
+    ) {
+        const toolHistory: ToolResult[] = [];
+        let turns = 0;
+
+        while (turns < aiConfig.maxTurns) {
+            turns++;
+
+            const result = await this.think({
+                systemPrompt,
+                conversationHistory,
+                toolHistory,
+                userInput,
+            });
+
+            // Final response — break loop
+            if (result.action === "respond") {
+                return {
+                    text: result.payload?.text ?? "",
+                    thought: result.thought,
+                    toolHistory,
+                    turns,
+                };
+            }
+
+            // Execute tool
+            const toolResult = await this.runTool(
+                result.action,
+                result.payload,
+            );
+            toolHistory.push(toolResult);
+
+            // If tool failed catastrophically, break early
+            if (toolResult.error && this.isFatalError(toolResult.error)) {
+                throw new ExternalServiceError(
+                    "ai_agent",
+                    "errors.ai.tool_fatal",
+                );
+            }
+        }
+
+        // Reached MAX_TURNS without respond
+        throw new BusinessError("errors.ai.max_turns_exceeded", "AI_MAX_TURNS");
+    }
+
+    private async think(ctx: {
+        systemPrompt: string;
+        conversationHistory: any[];
+        toolHistory: ToolResult[];
+        userInput: string;
+    }): Promise<AgentAction> {
+        const messages = [
+            { role: "system", content: ctx.systemPrompt },
+            ...ctx.conversationHistory,
+            { role: "user", content: ctx.userInput },
+            ...ctx.toolHistory.map((t) => ({
+                role: "assistant" as const,
+                content: `[Tool ${t.action} result]\n${t.error ?? t.output}`,
+            })),
+        ];
+
+        try {
+            const response = await this.openai.chat.completions.create(
+                {
+                    model: aiConfig.model,
+                    messages,
+                    temperature: aiConfig.temperature,
+                    response_format: aiConfig.responseFormat,
+                },
+                { timeout: aiConfig.timeout },
+            );
+
+            const content = response.choices[0].message.content;
+            if (!content) throw new Error("Empty AI response");
+
+            return JSON.parse(content) as AgentAction;
+        } catch (err) {
+            Sentry.captureException(err, {
+                tags: { service: "ai_agent", action: "think" },
+            });
+            throw new ExternalServiceError("openai", "errors.ai.unavailable");
+        }
+    }
+
+    private async runTool(action: string, payload: any): Promise<ToolResult> {
+        try {
+            const handlers: Record<string, (p: any) => Promise<string>> = {
+                read_file: async (p) => this.readFile(p?.path),
+                write_file: async (p) => this.writeFile(p?.path, p?.content),
+                bash: async (p) => this.bash(p?.command),
+                fetch_url: async (p) => this.fetchUrl(p?.url),
+            };
+
+            const handler = handlers[action];
+            if (!handler) throw new Error(`Unknown action: ${action}`);
+
+            const output = await handler(payload);
+            return { action, output };
+        } catch (err: any) {
+            return { action, output: "", error: err.message };
+        }
+    }
+
+    private async readFile(filepath: string) {
+        const safePath = resolveWorkspacePath(filepath, aiConfig.workspaceRoot);
+        const fs = await import("node:fs/promises");
+        return fs.readFile(safePath, "utf-8");
+    }
+
+    private async writeFile(filepath: string, content: string) {
+        const safePath = resolveWorkspacePath(filepath, aiConfig.workspaceRoot);
+        const fs = await import("node:fs/promises");
+        await fs.writeFile(safePath, content, "utf-8");
+        return `Wrote ${content.length} bytes to ${filepath}`;
+    }
+
+    private async bash(command: string) {
+        // SECURITY: Whitelist-only
+        const platform = process.platform === "win32" ? "windows" : "linux";
+        const whitelist = aiConfig.bashWhitelist[platform];
+        const cmdRoot = command.trim().split(/\s+/)[0].toLowerCase();
+
+        if (!whitelist.includes(cmdRoot)) {
+            throw new Error(
+                `Command not allowed: ${cmdRoot}. Whitelist: ${whitelist.join(", ")}`,
+            );
+        }
+
+        const { execSync } = await import("node:child_process");
+        return execSync(command, {
+            cwd: aiConfig.workspaceRoot,
+            timeout: 5000,
+            encoding: "utf-8",
+        }).toString();
+    }
+
+    private async fetchUrl(url: string) {
+        // SECURITY: Block local network (SSRF prevention)
+        const parsed = new URL(url);
+        if (
+            ["localhost", "127.0.0.1", "0.0.0.0"].includes(parsed.hostname) ||
+            parsed.hostname.startsWith("192.168.") ||
+            parsed.hostname.startsWith("10.") ||
+            parsed.hostname.startsWith("172.")
+        ) {
+            throw new Error("Local network URLs not allowed");
+        }
+
+        const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
+        const text = await res.text();
+        return text.slice(0, 10000); // Cap at 10KB
+    }
+
+    private isFatalError(error: string): boolean {
+        return /API key|quota|rate limit|unauthorized/i.test(error);
+    }
+}
+
+export default new AgentService();
+```
+
+## Path security utility
+
+```typescript
+// src/utils/path-security.ts
+import path from "node:path";
+
+/**
+ * Resolve a path within workspace, preventing path traversal attacks.
+ * `../`, absolute paths, symlinks escape are blocked.
+ */
+export function resolveWorkspacePath(
+    filepath: string,
+    workspace: string,
+): string {
+    if (!filepath || typeof filepath !== "string") {
+        throw new Error("Invalid path");
+    }
+
+    const resolved = path.resolve(workspace, filepath);
+    const wsResolved = path.resolve(workspace);
+
+    if (
+        !resolved.startsWith(wsResolved + path.sep) &&
+        resolved !== wsResolved
+    ) {
+        throw new Error(`Path escape attempt: ${filepath}`);
+    }
+    return resolved;
+}
+```
+
+## Rules
+
+1. **ALWAYS** use `response_format: { type: "json_schema", strict: true }` — prevent action hallucination
+2. **ALWAYS** enforce `MAX_TURNS` guard to prevent infinite loops
+3. Bash commands: **WHITELIST** only — never blacklist (incomplete by design)
+4. File paths: **ALWAYS** `resolveWorkspacePath()` — block `..`, absolute paths, symlinks
+5. URL fetch: **BLOCK** local network IPs (SSRF prevention)
+6. Tool errors → continue loop with error in history (let AI retry/adapt)
+7. Fatal errors (API key, quota) → throw immediately, don't retry
+8. Tool output capped (e.g. 10KB) — prevent context bloat
+9. Timeout each AI call (default 30s) + each tool (default 5-10s)
+10. Sentry capture all AI errors with `service: "ai_agent"` tag

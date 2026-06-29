@@ -1,0 +1,6 @@
+- [x] Task 1: Sửa lỗi chặn dòng chảy HTML (Blocking SSR) tại RootLayout
+- [x] Task 2: Loại bỏ re-render toàn trang khi chuyển trang (Stinger)
+- [x] Task 3: Thay thế scroll handler bằng IntersectionObserver tại FloatingTOC
+- [x] Task 4: Loại bỏ ResizeObserver thủ công tại useFeaturedNationalities
+- [x] Task 5: Khắc phục lỗi Dynamic Component Definition ở ChatMessage
+- [x] Task 6: Tối ưu so sánh ngày trong ChatMessageList

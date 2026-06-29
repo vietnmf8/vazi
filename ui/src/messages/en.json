@@ -1,0 +1,2018 @@
+{
+  "Metadata": {
+    "site_name": "FastVisa",
+    "default_title": "FastVisa — Get Visas On Time to 120+ Destinations, Guaranteed",
+    "description": "Apply for your visa online in minutes. Fast, reliable, and guaranteed processing to 120+ destinations worldwide."
+  },
+  "HomePage": {
+    "title": "Welcome to FASTVISA",
+    "description": "Your trusted visa application partner.",
+    "switch_language": "Change Language",
+    "Hero": {
+      "eyebrow": "Vietnam E-Visa Service",
+      "headline_1": "Get Your",
+      "headline_2": "Vietnam E-Visa",
+      "headline_3": "in 24 Hours",
+      "subheadline_1": "Simple online application, transparent pricing, and guaranteed on-time delivery — trusted by",
+      "subheadline_2": "150,000+ travelers",
+      "subheadline_3": "worldwide.",
+      "apply_now": "Apply Now →",
+      "check_status": "Check Status",
+      "stat_1_value": "150,000+",
+      "stat_1_label": "Visas Issued",
+      "stat_2_value": "24h",
+      "stat_2_label": "Processing",
+      "stat_3_value": "4.9★",
+      "stat_3_label": "Rating"
+    },
+    "QuickApply": {
+      "est_pricing": "Estimated Visa Pricing",
+      "express_speed": "Express Speed",
+      "total_for_travellers": "total for {count} travellers",
+      "per_traveller": "per traveller",
+      "fee_desc": "${price}/person · Full agency service guarantee",
+      "standard_fee": "Standard Visa Fee",
+      "express_delivery": "Express Delivery",
+      "people": "people",
+      "person": "person",
+      "guaranteed_price": "Guaranteed Service Price",
+      "continue_to_apply": "Continue to Application",
+      "evisa_desc": "✓ Government stamping fee of $25 included. Fast processing.",
+      "voa_desc": "✓ Government stamp fee paid at Vietnam arrival counter.",
+      "fasttrack_desc": "✓ Inclusive of official airport fast-track support queue code.",
+      "visa_category": "Visa Category",
+      "evisa": "E-Visa",
+      "fast_track": "Fast-Track",
+      "visa_on_arrival": "Visa on Arrival",
+      "nationality": "Nationality",
+      "select_nationality": "Select nationality...",
+      "no_nationality": "No nationality found.",
+      "port_of_entry": "Port of Entry",
+      "date_of_arrival": "Date of Arrival",
+      "select_arrival_date": "Select arrival date",
+      "visa_option": "Visa Option",
+      "travellers": "Travellers",
+      "processing_time": "Processing Time",
+      "free": "Free"
+    },
+    "Constants": {
+      "basic_fasttrack": "Basic Fast-Track Assistance",
+      "code_fasttrack": "VIP Fast-Track Assistance",
+      "evisa_30_single": "30 Days — Single Entry",
+      "evisa_90_single": "90 Days — Single Entry",
+      "evisa_90_multiple": "90 Days — Multiple Entry",
+      "voa_1m_single": "1 Month — Single Entry VOA",
+      "voa_1m_multiple": "1 Month — Multiple Entry VOA",
+      "voa_3m_single": "3 Months — Single Entry VOA",
+      "voa_3m_multiple": "3 Months — Multiple Entry VOA",
+      "normal_7_days": "Normal — 7 Working Days",
+      "urgent_4_days": "Urgent — 4 Working Days",
+      "urgent_2_hours": "Urgent — 2 Working Hours",
+      "urgent_1_day": "Last Minute — 4 Working Hours",
+      "han": "HAN — Hanoi Airport",
+      "sgn": "SGN — Saigon Airport",
+      "dad": "DAD — Da Nang Airport",
+      "pqc": "PQC — Phu Quoc Airport",
+      "moc_bai": "Moc Bai Border (Land)"
+    },
+    "Eligibility": {
+      "title": "Am I Eligible for Vietnam E-Visa?",
+      "desc": "Select your nationality to see if you qualify for a Vietnam E-Visa online — instant result, no account needed.",
+      "checker": "Eligibility Checker",
+      "your_nationality": "Your Nationality",
+      "select_nationality": "Select your nationality",
+      "no_nationality": "No nationality found.",
+      "error_lookup": "Could not load exemption details for this country.",
+      "qualify_title": "You qualify for Vietnam E-Visa!",
+      "visa_type": "Visa Type",
+      "max_duration": "Max Duration",
+      "stamping_fee": "Stamping Fee",
+      "processing_speed": "Processing Speed",
+      "req_docs": "Required Documents",
+      "req_1": "Valid passport with at least 6 months validity from date of arrival",
+      "req_2": "At least 2 blank pages in your passport for immigration stamps",
+      "req_3": "A high-quality digital portrait photo (white background, color)",
+      "req_4": "Scan or clear photo of your passport biodata page",
+      "advisory": "Advisory",
+      "visa_exemption_1": "Visa exemption applies for stays up to",
+      "visa_exemption_2": "days. You don't need a visa if staying under this duration!",
+      "apply_evisa_now": "Apply E-Visa Now",
+      "alt_options_req": "Alternative Visa Options Required",
+      "not_eligible_desc": "Your nationality may not be eligible for the standard E-Visa. Don't worry! Contact our support experts to explore options like visa-on-arrival or embassy sponsorship.",
+      "contact_support": "Contact Support Expert",
+      "details_status": "E-Visa Fully Supported",
+      "details_stay": "Up to 90 Days stay",
+      "details_fee": "$25 USD Government Fee",
+      "details_processing": "Standard 3 days / Express 24h"
+    },
+    "HowItWorks": {
+      "title": "How It Works",
+      "desc": "Four simple steps from application to approval — most applicants complete the form in under 10 minutes.",
+      "steps": {
+        "step_1_title": "Choose Visa",
+        "step_1_desc": "Select visa type, processing speed, and number of applicants.",
+        "step_2_title": "Fill Form",
+        "step_2_desc": "Enter passport details and upload required documents securely.",
+        "step_3_title": "Make Payment",
+        "step_3_desc": "Pay online via card or PayPal with transparent pricing.",
+        "step_4_title": "Receive via Email",
+        "step_4_desc": "Get your approved e-visa delivered to your inbox."
+      }
+    },
+    "FAQ": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Quick answers to common questions about Vietnam E-Visa.",
+      "view_all": "View All FAQs",
+      "q1": "How long does it take to get a Vietnam e-visa?",
+      "a1": "Standard processing takes 7 working days. Urgent options are available from 4 hours to 1 working day depending on visa type.",
+      "q2": "What documents do I need to apply?",
+      "a2": "You need a valid passport (6+ months validity), a passport bio-page scan, and a portrait photo. VIP fast-track may require additional documents.",
+      "q3": "Can I apply for multiple applicants in one order?",
+      "a3": "Yes. Select the number of applicants in Step 1 and complete a separate form card for each person in Step 2.",
+      "q4": "What payment methods do you accept?",
+      "a4": "We accept major credit cards (Visa, Mastercard) and PayPal. All charges are in USD.",
+      "q5": "What if my application is rejected?",
+      "a5": "Our money-back guarantee covers eligible rejections. Contact support with your booking number for assistance."
+    },
+    "Trust": {
+      "title": "Trusted by Travelers Worldwide",
+      "stat_1": "Visas issued",
+      "stat_2": "Fast processing",
+      "stat_3": "Customer rating",
+      "stat_4": "Countries served",
+      "reviews": {
+        "1_text": "Applied on Monday morning and received my e-visa the next day. Smooth process from start to finish.",
+        "1_name": "Sarah Mitchell",
+        "1_country": "United Kingdom",
+        "2_text": "Clear pricing, no hidden fees. Support answered my questions within minutes on WhatsApp.",
+        "2_name": "James Chen",
+        "2_country": "Australia",
+        "3_text": "The form was straightforward and the status checker kept me updated. Highly recommend.",
+        "3_name": "Maria Lopez",
+        "3_country": "United States"
+      }
+    },
+    "CTA": {
+      "title": "Ready to Visit Vietnam?",
+      "desc": "Start your application now — most travelers complete the form in under 10 minutes. Approved visa delivered directly to your inbox.",
+      "apply_now": "Apply Now →",
+      "check_status": "Check Status"
+    },
+    "ReadyToApply": {
+      "badge": "Fast Track Processing",
+      "title": "Ready to start your journey to Vietnam?",
+      "desc": "Skip the long queues and stressful paperwork. Apply online for your official Vietnam E-Visa in less than 5 minutes. Secure, simple, and 100% online.",
+      "trust_1": "Secure Encrypted Connection",
+      "trust_2": "Instant Agent Pre-Screening",
+      "apply_now": "Apply Now"
+    },
+    "EmergencyNotice": {
+      "title": "Emergency Support Announcement",
+      "need_an": "Need an ",
+      "emergency_visa": "EMERGENCY visa",
+      "desc": "? Contact our support team for 24/7 priority processing."
+    },
+    "FeaturedNationalities": {
+      "title": "Check Requirements by Nationality",
+      "loading": "Loading nationalities...",
+      "select": "Select nationality...",
+      "no_found": "No nationality found.",
+      "check_btn": "Check Exemption",
+      "see_less": "See Less",
+      "see_more": "See More countries",
+      "tab_good": "EVISA and VOA Supported",
+      "tab_normal": "VOA Only",
+      "tab_blacklist": "Not Supported",
+      "Dialog": {
+        "subtitle": "Vietnam Visa Requirements",
+        "important_requirements": "IMPORTANT REQUIREMENTS",
+        "close": "Close",
+        "apply_now": "Apply E-Visa Now",
+        "service_unavailable": "Service Unavailable",
+        "passport_validity": "Passport valid <strong>6+ months</strong> from arrival.",
+        "blank_pages": "At least <strong>2 blank pages</strong> for stamps.",
+        "apply_early": "Apply <strong>3-4 days</strong> before departure.",
+        "status": {
+          "exempt": {
+            "title": "Visa Exempted (Up to {days} Days)",
+            "description": "Great news! Citizens of this country are exempt from Vietnam visa requirements for stays of up to {days} days. You only need a passport valid for at least 6 months with 2 blank pages."
+          },
+          "evisa_only": {
+            "title": "E-Visa Required",
+            "description": "Citizens of this country require a valid E-Visa to enter Vietnam. The E-Visa is valid for tourist or business purposes, allowing up to 90 days stay with single or multiple entry."
+          },
+          "blacklist": {
+            "title": "Service Unsupported",
+            "description": "We regret to inform you that we currently do not support visa services for citizens of this country. Please contact our support team or the nearest embassy for assistance."
+          }
+        }
+      }
+    },
+    "PricingPreview": {
+      "title": "Popular E-Visa Options",
+      "desc": "Transparent service fees per applicant. Urgent processing available at checkout.",
+      "best_value": "Best Value",
+      "popular": "Popular",
+      "per_person": "/ person",
+      "apply_btn": "Apply",
+      "see_full_pricing": "See Full Pricing"
+    },
+    "CommentSection": {
+      "title": "Questions & Answers",
+      "entries_in_discussion": "entries in this discussion",
+      "quick_inquiry": "Quick Inquiry Form",
+      "full_name": "Full Name *",
+      "full_name_placeholder": "e.g. John Doe",
+      "email": "Email Address *",
+      "email_placeholder": "e.g. john@example.com",
+      "nationality": "Nationality *",
+      "select_country": "Select country",
+      "no_country": "No country found.",
+      "your_question": "Your Question *",
+      "question_placeholder": "What details are you looking for?",
+      "confirm_delete_title": "Confirm Delete",
+      "confirm_delete_desc": "Are you sure you want to delete this comment? This action cannot be undone.",
+      "no": "No",
+      "yes": "Yes",
+      "posting": "Posting..."
+    },
+    "BlogPreviewSection": {
+      "title_start": "Visa Information",
+      "title_highlight": "Centre",
+      "desc": "Stay updated with the latest Vietnam travel guides, official visa policy updates, and expert tips from our support team.",
+      "view_all": "View all articles",
+      "read_full": "Read Full Article",
+      "drag_browse": "← Drag to browse →"
+    },
+    "SubscribeForm": {
+      "success_title": "Successfully Joined!",
+      "success_desc": "Thank you! You are now subscribed to the latest travel policies & e-visa updates.",
+      "email_label": "Email Newsletter",
+      "desc": "Subscribe to get the latest e-visa updates, policy changes, and travel tips.",
+      "placeholder": "Enter your email address",
+      "error_generic": "Subscription failed. Please try again."
+    },
+    "Data": {
+      "PricingPlans": {
+        "0": {
+          "name": "Basic E-Visa",
+          "processing": "Standard Processing (3 working days)",
+          "features": {
+            "0": "Valid for 30 days",
+            "1": "Single Entry",
+            "2": "Standard Email Support",
+            "3": "No Hidden Fees"
+          }
+        },
+        "1": {
+          "name": "Urgent E-Visa",
+          "processing": "Urgent Processing (24 working hours)",
+          "features": {
+            "0": "Valid for 90 days",
+            "1": "Single Entry",
+            "2": "Priority Support (24/7)",
+            "3": "Fast-track Application"
+          }
+        },
+        "2": {
+          "name": "Emergency E-Visa",
+          "processing": "Emergency Processing (4 working hours)",
+          "features": {
+            "0": "Valid for 90 days",
+            "1": "Multiple Entries",
+            "2": "VIP Airport Fast-track (Add-on)",
+            "3": "Instant WhatsApp Support"
+          }
+        }
+      },
+      "BlogPosts": {
+        "0": {
+          "title": "Cruising the mystical emerald waters of Ha Long Bay",
+          "excerpt": "Discover the thousands of limestone karsts rising dramatically from the quiet sea, and explore hidden caves on standard wooden junk boats.",
+          "date": "May 12, 2026",
+          "category": "Cruises"
+        },
+        "1": {
+          "title": "A food lover's 48-hour guide to exploring Hanoi's Old Quarter",
+          "excerpt": "Savor steaming bowls of Pho, delicious crunchy Banh Mi, and egg coffee on the narrow railway streets of Vietnam's thousand-year-old capital.",
+          "date": "May 10, 2026",
+          "category": "Food & Culture"
+        },
+        "2": {
+          "title": "Have you experienced all the vibrant colors of travel in Da Nang?",
+          "excerpt": "Da Nang - the most modern and remarkable city situated on the banks of the Han River - greets visitors with beautiful beaches and the legendary Golden Bridge.",
+          "date": "May 20, 2026",
+          "category": "Travel Guide"
+        },
+        "3": {
+          "title": "Must-see places in Ho Chi Minh City (Saigon)",
+          "excerpt": "Whether living here or as a tourist, this beautiful city will still attract you by its unique combination of historic French architecture and dynamic nightlife.",
+          "date": "May 18, 2026",
+          "category": "Destinations"
+        },
+        "4": {
+          "title": "The most fascinating mountain passes in Northern Vietnam for adventure lovers",
+          "excerpt": "Downing a pass at midnight, or building a camp on the way are the valuable memories for the lovers of adventures conquering Ha Giang & Cao Bang.",
+          "date": "May 15, 2026",
+          "category": "Adventure"
+        }
+      },
+      "Nationalities": {
+        "us": "United States",
+        "uk": "United Kingdom",
+        "au": "Australia",
+        "ca": "Canada",
+        "fr": "France",
+        "de": "Germany",
+        "in": "India",
+        "jp": "Japan",
+        "cn": "China",
+        "vn": "Vietnam"
+      },
+      "HowItWorks": {
+        "0": {
+          "title": "Choose Visa",
+          "description": "Select visa type, processing speed, and number of applicants."
+        },
+        "1": {
+          "title": "Fill Form",
+          "description": "Enter passport details and upload required documents securely."
+        },
+        "2": {
+          "title": "Make Payment",
+          "description": "Pay online via card or PayPal with transparent pricing."
+        },
+        "3": {
+          "title": "Receive via Email",
+          "description": "Get your approved e-visa delivered to your inbox."
+        }
+      },
+      "TrustStats": {
+        "0": {
+          "label": "Visas issued"
+        },
+        "1": {
+          "label": "Fast processing"
+        },
+        "2": {
+          "label": "Customer rating"
+        },
+        "3": {
+          "label": "Countries served"
+        }
+      },
+      "Testimonials": {
+        "0": {
+          "country": "United Kingdom",
+          "text": "Applied on Monday morning and received my e-visa the next day. Smooth process from start to finish."
+        },
+        "1": {
+          "country": "Australia",
+          "text": "Clear pricing, no hidden fees. Support answered my questions within minutes on WhatsApp."
+        },
+        "2": {
+          "country": "United States",
+          "text": "The form was straightforward and the status checker kept me updated. Highly recommend."
+        }
+      },
+      "Faqs": {
+        "0": {
+          "question": "How long does it take to get a Vietnam e-visa?",
+          "answer": "Standard processing takes 7 working days. Urgent options are available from 4 hours to 1 working day depending on visa type."
+        },
+        "1": {
+          "question": "What documents do I need to apply?",
+          "answer": "You need a valid passport (6+ months validity), a passport bio-page scan, and a portrait photo. VIP fast-track may require additional documents."
+        },
+        "2": {
+          "question": "Can I apply for multiple applicants in one order?",
+          "answer": "Yes. Select the number of applicants in Step 1 and complete a separate form card for each person in Step 2."
+        },
+        "3": {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept major credit cards (Visa, Mastercard) and PayPal. All charges are in USD."
+        },
+        "4": {
+          "question": "What if my application is rejected?",
+          "answer": "Our money-back guarantee covers eligible rejections. Contact support with your booking number for assistance."
+        }
+      }
+    },
+    "EligibilityConstants": {
+      "us": {
+        "status": "E-Visa Fully Eligible",
+        "stay": "Up to 90 Days (Single/Multiple Entry)",
+        "fee": "$25 USD (Single) / $50 USD (Multiple)",
+        "processing": "Standard: 3 days | Urgent: 24h | Emergency: 4h",
+        "requirements": {
+          "0": "Ordinary US Passport valid for 6 months beyond arrival date",
+          "1": "At least 2 blank pages in the passport for entry stamps",
+          "2": "1 recent portrait photograph (color, white background, no glasses)",
+          "3": "High-resolution digital scan/photo of the passport biodata page"
+        },
+        "note": "US citizens can easily apply online for tourist or business E-Visa. Ensure that your designated port of entry exactly matches your E-Visa approval letter."
+      },
+      "au": {
+        "status": "E-Visa Fully Eligible",
+        "stay": "Up to 90 Days (Single/Multiple Entry)",
+        "fee": "$25 USD (Single) / $50 USD (Multiple)",
+        "processing": "Standard: 3 days | Urgent: 24h | Emergency: 4h",
+        "requirements": {
+          "0": "Australian Passport valid for at least 6 months",
+          "1": "At least 2 blank pages in the passport for entry stamps",
+          "2": "Recent passport-sized photo (white background, clear face)",
+          "3": "Clear photo of passport details page (biodata page)"
+        },
+        "note": "Australian passport holders are 100% eligible. High-speed entry Fast-Track airport service is highly recommended at Hanoi (HAN) and Saigon (SGN) to skip long immigration queues."
+      },
+      "cn": {
+        "status": "E-Visa Eligible (Ordinary G-Series)",
+        "stay": "Up to 90 Days (Single/Multiple Entry)",
+        "fee": "$25 USD (Single) / $50 USD (Multiple)",
+        "processing": "Standard: 3-4 days | Urgent: 24h available",
+        "requirements": {
+          "0": "Ordinary Chinese Passport (G-series). E-passports (E-series) are supported for flights but require careful border validation checks",
+          "1": "Passport must have 6 months validity and 2 blank pages",
+          "2": "Clear passport-sized photo with white background",
+          "3": "Scanned copy of the passport biodata page"
+        },
+        "note": "E-visa applies only to ordinary G-series passports. E-passports (starting with E) may experience extra checks at certain land borders. Flight travel is fully recommended."
+      },
+      "ca": {
+        "status": "E-Visa Fully Eligible",
+        "stay": "Up to 90 Days (Single/Multiple Entry)",
+        "fee": "$25 USD (Single) / $50 USD (Multiple)",
+        "processing": "Standard: 3 days | Urgent: 24h available",
+        "requirements": {
+          "0": "Canadian Passport valid for 6 months beyond stay duration",
+          "1": "At least 2 blank pages in passport for entry/exit stamps",
+          "2": "Digital portrait photograph in JPG format",
+          "3": "Digital scan of passport identification page"
+        },
+        "note": "Canadian citizens can travel to Vietnam for tourism, business, or family visits. The online application is simple and requires no embassy visits."
+      },
+      "gb": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid UK Passport with 6 months validity and 2 blank pages",
+          "1": "For Exemption: Proof of onward/return ticket within 45 days",
+          "2": "For E-Visa: Passport scan and digital portrait photo"
+        },
+        "note": "British citizens enjoy 45 days visa-free entry. If you plan to stay longer (up to 90 days) or require multiple entries, apply for an E-Visa online before departure."
+      },
+      "fr": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid French Passport with 6 months validity",
+          "1": "For Exemption: Onward flight ticket within 45 days",
+          "2": "For E-Visa: Passport scan and portrait photo"
+        },
+        "note": "French citizens are exempt for up to 45 days. Stays from 46 to 90 days require an E-Visa."
+      },
+      "de": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid German Passport with 6 months validity",
+          "1": "For Exemption: Onward flight ticket within 45 days",
+          "2": "For E-Visa: Passport scan and portrait photo"
+        },
+        "note": "German citizens enjoy 45 days visa-free entry. Stays from 46 to 90 days require an E-Visa."
+      },
+      "jp": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Japanese Passport with minimum 6 months validity",
+          "1": "For Exemption: Return or onward ticket within 45 days",
+          "2": "For E-Visa: Digital passport scan and portrait photograph"
+        },
+        "note": "Japanese passport holders enjoy one of the strongest visa exemptions. For stays beyond 45 days or multiple entries, apply for an E-Visa online before departure."
+      },
+      "kr": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid South Korean Passport with 6 months validity",
+          "1": "Proof of return or onward travel ticket within 45 days (exemption)",
+          "2": "For E-Visa: Passport biodata scan and recent portrait photo"
+        },
+        "note": "South Korean citizens benefit from 45 days visa-free access. Frequent visitors and long-term travelers should apply for a 90-day Multiple Entry E-Visa."
+      },
+      "in": {
+        "status": "E-Visa Eligible",
+        "stay": "Up to 90 Days (Single/Multiple Entry)",
+        "fee": "$25 USD (Single Entry) / $50 USD (Multiple Entry)",
+        "processing": "Standard: 3-5 days | Urgent: 24-48h available",
+        "requirements": {
+          "0": "Valid Indian Passport with at least 6 months validity",
+          "1": "At least 2 blank pages in the passport",
+          "2": "Recent digital portrait photo (white background)",
+          "3": "Clear scan of passport biodata page"
+        },
+        "note": "Indian citizens must obtain an E-Visa before arrival. The application process is fully online and typically takes 3-5 working days. Apply well in advance for busy travel seasons."
+      },
+      "sg": {
+        "status": "Visa Exempt (30 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 30 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Singapore Passport with 6 months validity",
+          "1": "For Exemption: Onward flight ticket within 30 days",
+          "2": "For E-Visa: Digital passport scan and portrait photo"
+        },
+        "note": "Singapore passport holders enjoy 30 days visa-free entry — one of the highest bilateral trust levels. For extended stays or business trips, apply for the 90-day E-Visa."
+      },
+      "es": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Spanish Passport with minimum 6 months validity",
+          "1": "For Exemption: Proof of onward/return journey within 45 days",
+          "2": "For E-Visa: Passport scan and recent color portrait photo"
+        },
+        "note": "Spanish citizens enjoy 45 days visa-free access to Vietnam. Planning a longer Indochina trip? Apply for the 90-day multiple entry E-Visa for full flexibility."
+      },
+      "it": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Italian Passport with at least 6 months validity",
+          "1": "For Exemption: Confirmed onward/return ticket within 45 days",
+          "2": "For E-Visa: Digital passport scan and portrait photograph"
+        },
+        "note": "Italian passport holders are visa-exempt for 45 days. For longer trips combining Vietnam with Cambodia or Laos, the 90-day multiple-entry E-Visa is the best option."
+      },
+      "nl": {
+        "status": "Visa Exempt (45 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 45 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Dutch/Netherlands Passport with 6 months validity",
+          "1": "Proof of return or onward flight (for exemption)",
+          "2": "For E-Visa: Passport scan and portrait photo"
+        },
+        "note": "Dutch citizens benefit from 45 days visa-free entry. For business meetings or extended vacations, the Vietnam E-Visa can be obtained online within 3 working days."
+      },
+      "my": {
+        "status": "Visa Exempt (30 Days) & E-Visa Eligible (90 Days)",
+        "stay": "Visa-Free: 30 Days | E-Visa: Up to 90 Days",
+        "fee": "Exemption: Free | E-Visa: $25 - $50 USD",
+        "processing": "Exemption: Instant | E-Visa: 3 days standard",
+        "requirements": {
+          "0": "Valid Malaysian Passport with 6 months validity",
+          "1": "Confirmed return or onward ticket within 30 days (exemption)",
+          "2": "For E-Visa: Clear passport scan and digital portrait photo"
+        },
+        "note": "Malaysian passport holders are eligible for 30 days visa-free entry. Frequent cross-border travelers and business visitors should apply for the 90-day multiple-entry E-Visa."
+      }
+    },
+    "QuickApplyConstants": {
+      "visa_options": {
+        "basic-fasttrack": "Basic Fast Track",
+        "code-fasttrack": "Approval Code + Fast Track",
+        "evisa-30-single": "E-Visa 30 Days Single",
+        "evisa-90-single": "E-Visa 90 Days Single",
+        "evisa-90-multiple": "E-Visa 90 Days Multiple",
+        "voa-1m-single": "VOA 1 Month Single",
+        "voa-1m-multiple": "VOA 1 Month Multiple",
+        "voa-3m-single": "VOA 3 Months Single",
+        "voa-3m-multiple": "VOA 3 Months Multiple"
+      },
+      "processing_options": {
+        "normal": "Normal Processing (3-5 days)",
+        "urgent-4d": "Urgent Processing (4 days)",
+        "urgent-2d": "Urgent Processing (2 hours)",
+        "urgent-1d": "Urgent Processing (1 day)"
+      },
+      "ports": {
+        "HAN": "Hanoi (HAN)",
+        "SGN": "Ho Chi Minh City (SGN)",
+        "DAD": "Da Nang (DAD)",
+        "PQC": "Phu Quoc (PQC)",
+        "MOC_BAI": "Moc Bai Landport"
+      }
+    },
+    "CommentsConstants": {
+      "c1": {
+        "nationality": "United States",
+        "date": "1 day ago",
+        "content": "Is the 24-hour urgent service available on weekends? I have a sudden flight scheduled for Monday morning and need the E-Visa processed as soon as possible.",
+        "r1": {
+          "date": "18 hours ago",
+          "content": "Hi Marcus! Yes, our urgent and super-urgent E-Visa services operate 24/7, including weekends and public holidays. Since your flight is on Monday morning, we highly recommend selecting the 'Super Urgent 4 hours' or 'Urgent 24 hours' processing speed. Please ensure your passport photo and scan are clear to avoid any delays."
+        }
+      },
+      "c2": {
+        "nationality": "United Kingdom",
+        "date": "2 days ago",
+        "content": "I'm arriving at Hanoi (HAN) and departing from Da Nang (DAD). Do I need a multiple-entry visa for this?",
+        "r2": {
+          "date": "1 day ago",
+          "content": "Hello Sarah! Since you're arriving at Hanoi (HAN) and departing from Da Nang (DAD), you only need a single-entry e-visa as you will remain inside Vietnam during your travel between the two cities."
+        }
+      },
+      "c3": {
+        "nationality": "Japan",
+        "date": "4 days ago",
+        "content": "Konnichiwa! I am a Japanese citizen planning to stay in Vietnam for 60 days. Do I need an e-visa or does the exemption cover me?",
+        "r3": {
+          "date": "3 days ago",
+          "content": "Konnichiwa Hiroshi! Yes, Japanese citizens enjoy a 45-day visa exemption when entering Vietnam. Since you wish to stay for 60 days, you must apply for a tourist E-Visa. We recommend applying for our '90-day single entry' or '90-day multiple entry' E-Visa online, which will easily cover your 60-day stay."
+        }
+      }
+    },
+    "TOC": {
+      "hero": "Vietnam E-Visa",
+      "nationalities": "Supported Countries",
+      "eligibility": "Visa Eligibility",
+      "how-it-works": "Application Steps",
+      "pricing": "Visa Pricing",
+      "trust": "Traveler Reviews",
+      "faq": "Frequently Asked Questions",
+      "comments": "Q&A Discussion",
+      "blog": "Latest News"
+    }
+  },
+  "Header": {
+    "select_timezone": "Select timezone...",
+    "whatsapp_priority": "WhatsApp (24/7):",
+    "check_status": "Check Status",
+    "apply_now": "Apply Now",
+    "light_mode": "Light Mode",
+    "dark_mode": "Dark Mode"
+  },
+  "Navigation": {
+    "guide": "Guide",
+    "how_to_apply": "How to Apply",
+    "visa_fees": "Visa Fees",
+    "faqs": "FAQs",
+    "about_us": "About Us",
+    "emergency_inquiry": "Emergency",
+    "visa_extensions": "Visa Extensions",
+    "visa_exemption_rules": "Visa Exemption Rules",
+    "extra_services": "Extra Services",
+    "payment_guideline": "Payment Guideline",
+    "timezone_vietnam": "Vietnam (GMT+7)",
+    "timezone_london": "London (GMT+0)",
+    "timezone_new_york": "New York (GMT-5)",
+    "timezone_sydney": "Sydney (GMT+10)",
+    "apply_online": "Apply Online",
+    "check_status": "Check Status",
+    "timezone_korea": "South Korea (KST)",
+    "timezone_japan": "Japan (JST)",
+    "timezone_china": "China (CST)",
+    "timezone_france": "France (CET)",
+    "timezone_germany": "Germany (CET)",
+    "timezone_spain": "Spain (CET)"
+  },
+  "Footer": {
+    "hotline_support": "Hotline Support",
+    "tel": "Tel:",
+    "whatsapp_priority_desc": "WhatsApp 24/7 Priority Support",
+    "support_email": "Support Email",
+    "response_time": "Response within 1-2 hours",
+    "hanoi_office": "Hanoi Main Office",
+    "cau_giay_district": "Cau Giay District",
+    "hanoi_vietnam": "Hanoi, Vietnam",
+    "description": "Providing professional consultancy and expedited visa services for international travelers visiting Vietnam since 2011.",
+    "gov_disclaimer": "Government Disclaimer",
+    "gov_disclaimer_desc": "VietnamEVisa is a commercial visa agency providing processing assistance. We are not official representatives or affiliated with the Government of Vietnam.",
+    "quick_links": "Quick Links",
+    "guide": "Guide",
+    "stay_updated": "Stay Updated",
+    "all_rights_reserved": "VietnamEVisa. All rights reserved."
+  },
+  "HowToApplyPage": {
+    "title": "How to Apply",
+    "subtitle": "Five simple steps from application to approved e-visa in your inbox",
+    "applicationTimelineTitle": "Application Timeline",
+    "requiredDocumentsTitle": "Required Documents",
+    "quickAnswersTitle": "Quick Answers",
+    "quickAnswersSubtitle": "Get instant solutions to common queries regarding the e-visa application process.",
+    "startApplicationBtn": "Start Your Application",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Choose Your Visa",
+        "description": "Select visa type, processing speed, and number of applicants on the online form."
+      },
+      {
+        "step": 2,
+        "title": "Prepare Documents",
+        "description": "Gather passport copy (6+ months validity), portrait photo, and any extra documents for VIP service."
+      },
+      {
+        "step": 3,
+        "title": "Fill Application Details",
+        "description": "Enter passport details for each applicant and upload required files securely."
+      },
+      {
+        "step": 4,
+        "title": "Review & Pay",
+        "description": "Confirm pricing breakdown — no hidden fees — then pay via card or PayPal in USD."
+      },
+      {
+        "step": 5,
+        "title": "Receive E-Visa by Email",
+        "description": "Standard processing takes 7 working days. Urgent options from 4 hours to 1 working day."
+      }
+    ],
+    "documents": [
+      {
+        "id": "Passport Copy",
+        "title": "Passport Copy",
+        "description": "Bio-page scan with at least 6 months validity remaining."
+      },
+      {
+        "id": "Portrait Photo",
+        "title": "Portrait Photo",
+        "description": "Recent photo on white background, passport-style dimensions."
+      },
+      {
+        "id": "Application Form",
+        "title": "Application Form",
+        "description": "Completed online — no paper form required for e-visa."
+      }
+    ],
+    "tips": [
+      {
+        "question": "What is a Vietnam E-visa?",
+        "answer": "An electronic visa issued by the Vietnamese government. You receive a PDF approval letter to present at immigration."
+      },
+      {
+        "question": "How fast can I get my visa?",
+        "answer": "Normal processing is 7 working days. Urgent options: 4 days, 2 days, 1 day, or 4 working hours depending on visa type."
+      },
+      {
+        "question": "Are there additional costs?",
+        "answer": "Total = base service fee + processing surcharge + optional extras (e.g. VIP fast-track +$55). Stamping fee at airport is separate ($25 tourist / $50 business)."
+      }
+    ]
+  },
+  "VietnamVisaFeesPage": {
+    "title": "Vietnam Visa Fees",
+    "subtitle": "Transparent service fees in USD — no hidden charges at checkout",
+    "breadcrumbHome": "Home",
+    "breadcrumbGuide": "Guide",
+    "disclaimerTitle": "Service Fee vs. Government Stamping Fee — Important Distinction",
+    "disclaimerServiceFee": "Service Fee",
+    "disclaimerServiceFeeDesc": " (paid online at checkout) — covers application processing, document review, and visa delivery to your email.",
+    "disclaimerGovFee": "Government Stamping Fee",
+    "disclaimerGovFeeDesc1": " (paid in ",
+    "disclaimerGovFeeDesc2": "exact cash USD",
+    "disclaimerGovFeeDesc3": " at Vietnamese border) — ",
+    "disclaimerGovFeeDesc4": "$25 for tourist",
+    "disclaimerGovFeeDesc5": ", ",
+    "disclaimerGovFeeDesc6": "$50 for business",
+    "disclaimerGovFeeDesc7": ". ATMs may not be available at land borders — please prepare cash in advance.",
+    "saveMoreTogether": "Save More Together",
+    "groupDiscountPricing": "Group Discount Pricing",
+    "groupDiscountDesc": "Discounts applied automatically at checkout based on your applicant count.",
+    "paxTiers": {
+      "1_Person": "1 Person",
+      "2_3_Persons": "2–3 Persons",
+      "4_5_Persons": "4–5 Persons",
+      "6_Plus_Persons": "6+ Persons",
+      "off": "{discount}% off",
+      "standard": "Standard",
+      "save_per_person": "Save {discount}% per person",
+      "base_service_price": "Base service price"
+    },
+    "sampleCalcTitle": "Sample calculation: E-Visa 90 Days Multiple Entry (Normal, $85/person)",
+    "tableGroupSize": "Group Size",
+    "tablePricePerson": "Price/Person",
+    "tableTotal": "Total",
+    "tableYouSave": "You Save",
+    "sampleGroups": {
+      "1_person": "1 person",
+      "2_persons": "2 persons",
+      "3_persons": "3 persons",
+      "4_persons": "4 persons",
+      "6_persons": "6 persons"
+    },
+    "feeSchedule": "Fee Schedule",
+    "eVisa": "E-Visa",
+    "voa": "Visa on Arrival (VOA)",
+    "tableVisaType": "Visa Type",
+    "tableNormal": "Normal (7 days)",
+    "tableUrgent4D": "Urgent 4D",
+    "tableUrgent2D": "Urgent 2D",
+    "tableUrgent1D": "Urgent 1D",
+    "tableAction": "Action",
+    "applyNow": "Apply Now",
+    "visaTypes": {
+      "30_Days_Single_Entry": "30 Days Single Entry",
+      "90_Days_Single_Entry": "90 Days Single Entry",
+      "90_Days_Multiple_Entry": "90 Days Multiple Entry",
+      "1_Month_Single_Entry": "1 Month Single Entry",
+      "1_Month_Multiple_Entry": "1 Month Multiple Entry",
+      "3_Months_Single_Entry": "3 Months Single Entry",
+      "3_Months_Multiple_Entry": "3 Months Multiple Entry"
+    },
+    "addOnsLabel": "Add-Ons",
+    "extraServicesTitle": "Extra Services",
+    "vipFastTrack": "VIP Airport Fast-track:",
+    "vipFastTrackDesc": " +$55 per person",
+    "carPickUp": "Car pick-up:",
+    "carPickUpDesc": " price varies by distance — contact support for a quote",
+    "viewAllExtraServices": "View all extra services"
+  },
+  "FaqsPage": {
+    "Data": {
+      "Categories": [
+        {
+          "id": "general",
+          "label": "General"
+        },
+        {
+          "id": "payment",
+          "label": "Payment"
+        },
+        {
+          "id": "application",
+          "label": "Application"
+        },
+        {
+          "id": "after-apply",
+          "label": "After Apply"
+        }
+      ],
+      "Faqs": [
+        {
+          "id": "g1",
+          "category": "general",
+          "question": "How long does it take to get a Vietnam e-visa?",
+          "answer": "Standard processing takes 7 working days. Urgent options are available from 4 hours to 1 working day depending on visa type."
+        },
+        {
+          "id": "g2",
+          "category": "general",
+          "question": "Which nationalities are eligible for Vietnam e-visa?",
+          "answer": "Most nationalities including US, UK, Australia, Canada, EU countries, India, and Japan. Use our eligibility checker on the homepage."
+        },
+        {
+          "id": "g3",
+          "category": "general",
+          "question": "Is FastVisa an official government website?",
+          "answer": "We are a licensed visa service provider. We submit applications on your behalf and deliver approved e-visas via email."
+        },
+        {
+          "id": "g4",
+          "category": "general",
+          "question": "Do I need a visa to visit Phu Quoc Island?",
+          "answer": "Foreign travelers are exempt from Vietnam visa requirements for stays up to 30 days on Phu Quoc Island, provided they enter via Phu Quoc International Airport or seaport and do not leave the island. If you plan to travel to other parts of Vietnam, you must apply for an E-visa."
+        },
+        {
+          "id": "p1",
+          "category": "payment",
+          "question": "What payment methods do you accept?",
+          "answer": "We accept major credit cards (Visa, Mastercard) and PayPal. All charges are in USD."
+        },
+        {
+          "id": "p2",
+          "category": "payment",
+          "question": "Are there hidden fees?",
+          "answer": "No. Your checkout total equals base service fee + processing surcharge + any optional extras you selected."
+        },
+        {
+          "id": "p3",
+          "category": "payment",
+          "question": "Can I get a refund if my application is rejected?",
+          "answer": "Our money-back guarantee covers eligible rejections. Contact support with your booking number for assistance."
+        },
+        {
+          "id": "a1",
+          "category": "application",
+          "question": "What documents do I need to apply?",
+          "answer": "Valid passport (6+ months), passport bio-page scan, and portrait photo. VIP fast-track may require additional documents."
+        },
+        {
+          "id": "a2",
+          "category": "application",
+          "question": "Can I apply for multiple applicants in one order?",
+          "answer": "Yes. Select the number of applicants in Step 1 and complete a separate form for each person in Step 2."
+        },
+        {
+          "id": "a3",
+          "category": "application",
+          "question": "Can I save my application and finish later?",
+          "answer": "Yes. Your draft is saved locally in your browser so you can return and complete it within 7 days."
+        },
+        {
+          "id": "f1",
+          "category": "after-apply",
+          "question": "How do I check my application status?",
+          "answer": "Use the Check Status page with your booking number and registration email to see real-time updates."
+        },
+        {
+          "id": "f2",
+          "category": "after-apply",
+          "question": "When can I download my approved visa?",
+          "answer": "Once status shows Completed, a Download Visa button appears with your PDF approval letter."
+        },
+        {
+          "id": "f3",
+          "category": "after-apply",
+          "question": "What if I need to change my travel dates?",
+          "answer": "Contact support with your booking number before your visa is processed. Changes may not be possible after submission to immigration."
+        },
+        {
+          "id": "f4",
+          "category": "after-apply",
+          "question": "Can I change my port of entry after E-Visa approval?",
+          "answer": "No, you cannot change your port of entry once your Vietnam E-visa has been issued. If you must enter through a different port than the one printed on your approved E-visa, you will need to apply for a new E-visa. Travel departments and airlines will deny boarding if the entry port does not match."
+        }
+      ]
+    },
+    "UI": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers about applications, payments, and processing",
+      "breadcrumbHome": "Home",
+      "breadcrumbFaqs": "FAQs",
+      "searchPlaceholder": "Search FAQs...",
+      "tabAll": "All",
+      "noResults": "No questions match your search. Try a different keyword or category."
+    },
+    "Form": {
+      "widgetTitle": "Can't find what you are looking for?",
+      "widgetSubtitle": "Submit your custom question and our visa experts will respond directly.",
+      "successTitle": "Question Submitted Successfully!",
+      "successDesc": "Thank you for reaching out. Our support team will review your question and respond to your email ({email}) within 24 hours.",
+      "askAnother": "Ask another question",
+      "fullName": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "question": "Your Question",
+      "questionPlaceholder": "Type your question in detail...",
+      "submitBtn": "Send Question",
+      "errorEmpty": "Please fill out all fields.",
+      "errorEmail": "Please enter a valid email address."
+    }
+  },
+  "AboutUsPage": {
+    "Hero": {
+      "title": "We Are <accent>FastVisa.</accent>",
+      "subtitle": "One of the most recommended Vietnam visa services worldwide.<br/>Pioneering seamless global mobility with 15+ years of trusted expertise."
+    },
+    "Quote": {
+      "text": "“Vietnam's e-visa service has become remarkably streamlined — services like FastVisa make the application process effortless for international travelers visiting one of Southeast Asia's most spectacular destinations.”",
+      "author": "The New York Times",
+      "section": "Travel Section"
+    },
+    "Mission": {
+      "label": "Our Purpose",
+      "title": "Our Mission",
+      "description": "We help travelers obtain Vietnam visas on time with transparent pricing, secure document handling, and responsive support. Easy application, no hidden charges, and a service guarantee backed by our money-back policy for eligible cases.",
+      "hassleFreeTitle": "Hassle-Free Process",
+      "hassleFreeDesc": "Streamlining documents so you can focus on the travel experience.",
+      "reliabilityTitle": "Absolute Reliability",
+      "reliabilityDesc": "Direct updates and secure channels ensure your personal data is safe."
+    },
+    "SceneSlider": {
+      "heading": "Discover Vietnam's Beauty",
+      "subheading": "From emerald bays to historic cities — your next adventure awaits.",
+      "destinations": {
+        "sapa": {
+          "title": "Ruộng Bậc Thang",
+          "location": "Sa Pa, Lào Cai",
+          "desc": "Kiệt tác thiên nhiên và con người miền núi Tây Bắc."
+        },
+        "hoian": {
+          "title": "Phố Cổ Hội An",
+          "location": "Quảng Nam",
+          "desc": "World cultural heritage with romantic and ancient beauty."
+        },
+        "halong": {
+          "title": "Vịnh Hạ Long",
+          "location": "Quảng Ninh",
+          "desc": "A natural wonder with thousands of magnificent islands."
+        },
+        "danang": {
+          "title": "Cầu Vàng",
+          "location": "Đà Nẵng",
+          "desc": "An architectural masterpiece supported by giant hands."
+        },
+        "ninhbinh": {
+          "title": "Tràng An",
+          "location": "Ninh Bình",
+          "desc": "A scenic complex known as Ha Long Bay on land."
+        },
+        "phuquoc": {
+          "title": "Bãi Sao",
+          "location": "Phú Quốc",
+          "desc": "A beach with smooth white sand and crystal clear water."
+        },
+        "journey": {
+          "title": "Hành Trình Khám Phá",
+          "location": "Việt Nam",
+          "desc": "Pack your bags for unforgettable experiences."
+        }
+      }
+    },
+    "Features": {
+      "label": "Why Choose Us",
+      "title": "Why Apply With Us",
+      "items": {
+        "noHiddenCharges": {
+          "title": "No Hidden Charges",
+          "description": "Transparent pricing from quote to checkout."
+        },
+        "experience": {
+          "title": "15+ Years Experience",
+          "description": "Trusted by travelers worldwide since 2009."
+        },
+        "delivery": {
+          "title": "99% On-Time Delivery",
+          "description": "Applications processed within promised timeframe."
+        },
+        "prices": {
+          "title": "Competitive Prices",
+          "description": "Best value for standard and urgent processing."
+        },
+        "guarantee": {
+          "title": "Money-Back Guarantee",
+          "description": "Eligible rejections covered by our guarantee policy."
+        }
+      }
+    },
+    "Team": {
+      "ctaTitle": "Have questions about Vietnam Visa requirements?",
+      "ctaDesc": "Our specialists are always ready to review your files and provide custom solutions for group travel or business entries.",
+      "ctaButton": "Contact Our Team",
+      "label": "Expert Assistance",
+      "title": "Our Core Team"
+    },
+    "Metadata": {
+      "title": "About Us",
+      "description": "FastVisa — trusted Vietnam visa service with 15+ years experience, transparent pricing, and money-back guarantee."
+    }
+  },
+  "GuidePage": {
+    "title": "Visa Guide",
+    "subtitle": "Everything you need to know before applying",
+    "breadcrumbHome": "Home",
+    "breadcrumbGuide": "Guide",
+    "readGuide": "Read guide",
+    "vietnamVisaFees": {
+      "title": "Vietnam Visa Fees",
+      "description": "Full pricing table for E-Visa and VOA with urgent processing options."
+    }
+  },
+  "guideSlugPage": {
+    "extra-services": {
+      "title": "Extra Services",
+      "description": "We offer an array of extra services for all your travel needs in Vietnam, including Fast-Track Immigration, Private Car Pickup, and Hotel Reservations."
+    },
+    "visa-extension": {
+      "title": "Vietnam Visa Extension",
+      "description": "Everything you need to know about extending your stay in Vietnam smoothly and legally."
+    },
+    "visa-exemptions": {
+      "title": "Vietnam Visa Exemptions",
+      "description": "New regulations on Vietnam entry time for foreigners under Vietnam's unilateral and bilateral visa exemptions."
+    },
+    "not_found": "Article Not Found"
+  },
+  "mockGuideContent": {
+    "extra-services": {
+      "title": "Extra Services",
+      "subtitle": "Optional add-ons to speed up your airport experience."
+    },
+    "visa-exemptions": {
+      "title": "Visa Exemptions",
+      "subtitle": "Check if your nationality qualifies for visa-free entry to Vietnam."
+    },
+    "visa-extension": {
+      "title": "Visa Extension",
+      "subtitle": "How to extend your stay while already in Vietnam."
+    },
+    "payment-guideline": {
+      "title": "Payment Guideline",
+      "subtitle": "Secure online payment for your Vietnam visa application."
+    }
+  },
+  "ExtraServicesGuide": {
+    "fastTrack": {
+      "noteTitle": "Please prepare the stamping fee in cash (USD):",
+      "note1": "for 1 month / 3 months / 6 months single entry visa.",
+      "note2": "for 1 month / 3 months multiple entry visa.",
+      "note3": "for 6 months / 1 year multiple entry visa.",
+      "title": "Vietnam Airport – Fast Track Service",
+      "desc": "Skip the long queues at immigration. Our staff will assist you through a private track, saving you valuable time upon arrival.",
+      "normal": "Normal Service",
+      "vip": "VIP Service",
+      "normalDesc": "It takes you only 15 to 20 minutes instead of 1 hour waiting as normal. Our staff holds a board with your name at the Immigration area, takes your passport and stamping fee to do all procedures, and returns your stamped passport while you wait for identification processing.",
+      "vipDesc": "It takes you only 5 to 10 minutes. Our staff waits with your name board, takes your passport and fee. You don't need to wait for identification processing—go straight through a private VIP track to baggage claim or your car!",
+      "pax": "/pax"
+    },
+    "carPickup": {
+      "table": {
+        "economicClass": "Economic Class",
+        "businessClass": "Business Class",
+        "fordTransit": "Ford Transit, Mercedes Transit..",
+        "huyndai": "Huyndai, Daewoo..",
+        "civic": "Civic, Chervolet, Altis, Vios..",
+        "camry": "Camry, Mercedes, BMW, Audi..",
+        "innova": "Innova, Chervolet..",
+        "mercedes": "Mercedes, BMW, Audi..",
+        "contact": "Contact"
+      },
+      "title": "Private Car Pickup Airport",
+      "desc": "We pick you up from the airport and bring you safely to your specific address by our modern, well-maintained cars with professional drivers.",
+      "sedan": "Sedan (4 Seats)",
+      "suv": "SUV (7 Seats)",
+      "minibus": "Minibus 16-24 Seats",
+      "coach": "Coach 35-45 Seats"
+    },
+    "hotel": {
+      "title": "Hotel Reservation",
+      "desc": "Besides Vietnam visa services, we also offer Hotel Reservation services with the best prices. Log into your account registered during your visa application to browse the room lists.",
+      "howToBook": "How to book a room:",
+      "step1": "After applying for a visa on our website, leave a message with your preferred hotel's name or price range.",
+      "step2": "Alternatively, email us your requirements to sales@vietnamevisa.com.",
+      "hotline": "Hotline Support 24/7:"
+    }
+  },
+  "VisaExtensionGuide": {
+    "whyUsFeatures": {
+      "noTravel": {
+        "title": "No Travel Required",
+        "desc": "We handle the submission and pickup for you."
+      },
+      "guaranteed": {
+        "title": "Guaranteed Result",
+        "desc": "10+ years experience dealing with Immigration Department."
+      },
+      "noHidden": {
+        "title": "No Hidden Fees",
+        "desc": "Transparent pricing upfront, no extra charges."
+      },
+      "fast": {
+        "title": "Fast Processing",
+        "desc": "Urgent services available for tight deadlines."
+      }
+    },
+    "faqs": {
+      "q1": {
+        "q": "How long does it take to extend a visa?",
+        "a": "The standard processing time is 5-7 working days. However, we also offer urgent processing options if your visa is about to expire."
+      },
+      "q2": {
+        "q": "Can I extend my E-Visa?",
+        "a": "No, currently the Vietnam Immigration Department does not allow extensions for E-Visas. You must exit the country and apply for a new visa."
+      },
+      "q3": {
+        "q": "What is the overstay penalty?",
+        "a": "Overstaying your visa will result in administrative fines starting from 500,000 VND to 20,000,000 VND depending on the number of days overstayed, and possible deportation or blacklisting."
+      }
+    },
+    "definitions": {
+      "title": "Important Definitions",
+      "visaPeriod": "Visa Period",
+      "visaPeriodDesc": "The valid period of a visa is clearly shown by effective date and expiry date on the applicants' visas.",
+      "tempStay": "Temporary Stay",
+      "tempStayDesc": "Maximum period (Number of days) that foreigners are allowed to stay since entry. The temporary stay period can be shorter or equal to the period of the visa but never longer than valid period of the visa.",
+      "whatIs": "What is Visa Extension?",
+      "whatIsDesc": "Foreigners who have been granted a visa and are staying in Vietnam and wish to continue their stay after the visa expires, need to carry out visa extension (also known as temporary residence extensions). This allows foreigners to continue to stay in Vietnam without having to leave."
+    },
+    "visaTypes": {
+      "title": "Allowed Visa Types for Extension",
+      "evisa": "1. E-VISA",
+      "evisaDesc": "This type of visa CANNOT be extended. Foreigners who use e-visas to enter Vietnam need to exit on time upon expiration, then apply for a new visa if they want to continue to enter.",
+      "voa": "2. VISA ON ARRIVAL (VOA)",
+      "voaDesc": "This type of visa is allowed to be extended. The extension time depends on the purpose of stay and relevant regulations in Law on exit and entry of Vietnam.",
+      "voa1": "Tourist visa",
+      "voa2": "Visiting relatives",
+      "voa3": "Business / Investment"
+    },
+    "procedures": {
+      "title": "Procedures for Visa Extension",
+      "desc": "Follow these steps to extend your stay in Vietnam smoothly and legally.",
+      "step1": "Prepare Documents",
+      "step1Desc": "Gather original passport, NA5 form, and sponsoring company/relative documents.",
+      "step2": "Submit Application",
+      "step2Desc": "Submit to Vietnam Immigration Department in Hanoi, Da Nang, or Ho Chi Minh City.",
+      "step3": "Get Result",
+      "step3Desc": "Processing time is 5-7 working days. Receive passport with new extension stamp."
+    },
+    "whyUs": {
+      "title": "Why Use FastVisa Service?"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions"
+    }
+  },
+  "VisaExemptionsGuide": {
+    "countries": {
+      "cl": "Chile",
+      "pa": "Panama",
+      "kh": "Cambodia",
+      "id": "Indonesia",
+      "kg": "Kyrgyz",
+      "la": "Laos",
+      "my": "Malaysia",
+      "sg": "Singapore",
+      "th": "Thailand",
+      "ph": "Philippines",
+      "bn": "Brunei",
+      "mm": "Myanmar",
+      "by": "Belarus",
+      "kr": "Korea",
+      "jp": "Japan",
+      "de": "Germany",
+      "dk": "Denmark",
+      "no": "Norway",
+      "ru": "Russia",
+      "fr": "France",
+      "fi": "Finland",
+      "es": "Spain",
+      "se": "Sweden",
+      "it": "Italy",
+      "gb": "United Kingdom"
+    },
+    "days": "{count} days",
+    "otherCases": {
+      "diplomatic": {
+        "title": "Diplomatic Passports",
+        "desc": "Entering Vietnam for official purposes."
+      },
+      "trc": {
+        "title": "Temporary Residence Card",
+        "desc": "Can enter and stay up to the length of the temporary residence card."
+      },
+      "vec": {
+        "title": "Visa Exemption Certificate",
+        "desc": "Can enter and stay up to 180 days."
+      },
+      "apec": {
+        "title": "APEC Cards",
+        "desc": "Valid passport holders with APEC cards can enter and stay up to 60 days."
+      },
+      "sez": {
+        "title": "Special Economic Zones",
+        "desc": "E.g., Phu Quoc Island. Can enter and stay up to 30 days."
+      },
+      "title": "Other Cases of Visa Exemption"
+    },
+    "extension": {
+      "rules": {
+        "bilateral": {
+          "title": "Bilateral Visa Exemption",
+          "desc": "Must exit Vietnam after the stay expires, then re-enter if a longer stay is needed."
+        },
+        "unilateral": {
+          "title": "Unilateral Visa Exemption",
+          "desc": "After the allowed stay expires, it is possible to extend for an additional 15 days."
+        },
+        "vec": {
+          "title": "Visa Exemption Certificate",
+          "desc": "Can extend for another 180 days with a valid guarantor in Vietnam and a justified reason."
+        }
+      },
+      "note": "Note: All temporary residence extensions are processed at the Immigration Department of Vietnam.",
+      "whyUsFeatures": {
+        "fast": {
+          "title": "Fast Processing",
+          "desc": "Get your results quickly within 3-5 working days. We support the entire process from preparation to completion."
+        },
+        "accuracy": {
+          "title": "100% Accuracy",
+          "desc": "Our experts prepare documents quickly and ensure 100% accuracy for a successful extension."
+        },
+        "convenience": {
+          "title": "Convenience",
+          "desc": "No need to visit authorities. We collect documents and deliver results directly to your address in Vietnam."
+        }
+      },
+      "contactBtn": "Contact Us for Extension",
+      "title": "Extension of Visa Exemption",
+      "rulesTitle": "Extension Rules by Category",
+      "needExtension": "Need an Extension?",
+      "needExtensionDesc": "Extend your stay in Vietnam legally and safely with our professional services.",
+      "whyUs": "Why Use Our Visa Extension Services?"
+    },
+    "whatIs": {
+      "title": "What is Visa Exemption?",
+      "desc": "Visa exemption (also known as visa-free) allows citizens of specific countries to enter Vietnam without applying for a visa or paying any visa-related fees, for a designated period of time.",
+      "bilateral": "Bilateral Exemption",
+      "bilateralDesc": "An agreement between two countries allowing citizens of both to travel visa-free to each other's territories.",
+      "unilateral": "Unilateral Exemption",
+      "unilateralDesc": "Vietnam unilaterally exempts citizens of a specific country from visas, regardless of whether that country offers visa-free entry to Vietnamese citizens.",
+      "note": "Note: This visa exemption is completely different from the VISA EXEMPTION CERTIFICATE (5-YEAR VISA) issued to overseas Vietnamese or those who are Spouses/Children of Overseas Vietnamese."
+    },
+    "requirements": {
+      "title": "Requirements for Visa Free Entry",
+      "desc": "Ensure your travel documents meet the standard criteria before departure.",
+      "nationality": "Eligible Nationality",
+      "nationalityDesc": "Hold a passport from a country on the bilateral/unilateral visa exemption list.",
+      "validity": "Passport Validity",
+      "validityDesc": "Passport must be valid for at least 6 months from the date of arrival.",
+      "blankPages": "Blank Pages",
+      "blankPagesDesc": "Passport must have at least two (02) blank pages for immigration stamps."
+    },
+    "list": {
+      "title": "Exempted Countries",
+      "desc": "Vietnam currently grants bilateral and unilateral visa exemptions to citizens from 25 countries.",
+      "search": "Search country...",
+      "showing": "Showing {count} countries",
+      "noData": "No countries found matching \"{query}\"",
+      "tableNo": "No.",
+      "tableNationality": "Nationality",
+      "tableDays": "Length of stay",
+      "notesTitle": "Important notes about visa exemption:",
+      "note1": "From January 1, 2023, citizens of countries on the unilateral visa exemption list can enter and exit an unlimited number of times without waiting 30 days between entries.",
+      "note2": "British nationals overseas (BNOs) are not exempt from Vietnam visa.",
+      "note3": "Citizens of these countries can still apply for a visa if they wish to stay longer."
+    }
+  },
+  "ArticleHero": {
+    "latestNews": "Latest News",
+    "guide": "Guide"
+  },
+  "PaymentGuideline": {
+    "toc": {
+      "paymentOptions": "How to Make Payment",
+      "specialNotes": "Special Notes",
+      "needHelp": "Need Help?"
+    },
+    "options": {
+      "title": "How To Make Payment?",
+      "desc": "There are 2 convenient options to make payment for your visa application. Choose the one that works best for you.",
+      "opt1": "Option 1",
+      "paypal": {
+        "title": "Pay via PayPal",
+        "desc1": "Pay through <strong>PayPal (www.paypal.com)</strong> using your credit card.",
+        "desc2": "On the last step of the application process, we will provide a payment link via the PayPal gate, or the link will be sent to your email. Click that payment link to make a payment using our PayPal Address:",
+        "quote": "\"The www.paypal.com is one among the most reliable International Money-Transfer Networks. It is used to send and receive money by customers worldwide. Safer, Easier, Quicker, and no refunded online money sending is what customers find at PayPal.\" – Paypal"
+      },
+      "opt2": "Option 2",
+      "cash": {
+        "title": "Pay in Cash",
+        "desc1": "Pay in cash at our office in Vietnam.",
+        "desc2": "If you have friends or relatives in Vietnam, you can ask them to visit our office to make the payment for your application.",
+        "officeTitle": "Our Office Address",
+        "officeDesc1": "VietnamEvisa.com Office:",
+        "officeDesc2": "No 47/2 Hoang Sam, Nghia Do Ward, Cau Giay Dist, Hanoi City, Vietnam"
+      }
+    },
+    "notes": {
+      "title": "Special Notes",
+      "imgAlt": "Special Notes",
+      "imgDesc": "Important information regarding your visa application processing.",
+      "processTitle": "Processing Time",
+      "processDesc": "Once we receive your payment, we will process your visa approval letter. It will be ready on our website after <strong>1 business day</strong> (urgent service) or <strong>2 business days</strong> (normal service).",
+      "feeTitle": "Service Fee vs. Stamping Fee",
+      "feeDesc": "The fee you pay us is the <strong>service fee</strong> used to process your visa approval letter. When picking up the visa stamp at the arrival airport, you are required to pay an additional <strong>stamping fee</strong>.",
+      "viewFee": "View detailed Vietnam visa fees"
+    },
+    "help": {
+      "title": "Need Help?",
+      "desc": "Our support department is ready to assist you. We will respond within 2 hours during business hours and within 24 hours out of office hours.",
+      "hotline": "Hotline (WhatsApp)",
+      "email": "Email Address"
+    },
+    "heroTitle": "Payment Guideline",
+    "heroSubtitle": "We offer secure and convenient payment options for your visa application. Remember that the fee you pay us is the service fee to process your visa approval letter."
+  },
+  "CheckStatusPage": {
+    "title": "Check Application Status",
+    "subtitle": "Track your visa application in real time",
+    "breadcrumb_home": "Home",
+    "breadcrumb_check_status": "Check Status",
+    "faqs_heading": "Status Check — Frequently Asked Questions",
+    "need_help": "Still need help?",
+    "chat_whatsapp": "Chat with us on WhatsApp 24/7",
+    "faqs": [
+      {
+        "id": "sf1",
+        "question": "How long does it take for status to update?",
+        "answer": "Status updates occur within 1 business day after each processing milestone. Urgent orders may update faster."
+      },
+      {
+        "id": "sf2",
+        "question": "What does 'Processing' status mean?",
+        "answer": "Your application has been received and is being reviewed by our team. You'll receive an email when it progresses."
+      },
+      {
+        "id": "sf3",
+        "question": "When can I download my approved e-visa?",
+        "answer": "Once your status shows 'Completed', a Download button will appear on this page. Check your email for the direct link."
+      },
+      {
+        "id": "sf4",
+        "question": "What if my status shows 'On Hold'?",
+        "answer": "Our team may need additional information. Check your email inbox (including spam) or contact WhatsApp support immediately."
+      },
+      {
+        "id": "sf5",
+        "question": "I can't find my booking number — what should I do?",
+        "answer": "Your booking number (starting with FV-) was sent to your registration email at the time of payment. Search for 'FastVisa booking' in your inbox."
+      },
+      {
+        "id": "sf6",
+        "question": "My visa was approved but I haven't received the PDF.",
+        "answer": "Check your spam/junk folder for emails from thanhdatvietnamvisa@gmail.com. If not found, use the Download button on this page or contact our WhatsApp support."
+      }
+    ]
+  },
+  "CheckStatusForm": {
+    "lookup_title": "Application Lookup",
+    "lookup_desc": "Enter your booking number and registration email to view application status.",
+    "booking_format": "Booking format:",
+    "booking_number": "Booking Number",
+    "booking_placeholder": "e.g. VN-20260520-AB12C",
+    "email": "Email Address",
+    "email_placeholder": "your@email.com",
+    "check_status_btn": "Check Status",
+    "network_error": "Could not connect to the server. Please check your connection and try again.",
+    "not_found": "No application found. Verify your booking number and email match your registration.",
+    "status_title": "Application Status",
+    "arrival_date": "Arrival Date",
+    "applicants": "Applicants",
+    "visa_type": "Visa Type",
+    "total_amount": "Total Amount",
+    "download_visa": "Download Visa",
+    "errors": {
+      "booking_required": "Booking number is required",
+      "booking_invalid": "Booking format must be VN-YYYYMMDD-XXXXX",
+      "email_invalid": "Enter a valid email address"
+    }
+  },
+  "EntryGateModal": {
+    "label": "Before you proceed",
+    "title": "Have you already applied for your E-Visa?",
+    "desc": "This helps us direct you to the right service so we can assist you faster.",
+    "opt_new_title": "No, I need a new E-Visa",
+    "opt_new_desc": "Start a new e-visa application — Standard or Urgent processing.",
+    "opt_fasttrack_title": "Yes, I have E-Visa & need Fast-Track",
+    "opt_fasttrack_desc": "Already have E-Visa? Book official Airport Fast-Track assistance here.",
+    "opt_urgent_title": "Yes, I applied but need urgent help",
+    "opt_urgent_desc": "Already submitted? Contact us immediately for expedited processing support.",
+    "footer_need_help": "Need immediate assistance?",
+    "footer_whatsapp": "WhatsApp us 24/7 →"
+  },
+  "SubPageSidebar": {
+    "why_us": "Why Apply With Us?",
+    "why_us_items": [
+      {
+        "title": "15+ Years Experience",
+        "desc": "Trusted Vietnam visa agency since 2011."
+      },
+      {
+        "title": "200k+ Successful Visas",
+        "desc": "Guaranteed entry with 99.8% approval rate."
+      },
+      {
+        "title": "100% Refund Policy",
+        "desc": "Full money-back if visa is rejected."
+      },
+      {
+        "title": "Expert Pre-Screening",
+        "desc": "We check every photo & document manually."
+      }
+    ],
+    "urgent_help": "Need Urgent Help?",
+    "urgent_desc": "Flight departing soon? Application stuck? Get instant help from our 24/7 dedicated support team on WhatsApp.",
+    "chat_whatsapp": "Chat on WhatsApp",
+    "guest_reviews": "Guest Reviews",
+    "rating_based_on": "Based on 12,480+ traveler reviews",
+    "review_quote": "“Incredible 4-hour service. Recommended!”"
+  },
+  "ApplyPage": {
+    "PriceBreakdown": {
+      "order_summary": "Order Summary",
+      "empty_state": "Complete visa options to see pricing.",
+      "summary": "Summary",
+      "selected": "Selected",
+      "base_fee": "Base Service Fee",
+      "processing": "Processing",
+      "included": "Included",
+      "vip_fast_track": "VIP Fast-Track Service",
+      "basic_fast_track": "Basic Fast-track Assistance",
+      "applicants": "Applicants",
+      "person": "person",
+      "people": "people",
+      "total": "Total",
+      "E-Visa 30 ngày, 1 lần nhập cảnh": "E-Visa 30 days, single entry",
+      "E-Visa 30 ngày, nhiều lần nhập cảnh": "E-Visa 30 days, multiple entry",
+      "E-Visa 90 ngày, 1 lần nhập cảnh": "E-Visa 90 days, single entry",
+      "E-Visa 90 ngày, nhiều lần nhập cảnh": "E-Visa 90 days, multiple entry",
+      "VOA 1 tháng nhập cảnh 1 lần": "VOA 1 month, single entry",
+      "VOA 1 tháng nhập cảnh nhiều lần": "VOA 1 month, multiple entry",
+      "VOA 3 tháng nhập cảnh 1 lần": "VOA 3 months, single entry",
+      "VOA 3 tháng nhập cảnh nhiều lần": "VOA 3 months, multiple entry"
+    },
+    "ApplyClient": {
+      "loading": "Loading application…",
+      "pay_with": "Pay with",
+      "complete_options": "Please complete visa options first.",
+      "next_step2": "Next: Application Details",
+      "next_step3": "Next: Review & Pay"
+    },
+    "ApplicationStepper": {
+      "step_1": "Visa Options",
+      "step_2": "Applicant Details",
+      "step_3": "Review & Pay"
+    },
+    "Step1": {
+      "title": "Visa Options",
+      "desc": "Select the type of visa you need and your travel details.",
+      "fields": {
+        "visa_type": "Visa Type",
+        "visa_type_success": "Visa type confirmed",
+        "select_type": "Select type",
+        "evisa": "E-Visa — All border crossings",
+        "voa": "Visa on Arrival (VOA) — Air only",
+        "visa_category": "Visa Category",
+        "visa_category_success": "Visa category confirmed",
+        "select_category": "Select category",
+        "applicant_count": "Number of Applicants",
+        "applicant_count_success": "Number of applicants confirmed",
+        "select_count": "Select count",
+        "person": "Person",
+        "people": "People",
+        "arrival_date": "Arrival Date",
+        "arrival_date_success": "Arrival date confirmed",
+        "select_date": "Select arrival date",
+        "port_of_entry": "Port of Entry",
+        "port_of_entry_success": "Port of entry confirmed",
+        "loading_ports": "Loading ports…",
+        "select_port": "Select airport / border gate",
+        "purpose": "Purpose of Visit",
+        "purpose_success": "Purpose of visit confirmed",
+        "select_purpose": "Select purpose"
+      },
+      "processing_normal_7d_label": "Normal · 7 Working Days",
+      "processing_normal_7d_caption": "Standard processing — included in base fee",
+      "processing_normal_7d_expectedTime": "Results returned at the latest after 7 working days from the date of application receipt",
+      "processing_urgent_4d_label": "Urgent · 4 Working Days",
+      "processing_urgent_4d_caption": "Faster processing",
+      "processing_urgent_4d_note": "Surcharge varies by visa duration",
+      "processing_urgent_4d_expectedTime": "Results returned at 5:30 PM after 4 working days, after application receipt",
+      "processing_urgent_3d_label": "Urgent · 3 Working Days",
+      "processing_urgent_3d_caption": "Priority queue",
+      "processing_urgent_3d_note": "Surcharge varies by visa duration",
+      "processing_urgent_3d_expectedTime": "Results returned at 5:30 PM after 3 working days, after application receipt",
+      "processing_urgent_2d_label": "Urgent · 2 Working Days",
+      "processing_urgent_2d_caption": "Priority queue",
+      "processing_urgent_2d_note": "Surcharge varies by visa duration",
+      "processing_urgent_2d_expectedTime": "Results returned at 5:30 PM after 2 working days, after application receipt",
+      "processing_urgent_1d_label": "Urgent · 1 Working Day",
+      "processing_urgent_1d_caption": "Next-day processing",
+      "processing_urgent_1d_expectedTime": "Results returned at 5:30 PM after 1 working day, after application receipt",
+      "processing_urgent_4h_label": "Urgent · 4 Working Hours",
+      "processing_urgent_4h_caption": "Same-day processing",
+      "processing_urgent_4h_note": "Manual eligibility check required before confirming",
+      "processing_urgent_4h_expectedTime": "Results returned at 12:00 PM (applications received before 8:00 AM) or 5:30 PM (received before 2:00 PM)",
+      "processing_urgent_2h_label": "Urgent · 2 Working Hours",
+      "processing_urgent_2h_caption": "Emergency processing",
+      "processing_urgent_2h_note": "Manual eligibility check required before confirming",
+      "processing_urgent_2h_expectedTime": "Results returned 2 hours after application receipt",
+      "processing_urgent_1h_label": "Urgent · 1 Working Hour",
+      "processing_urgent_1h_caption": "Super Emergency processing",
+      "processing_urgent_1h_note": "Manual eligibility check required before confirming",
+      "processing_urgent_1h_expectedTime": "Results returned 1 hour after application receipt",
+      "processing_last_minute_label": "Last Minute / Holiday",
+      "processing_last_minute_caption": "Outside business hours or public holidays",
+      "processing_last_minute_expectedTime": "Results returned in 30-60 minutes",
+      "processing_weekend_processing_label": "Weekend Processing (Sat, Sun)",
+      "processing_weekend_processing_caption": "Contact for specific time",
+      "processing_weekend_processing_note": "Surcharge applies for weekend processing",
+      "processing_weekend_processing_expectedTime": "Contact for specific time",
+      "badge_popular": "Popular",
+      "badge_review_req": "Review Required",
+      "badge_special_service": "Special Service",
+      "processing_time_title": "Processing Time",
+      "processing_time_desc": "Surcharge is added per person on top of the base service fee.",
+      "price_included": "Included",
+      "port_han": "HAN — Hanoi Airport",
+      "port_sgn": "SGN — Saigon Airport",
+      "port_dad": "DAD — Da Nang Airport",
+      "port_pqc": "PQC – Phu Quoc Airport",
+      "port_moc_bai": "Moc Bai Landport",
+      "port_hph": "HPH — Cat Bi Airport",
+      "port_cxr": "CXR — Cam Ranh Airport",
+      "purpose_tourism": "Tourism",
+      "purpose_business": "Business",
+      "purpose_family": "Visiting family / friends",
+      "purpose_other": "Other",
+      "cat_evisa_30d_single": "E-Visa · 30 Days Single Entry",
+      "cat_evisa_90d_single": "E-Visa · 90 Days Single Entry",
+      "cat_evisa_90d_multiple": "E-Visa · 90 Days Multiple Entry",
+      "cat_voa_1m_single": "VOA · 1 Month Single Entry",
+      "cat_voa_1m_multiple": "VOA · 1 Month Multiple Entry",
+      "cat_voa_3m_single": "VOA · 3 Months Single Entry",
+      "cat_voa_3m_multiple": "VOA · 3 Months Multiple Entry",
+      "cat_code_fasttrack": "Fast Track · VIP Airport Service",
+      "evisa_30d_single": "30 Days · Single Entry",
+      "evisa_90d_single": "90 Days · Single Entry",
+      "evisa_90d_multiple": "90 Days · Multiple Entry",
+      "voa_1m_single": "1 Month · Single Entry",
+      "voa_1m_multiple": "1 Month · Multiple Entry",
+      "voa_3m_single": "3 Months · Single Entry",
+      "voa_3m_multiple": "3 Months · Multiple Entry"
+    },
+    "Step2": {
+      "title": "Applicant Details",
+      "desc": "Please provide accurate passport information to avoid rejection.",
+      "travel_processing_title": "Travel & Processing Details",
+      "arrival_date": "Arrival Date",
+      "select_arrival_date": "Select arrival date",
+      "port_of_entry": "Port of Entry",
+      "select_port": "Select port",
+      "contact_info_title": "Contact Information",
+      "email": "Email Address",
+      "email_placeholder": "Your E-Visa will be sent here",
+      "phone": "Phone Number",
+      "back_btn": "Back",
+      "extra_services_title": "Extra Services",
+      "basic_fasttrack_label": "Basic Fast-track Assistance",
+      "basic_fasttrack_price": "+$35 / person",
+      "basic_fasttrack_desc": "Our agent will meet you at the terminal and guide you through the passport control quickly.",
+      "vip_fasttrack_label": "VIP Airport Fast-track",
+      "vip_fasttrack_price": "+$55 / person",
+      "vip_fasttrack_desc": "Skip the immigration queue entirely. Our dedicated agent meets you at the gate and fast-tracks you.",
+      "dropzone_click_drag": "Click or drag image here",
+      "dropzone_drop": "Drop image here..."
+    },
+    "ApplicantCard": {
+      "applicant_number": "Applicant {index}",
+      "of": "of {total}",
+      "passport_data_page": "Passport Data Page",
+      "passport_data_desc": "The page with your photo, name, and passport number.",
+      "portrait_photo": "Portrait Photo",
+      "portrait_photo_desc": "4×6 cm portrait photo (white background, no glasses, within 6 months).",
+      "flight_ticket": "Flight Information/Flight Ticket",
+      "flight_ticket_desc": "Upload your flight ticket or boarding pass.",
+      "full_name": "Full Name (as in passport)",
+      "full_name_placeholder": "e.g. JOHN DOE",
+      "gender": "Gender",
+      "select_gender": "Select gender",
+      "nationality": "Nationality",
+      "select_nationality": "Select nationality",
+      "nationality_placeholder": "e.g. US (2-letter code)",
+      "date_of_birth": "Date of Birth",
+      "select_date_of_birth": "Select date of birth",
+      "passport_number": "Passport Number",
+      "passport_number_placeholder": "e.g. 123456789",
+      "passport_expiry_date": "Passport Expiry Date",
+      "select_expiry_date": "Select expiry date",
+      "verify_warning": "⚠ Verify"
+    },
+    "Step3": {
+      "title": "Review & Payment",
+      "desc": "Please review your details carefully before proceeding to payment.",
+      "summary_title": "Application Summary",
+      "visa_type": "Visa Type",
+      "applicants": "Applicants",
+      "arrival_date": "Arrival Date",
+      "port_of_entry": "Port of Entry",
+      "purpose": "Purpose",
+      "processing_time": "Processing Time",
+      "email": "Contact Email",
+      "phone": "Phone",
+      "extra_services": "Extra Services",
+      "vip_fast_track": "VIP Airport Fast-track",
+      "basic_fast_track": "Basic Fast-track Assistance",
+      "total_due": "Total Due",
+      "terms_prefix": "I confirm that all information provided is accurate. I agree to the",
+      "terms_link": "Terms & Conditions",
+      "terms_suffix": "and refund policy.",
+      "back_btn": "Back"
+    }
+  },
+  "EntryGate": {
+    "ResumeDraftModal": {
+      "step1": "Visa Options",
+      "step2": "Applicant Details",
+      "step3": "Review & Pay",
+      "fast_track": "E-Visa Fast Track",
+      "voa": "Visa on Arrival",
+      "standard": "E-Visa Standard",
+      "last_minute": "E-Visa Last Minute",
+      "urgent": "E-Visa Urgent",
+      "people": "people",
+      "arrival_prefix": "Arriving",
+      "title": "Resume your application?",
+      "desc_prefix": "You are at step",
+      "desc_suffix": "Would you like to continue or start over?",
+      "restart_btn": "Start over",
+      "continue_btn": "Continue",
+      "close_btn": "Close"
+    }
+  },
+  "EmergencyInquiryPage": {
+    "pricing_unavailable": "Emergency pricing is temporarily unavailable. Please try again later or contact support.",
+    "title": "Emergency Inquiry",
+    "subtitle": "Traveling soon? Our urgent support team responds within 2 hours",
+    "home": "Home",
+    "alert_title": "Emergency Assistance",
+    "alert_desc_prefix": "Use this dashboard only for time-sensitive issues where your departure is within 72 hours. For general inquiries, please visit our",
+    "alert_desc_link": "Contact Us",
+    "alert_desc_suffix": "page.",
+    "pricing_title": "Expedited Processing Tiers",
+    "pricing_desc": "Choose the speed that matches your departure timeframe. Prices are inclusive of all service fees.",
+    "most_requested": "Most Requested",
+    "best_for": "Best for:",
+    "service_fee": "Service Fee",
+    "contact_us": "Contact Us",
+    "whatsapp_btn": "WhatsApp Us",
+    "apply_btn": "Apply Now",
+    "tier_last_minute_name": "Last Minute (Stranded)",
+    "tier_last_minute_timeframe": "Under 1 Hour",
+    "tier_last_minute_desc": "For passengers stuck at departure gates or boarding immediately.",
+    "tier_last_minute_best": "Stranded at airport / Flight boarding in <3 hours",
+    "tier_2h_name": "Super Urgent 2-Hour",
+    "tier_2h_timeframe": "Within 2 working hours",
+    "tier_2h_desc": "Ultra-fast government clearance for same-day flights.",
+    "tier_2h_best": "Departure today / Flight in under 12 hours",
+    "tier_4h_name": "Urgent 4-Hour (Half-Day)",
+    "tier_4h_timeframe": "Within 4 working hours",
+    "tier_4h_desc": "Rapid review and processing for next-flight travelers.",
+    "tier_4h_best": "Flight tonight or early tomorrow morning",
+    "tier_1d_name": "Urgent 1 Working Day",
+    "tier_1d_timeframe": "Within 24 hours",
+    "tier_1d_desc": "Next-day delivery, secure processing slot.",
+    "tier_1d_best": "Traveling tomorrow / Flight in 24-36 hours",
+    "tier_2d_name": "Urgent 2 Working Days",
+    "tier_2d_timeframe": "Within 48 hours",
+    "tier_2d_desc": "Fast-tracked application, perfect for last-minute business plans.",
+    "tier_2d_best": "Flight in 2 to 3 days",
+    "timeline_title": "3-Step Emergency Process",
+    "timeline_desc": "How we fast-track your application to bypass typical government processing delays.",
+    "step1_title": "Prepare & Submit",
+    "step1_desc": "Gather passport bio-page copy, a portrait photo, arrival port, and flight departure time, then submit our emergency form.",
+    "step2_title": "WhatsApp Verification",
+    "step2_desc": "For extreme urgency (2h/4h), reach out directly via WhatsApp (+84-93-6699-869) to verify and unlock priority clearance.",
+    "step3_title": "Receive E-Visa PDF",
+    "step3_desc": "Our dedicated support team works directly with immigration. The approved E-Visa is delivered straight to your email inbox.",
+    "form_success_title": "Urgent inquiry received",
+    "form_success_desc1": "Our emergency team will contact you within 2 hours. Keep your phone available.",
+    "form_success_ref": "Reference:",
+    "form_success_btn": "Submit another inquiry",
+    "form_badge_title": "Urgent — 2h response target",
+    "form_badge_desc": "All fields are required for priority handling",
+    "form_error": "Could not submit your urgent inquiry. Please try again or call support.",
+    "form_name_label": "Full Name",
+    "form_name_placeholder": "As shown on your passport",
+    "form_booking_label": "Booking Number",
+    "form_booking_placeholder": "FV-12345",
+    "form_email_label": "Email used to register",
+    "form_email_placeholder": "your@email.com",
+    "form_date_label": "Travel Date",
+    "form_date_placeholder": "Select travel date",
+    "form_subject_label": "Issue Type",
+    "form_subject_placeholder": "Select urgency type",
+    "form_message_label": "Describe Your Situation",
+    "form_message_placeholder": "Explain your situation clearly — include flight details, departure time, and any relevant context...",
+    "form_submit_btn": "Submit Emergency Request",
+    "opt_urgent": "Urgent travel — visa not received",
+    "opt_wrong": "Wrong information on application",
+    "opt_payment": "Payment completed but no confirmation",
+    "opt_airport": "Airport / immigration issue",
+    "correction_title": "E-Visa Information Correction",
+    "correction_subtitle": "Stranded at departure gate / Denied boarding?",
+    "correction_desc1": "Airlines and border control will **strictly deny boarding or entry** if your approved E-Visa has even a single character mismatch with your passport bio-page, or if you attempt to arrive at a different port of entry.",
+    "correction_errors_title": "Most Common Flight-Gate Errors:",
+    "err_1": "Typo in Full Name (spelling order, middle name missing)",
+    "err_2": "Incorrect Passport Number or Expiry Date",
+    "err_3": "Mismatched Entry Port (changing from Hanoi to Ho Chi Minh City, etc.)",
+    "err_4": "Wrong Date of Birth or Mismatched Nationality",
+    "correction_desc2": "If you are stuck at the boarding gate, do not panic. We provide a **24/7 Priority Visa Re-issuance & Correction service** directly linked with Vietnam Immigration. We can reissue a corrected approval document in **1 to 2 hours**.",
+    "correction_btn": "WhatsApp Emergency"
+  },
+  "ContactUs": {
+    "form_title": "Send a Message",
+    "form_subtitle": "Contact Support",
+    "full_name_label": "Full Name",
+    "email_label": "Email",
+    "subject_label": "Subject",
+    "message_label": "Message",
+    "subject_placeholder": "Select a subject",
+    "success_title": "Message sent successfully",
+    "success_desc": "Our team will reply within 24 hours. Check your inbox for a confirmation email.",
+    "success_reference": "Reference: {ticketId}",
+    "send_another": "Send another message",
+    "send_button": "Send Message",
+    "error_generic": "Could not send your message. Please try again later.",
+    "subjects": {
+      "payment": "Payment issue",
+      "application": "Application question",
+      "edit_info": "Edit application info",
+      "refund": "Refund request",
+      "other": "Other"
+    }
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "back_home": "Back to Home",
+    "apply_visa": "Apply for Visa"
+  },
+  "Calendar": {
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "prev_month": "Go to previous month",
+    "next_month": "Go to next month"
+  },
+  "ChatForm": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "desc": "Ask about Vietnam e-Visa eligibility, documents, fees, or your application. Our AI assistant helps first — you can request a human agent anytime.",
+    "label_name": "Your name *",
+    "placeholder_name": "Enter your name",
+    "label_nationality": "Nationality (optional)",
+    "placeholder_nationality": "Select nationality…",
+    "empty_nationality": "No nationality found.",
+    "label_interest": "What do you need help with? (optional)",
+    "placeholder_interest": "Select an option…",
+    "opt_evisa": "E-Visa",
+    "opt_voa": "Visa on Arrival",
+    "opt_check": "Check my application",
+    "opt_urgent": "Urgent visa (<24h)",
+    "opt_other": "Other question",
+    "btn_start": "Start chat"
+  },
+  "ChatSearch": {
+    "placeholder": "Search...",
+    "up": "Up (Shift+Enter)",
+    "down": "Down (Enter)",
+    "close": "Close (Esc)"
+  },
+  "ChatMessage": {
+    "sender_you": "You",
+    "sender_ai": "AI Assistant",
+    "sender_agent": "Support Advisor",
+    "sender_system": "System",
+    "download_file": "Download file",
+    "replied_you": "You replied to {name}",
+    "replied_other": "{name1} replied to {name2}",
+    "recalled": "This message was recalled.",
+    "translation_badge": "TRANSLATION",
+    "translate_btn": "Translate",
+    "tooltip_react": "React",
+    "tooltip_reply": "Reply",
+    "typing": "Typing",
+    "delivery_seen": "Seen",
+    "delivery_sent": "Sent",
+    "day_today": "Today",
+    "day_yesterday": "Yesterday"
+  },
+  "ImageUploadZone": {
+    "description": "PNG, JPG up to {maxSizeMB}MB",
+    "main_text": "Click or drag image here",
+    "drop_text": "Drop image here..."
+  },
+  "Chat": {
+    "tooltip_minimize": "Minimize",
+    "empty_no_match": "No messages match \"{query}\"",
+    "empty_start": "Send a message to get started. Try asking about visa types or required documents.",
+    "error_dismiss": "Dismiss",
+    "suggestion_1": "Vietnam Visa Requirements",
+    "suggestion_2": "E-Visa Fee",
+    "suggestion_3": "How to apply?",
+    "header_start": "Start a conversation",
+    "header_desc": "AI assistant · Vietnam e-Visa support",
+    "header_connecting": "Connecting you to an agent…",
+    "header_connected": "Connected to {agentName}",
+    "header_agent_support": "Connected to support agent",
+    "header_experience": "How was your experience?",
+    "header_help": "We're here to help",
+    "tooltip_new": "New conversation",
+    "tooltip_search": "Search messages",
+    "tooltip_close": "Close chat",
+    "tray_suggestions": "Quick reply suggestions",
+    "tray_collapse": "Collapse suggestions",
+    "tray_expand": "Expand suggestions",
+    "tray_close": "Close suggestions completely",
+    "input_max_images": "Maximum 5 images per message",
+    "input_size_exceeded": "Image {fileName} exceeds 15MB limit",
+    "input_paste_failed": "Failed to process pasted image",
+    "input_send_failed": "Failed to send message or image. Restoring content.",
+    "input_replying": "Replying to",
+    "input_yourself": "yourself",
+    "input_assistant": "FastVisa Assistant",
+    "input_cancel_reply": "Cancel reply",
+    "input_waiting": "Waiting for an agent…",
+    "input_placeholder": "Type your message…",
+    "input_toggle_mode": "Switch between AI and Human mode",
+    "input_send_msg": "Send message",
+    "input_send_thumbs": "Send thumbs up",
+    "input_hint": "Enter to send · Shift+Enter new line",
+    "handback_system_message": "Transferred back to AI Kimi.",
+    "tool_check_visa_status": "Checking visa status...",
+    "tool_check_nationality": "Checking nationality...",
+    "tool_fetch_content_url": "Reading webpage information...",
+    "tool_get_current_time": "Getting current time...",
+    "tool_extract_information_from_image": "Processing image...",
+    "tool_calculate_visa_fee": "Calculating fees...",
+    "tool_draft_application": "Drafting application...",
+    "tool_get_faq": "Querying database...",
+    "tool_get_pricing_rules": "Looking up pricing...",
+    "draft_title": "Application Draft Created",
+    "draft_desc_1": "Your application",
+    "draft_desc_2": "has been drafted successfully.",
+    "draft_btn": "Review & Pay",
+    "ticket_title": "Support Ticket Created",
+    "ticket_id": "Ticket ID",
+    "ticket_desc": "We have received your request and our team will get back to you shortly.",
+    "tool_get_visa_exemptions": "Checking visa exemptions...",
+    "tool_get_ports_of_entry": "Checking ports of entry...",
+    "tool_get_guideline": "Checking guidelines...",
+    "tool_get_extra_services": "Checking extra services...",
+    "tool_get_support_contacts": "Checking support contacts...",
+    "tool_get_about_us_info": "Checking company info...",
+    "tool_get_page_content": "Reading page content...",
+    "tool_navigate_to_page": "Navigating to page...",
+    "tool_click_ui_element": "Interacting with interface...",
+    "tool_focus_ui_field": "Opening/selecting a field...",
+    "tool_scroll_page": "Scrolling the page..."
+  },
+  "AgentIndicator": {
+    "check_visa_status": "AI is checking status...",
+    "check_nationality": "AI is checking nationality...",
+    "fetch_content_url": "AI is reading webpage...",
+    "get_current_time": "AI is getting time...",
+    "extract_information_from_image": "AI is processing image...",
+    "calculate_visa_fee": "AI is calculating fee...",
+    "draft_application": "AI is drafting application...",
+    "get_faq": "AI is reading database...",
+    "get_pricing_rules": "AI is looking up pricing...",
+    "get_visa_exemptions": "AI is checking visa exemptions...",
+    "get_ports_of_entry": "AI is checking ports of entry...",
+    "get_guideline": "AI is checking guidelines...",
+    "get_extra_services": "AI is checking extra services...",
+    "get_support_contacts": "AI is checking support contacts...",
+    "get_about_us_info": "AI is checking company info...",
+    "get_page_content": "AI is reading page content...",
+    "navigate_to_page": "AI is navigating to page...",
+    "click_ui_element": "AI is interacting with UI...",
+    "focus_ui_field": "AI is opening/selecting a field...",
+    "scroll_page": "AI is scrolling..."
+  },
+  "Reels": {
+    "highlights": "Highlights",
+    "hoursAgo": "{hours} hours ago",
+    "minutesAgo": "{minutes} minutes ago",
+    "justNow": "Just now",
+    "badgeNew": "New",
+    "morePhotos": "+{count} photo(s)",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "LeaveReview": {
+    "title": "Share Your Experience",
+    "your_name": "Your Name",
+    "name_placeholder": "John Doe",
+    "nationality": "Nationality",
+    "select_nationality": "Select nationality",
+    "no_country": "No country found",
+    "rating": "Rating",
+    "star": "Star",
+    "stars": "Stars",
+    "your_review": "Your Review",
+    "review_placeholder": "Tell us about your experience...",
+    "cancel": "Cancel",
+    "submit": "Submit Review",
+    "submitting": "Submitting...",
+    "success": "Review submitted successfully and is pending approval!",
+    "error": "Failed to submit review. Please try again.",
+    "validation_name": "Name must be at least 2 characters",
+    "validation_country": "Please select a valid nationality",
+    "validation_rating_min": "Please select a rating",
+    "validation_content": "Review must be at least 10 characters"
+  }
+}

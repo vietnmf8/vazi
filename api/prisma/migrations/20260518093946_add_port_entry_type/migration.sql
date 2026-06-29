@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `ports` ADD COLUMN `entry_type` ENUM('AIRPORT', 'BORDER_GATE') NOT NULL DEFAULT 'AIRPORT';

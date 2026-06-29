@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stinger v2 — Anti-aliasing Fix + Real Logo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #080e1a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .page-title { font-size: 19px; font-weight: 900; color: #f8fafc; text-align: center; letter-spacing: -0.02em; }
+        .page-subtitle { font-size: 12px; color: #64748b; text-align: center; margin-top: 3px; }
+
+        /* Controls */
+        .controls {
+            display: flex; gap: 24px; align-items: flex-start;
+            background: #111827; border: 1px solid #1e293b;
+            border-radius: 12px; padding: 12px 20px;
+            flex-wrap: wrap; justify-content: center;
+            width: 100%; max-width: 680px;
+        }
+        .ctrl-group { display: flex; flex-direction: column; gap: 5px; min-width: 140px; }
+        .ctrl-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.07em; }
+        .ctrl-value { color: #38bdf8; font-weight: 800; }
+        .ctrl-group input[type=range] { accent-color: #0ea5e9; width: 100%; cursor: pointer; }
+
+        /* Screen */
+        .screen-wrap {
+            width: 100%; max-width: 680px; aspect-ratio: 16/9;
+            position: relative; border-radius: 12px; overflow: hidden;
+            border: 1px solid #1e293b;
+            box-shadow: 0 20px 56px rgba(0,0,0,0.7), 0 0 0 1px rgba(56,189,248,0.05);
+        }
+
+        /* Scenes */
+        .scene {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 11px; padding: 24px;
+        }
+        .scene-a { background: linear-gradient(140deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%); }
+        .scene-b { background: linear-gradient(140deg, #0f172a 0%, #14312a 60%, #0f172a 100%); opacity: 0; }
+        .scene-badge {
+            position: absolute; top: 11px; left: 13px;
+            font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 3px 9px; border-radius: 20px;
+        }
+        .scene-a .scene-badge { background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+        .scene-b .scene-badge { background: rgba(74,222,128,0.12); color: #4ade80; border: 1px solid rgba(74,222,128,0.2); }
+
+        /* Fake content */
+        .fake-card {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 9px; padding: 12px 16px; width: 100%; max-width: 320px;
+        }
+        .fake-card h3 { font-size: 10px; font-weight: 700; color: #64748b; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.07em; }
+        .fake-stat { display: flex; justify-content: space-between; align-items: center; }
+        .fake-num { font-size: 30px; font-weight: 900; color: #38bdf8; line-height: 1; }
+        .fake-num.green { color: #4ade80; }
+        .fake-badge {
+            font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+            background: rgba(56,189,248,0.1); color: #38bdf8; border: 1px solid rgba(56,189,248,0.15);
+        }
+        .fake-badge.green { background: rgba(74,222,128,0.1); color: #4ade80; border-color: rgba(74,222,128,0.15); }
+        .fake-sub { font-size: 9px; color: #334155; margin-top: 5px; }
+        .fake-rows { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 320px; }
+        .fake-row { display: flex; gap: 7px; align-items: center; }
+        .fake-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+        .fake-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+
+        /* ========================================================
+           STINGER OVERLAY
+           Anti-aliasing fix: polygon coordinates extended by 2%
+           (-2% / 102%) so the two triangles overlap slightly,
+           eliminating any sub-pixel gap on all GPU/DPI combos.
+           ======================================================== */
+        #stinger-overlay {
+            position: absolute; inset: 0; pointer-events: none; z-index: 50; overflow: hidden;
+        }
+        .sl1, .sl2 { position: absolute; inset: 0; display: none; }
+        /* Group 1 — top-left diagonal — sky blue tones */
+        .sl1-d3 { background: rgba(14,165,233,0.30); }
+        .sl1-d2 { background: rgba(14,165,233,0.65); }
+        .sl1-d1 { background: #0ea5e9; }
+        /* Group 2 — bottom-right diagonal — deep navy tones */
+        .sl2-d3 { background: rgba(12,74,110,0.50); }
+        .sl2-d2 { background: rgba(2,132,199,0.75); }
+        .sl2-d1 { background: #0c4a6e; }
+
+        /* Logo — solid square box, 1:1 ratio */
+        #stinger-logo {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; z-index: 60;
+        }
+        .logo-box {
+            /* Solid fill, no blur/glass */
+            background: #0f172a;
+            border: 2px solid rgba(237,188,27,0.35);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8), 0 0 24px rgba(237,188,27,0.12);
+            border-radius: 20px;
+            /* 1:1 square aspect */
+            width: 96px;
+            height: 96px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Trigger button */
+        .trigger-btn {
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            color: white; font-weight: 800; font-size: 12px;
+            padding: 12px 28px; border-radius: 50px; border: none; cursor: pointer;
+            box-shadow: 0 0 22px rgba(14,165,233,0.3);
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+            letter-spacing: 0.05em; text-transform: uppercase;
+        }
+        .trigger-btn:hover { transform: scale(1.04); box-shadow: 0 0 34px rgba(14,165,233,0.5); }
+        .trigger-btn:active { transform: scale(0.97); }
+        .trigger-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+        /* Info row */
+        .info-row {
+            display: flex; gap: 24px; flex-wrap: wrap;
+            justify-content: center; align-items: stretch;
+            width: 100%; max-width: 680px;
+        }
+        .info-box {
+            flex: 1; min-width: 240px;
+            background: #111827; border: 1px solid #1e293b;
+            border-radius: 10px; padding: 12px 16px;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .info-box h4 { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; }
+        .info-box p { font-size: 11px; color: #94a3b8; line-height: 1.6; }
+        .info-box code {
+            font-size: 10px; background: #0f172a; color: #38bdf8;
+            padding: 1px 5px; border-radius: 4px; font-family: monospace;
+        }
+        .tag-good { display: inline; background: rgba(74,222,128,0.12); color: #4ade80; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+
+        .chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+        .chip {
+            font-size: 10px; padding: 3px 10px; border-radius: 20px;
+            background: rgba(30,41,59,0.9); border: 1px solid #1e293b;
+            color: #64748b; font-weight: 600;
+        }
+        .chip strong { color: #38bdf8; }
+    </style>
+</head>
+<body>
+
+    <div>
+        <div class="page-title">Stinger v2 — Anti-aliasing Fix + Real Logo</div>
+        <div class="page-subtitle">Polygon extended ±2% · Solid logo box 1:1 · FastVisa SVG</div>
+    </div>
+
+    <div class="controls">
+        <div class="ctrl-group">
+            <span class="ctrl-label">Duration: <span class="ctrl-value" id="v-dur">0.5</span>s</span>
+            <input type="range" id="ctrl-dur" min="0.3" max="1.5" step="0.05" value="0.5">
+        </div>
+        <div class="ctrl-group">
+            <span class="ctrl-label">Stagger: <span class="ctrl-value" id="v-stag">0.08</span>s</span>
+            <input type="range" id="ctrl-stag" min="0" max="0.2" step="0.01" value="0.08">
+        </div>
+    </div>
+
+    <!-- Screen -->
+    <div class="screen-wrap">
+        <!-- Scene A -->
+        <div class="scene scene-a" id="scene-a">
+            <span class="scene-badge">State: Before Load</span>
+            <div class="fake-card">
+                <h3>Hồ sơ đang xử lý</h3>
+                <div class="fake-stat">
+                    <div class="fake-num">24</div>
+                    <div class="fake-badge">Đang chờ</div>
+                </div>
+                <div class="fake-sub">Nhấn nút bên dưới để trigger Stinger</div>
+            </div>
+            <div class="fake-rows">
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#38bdf8"></div>
+                    <div class="fake-bar" style="flex:1"></div>
+                    <div class="fake-bar" style="width:22%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#818cf8"></div>
+                    <div class="fake-bar" style="flex:0.65"></div>
+                    <div class="fake-bar" style="width:32%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#f59e0b"></div>
+                    <div class="fake-bar" style="flex:0.8"></div>
+                    <div class="fake-bar" style="width:18%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene B -->
+        <div class="scene scene-b" id="scene-b">
+            <span class="scene-badge">State: Loaded ✓</span>
+            <div class="fake-card">
+                <h3>Hồ sơ đã duyệt</h3>
+                <div class="fake-stat">
+                    <div class="fake-num green">18</div>
+                    <div class="fake-badge green">Thành công</div>
+                </div>
+                <div class="fake-sub">Dữ liệu tải xong · Stinger đã ẩn</div>
+            </div>
+            <div class="fake-rows">
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:1"></div>
+                    <div class="fake-bar" style="width:18%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:0.78"></div>
+                    <div class="fake-bar" style="width:28%"></div>
+                </div>
+                <div class="fake-row">
+                    <div class="fake-dot" style="background:#4ade80"></div>
+                    <div class="fake-bar" style="flex:0.9"></div>
+                    <div class="fake-bar" style="width:14%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stinger Overlay -->
+        <div id="stinger-overlay">
+            <div class="sl1 sl1-d3" id="s1-3"></div>
+            <div class="sl1 sl1-d2" id="s1-2"></div>
+            <div class="sl1 sl1-d1" id="s1-1"></div>
+            <div class="sl2 sl2-d3" id="s2-3"></div>
+            <div class="sl2 sl2-d2" id="s2-2"></div>
+            <div class="sl2 sl2-d1" id="s2-1"></div>
+
+            <!-- Logo: solid box, 1:1 square, real FastVisa SVG -->
+            <div id="stinger-logo">
+                <div class="logo-box">
+                    <!-- FastVisa Logo SVG (inline, từ FastVisaLogo.tsx) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93 93" width="60" height="60">
+                        <defs>
+                            <linearGradient id="g1" x1="9.62" y1="48.93" x2="91.06" y2="51.78" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#efbc1b"/>
+                                <stop offset="0.25" stop-color="#eeb21a"/>
+                                <stop offset="0.68" stop-color="#ed9918"/>
+                                <stop offset="0.86" stop-color="#ed8c18"/>
+                            </linearGradient>
+                            <linearGradient id="g2" x1="0.8" y1="23.32" x2="53.19" y2="25.15" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#efbc1b"/>
+                                <stop offset="0.29" stop-color="#eeb21a"/>
+                                <stop offset="0.78" stop-color="#ed9918"/>
+                                <stop offset="0.99" stop-color="#ed8c18"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#g1)" d="M82.41,26.04c-.97,0-1.86.53-2.33,1.38l-16.82,30.21-8.03-17.63c-1.41-3.1-4.51-5.1-7.92-5.1H10.11c4.05,7.04,7.69,10.13,10.99,10.03h24.79l15.97,31.13c.32.63,1.21.65,1.56.03l28.55-50.05c0-.07-6.49-.03-9.56-.01Z"/>
+                        <path fill="url(#g2)" d="M38.21,26.44c1.08.02,2.21,1.54,3.38,4.51h5.09c2.08-.04,4.15.7,6.22,2.48l-5.73-12.87c-1.11-2.49-3.58-4.1-6.31-4.1H1.04c3.47,6.37,7.18,10.02,11.22,9.99h25.95Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info chips -->
+    <div class="chips">
+        <div class="chip">Diagonal <strong>3 layers</strong></div>
+        <div class="chip">Easing: <strong>expo.inOut</strong></div>
+        <div class="chip">Logo: <strong>Sync · Solid box</strong></div>
+        <div class="chip">AA Fix: <strong>±2% overlap</strong></div>
+    </div>
+
+    <button id="trigger-btn" class="trigger-btn">▶&nbsp; Chạy Stinger (A → B)</button>
+
+    <!-- Technical explanation boxes -->
+    <div class="info-row">
+        <div class="info-box">
+            <h4>Anti-aliasing Fix <span class="tag-good">Đã áp dụng</span></h4>
+            <p>
+                Thay vì 2 tam giác gặp nhau chính xác tại đường chéo, polygon được mở rộng <code>±2%</code> ra ngoài viewport. Hai tam giác <strong>chồng lên nhau</strong> một dải nhỏ — GPU không thể tạo ra khe hở tại vùng đã được phủ chồng.
+            </p>
+            <p>
+                <code>Group 1: polygon(-2% -2%, 102% -2%, -2% 102%)</code><br/>
+                <code>Group 2: polygon(102% 102%, -2% 102%, 102% -2%)</code>
+            </p>
+        </div>
+        <div class="info-box">
+            <h4>Logo Box Design</h4>
+            <p>
+                Solid fill <code>#0f172a</code>, không dùng blur/glass. Tỉ lệ <code>1:1</code> vuông, <code>96×96px</code>. Logo SVG FastVisa thật (inline từ <code>FastVisaLogo.tsx</code>) tại kích thước <code>60px</code>.
+            </p>
+            <p>Border vàng-cam mờ <code>rgba(237,188,27,0.35)</code> lấy theo màu gradient logo để tạo sự liên kết thương hiệu.</p>
+        </div>
+    </div>
+
+    <script>
+        let isSceneA = true;
+        let isAnimating = false;
+
+        const btn = document.getElementById('trigger-btn');
+        const ctrlDur  = document.getElementById('ctrl-dur');
+        const ctrlStag = document.getElementById('ctrl-stag');
+        const vDur  = document.getElementById('v-dur');
+        const vStag = document.getElementById('v-stag');
+
+        ctrlDur.addEventListener('input',  e => vDur.textContent  = e.target.value);
+        ctrlStag.addEventListener('input', e => vStag.textContent = e.target.value);
+
+        const layers1 = ['s1-3','s1-2','s1-1'].map(id => document.getElementById(id));
+        const layers2 = ['s2-3','s2-2','s2-1'].map(id => document.getElementById(id));
+
+        btn.addEventListener('click', () => {
+            if (isAnimating) return;
+            isAnimating = true;
+            btn.disabled = true;
+            btn.textContent = '⏳  Đang chạy...';
+
+            const dur  = parseFloat(ctrlDur.value);
+            const stag = parseFloat(ctrlStag.value);
+            const ease = 'expo.inOut';
+
+            // Reset
+            gsap.set([...layers1, ...layers2], { clearProps: 'all' });
+            gsap.set([...layers1, ...layers2], { display: 'none' });
+            gsap.set('#stinger-logo', { opacity: 0, scale: 0.5, rotation: -45 });
+
+            // Diagonal setup — polygon extended ±2% để fix anti-aliasing gap
+            gsap.set(layers1, {
+                display: 'block',
+                clipPath: 'polygon(-2% -2%, 102% -2%, -2% 102%)',
+                x: '-100%', y: '-100%'
+            });
+            gsap.set(layers2, {
+                display: 'block',
+                clipPath: 'polygon(102% 102%, -2% 102%, 102% -2%)',
+                x: '100%', y: '100%'
+            });
+
+            const maxStag   = stag * 2; // (numLayers - 1)
+            const fullCover = dur + maxStag;
+            const logoAt    = fullCover - 0.2; // sync mode
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    isAnimating = false;
+                    btn.disabled = false;
+                    btn.textContent = isSceneA
+                        ? '▶  Chạy Stinger (B → A)'
+                        : '▶  Chạy Stinger (A → B)';
+                }
+            });
+
+            // Fly IN
+            tl.to(layers1, { x: '0%', y: '0%', duration: dur, ease, stagger: stag }, 0);
+            tl.to(layers2, { x: '0%', y: '0%', duration: dur, ease, stagger: stag }, 0);
+
+            // Logo appear (sync)
+            tl.to('#stinger-logo', {
+                opacity: 1, scale: 1.05, rotation: 0,
+                duration: 0.42, ease: 'back.out(1.7)'
+            }, logoAt);
+
+            // Scene swap
+            tl.call(() => {
+                if (isSceneA) {
+                    gsap.set('#scene-a', { opacity: 0 });
+                    gsap.set('#scene-b', { opacity: 1 });
+                } else {
+                    gsap.set('#scene-a', { opacity: 1 });
+                    gsap.set('#scene-b', { opacity: 0 });
+                }
+                isSceneA = !isSceneA;
+            }, null, fullCover + 0.1);
+
+            // Fly OUT
+            const retractAt = fullCover + 0.82;
+            tl.to(layers1, { x: '-100%', y: '-100%', duration: dur, ease, stagger: { each: stag, from: 'end' } }, retractAt);
+            tl.to(layers2, { x: '100%', y: '100%',  duration: dur, ease, stagger: { each: stag, from: 'end' } }, retractAt);
+
+            // Logo hide — đồng thời với polygon bắt đầu rút ra
+            tl.to('#stinger-logo', {
+                opacity: 0, scale: 0.5, rotation: -45,
+                duration: 0.2, ease: 'power2.in'
+            }, retractAt);
+        });
+    </script>
+</body>
+</html>

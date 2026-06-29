@@ -1,0 +1,68 @@
+<h2>Theme Toggle — Kiểu nào phù hợp?</h2>
+<p class="subtitle">Bạn muốn style toggle switch nào cho nút đổi giao diện sáng/tối trong Header?</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:24px;display:flex;align-items:center;justify-content:center;gap:16px;min-height:120px">
+      <!-- Toggle A: Track + Thumb với Sun/Moon icon bên trong thumb -->
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="color:#94a3b8;font-size:12px;font-family:monospace">Light</span>
+        <div style="position:relative;width:52px;height:28px;background:linear-gradient(135deg,#d97706,#f59e0b);border-radius:14px;cursor:pointer;box-shadow:0 0 12px rgba(217,119,6,0.4)">
+          <div style="position:absolute;right:3px;top:3px;width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 6px rgba(0,0,0,0.3)">🌙</div>
+        </div>
+        <span style="color:#f1f5f9;font-size:12px;font-family:monospace">Dark</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Track + Thumb (icon inside)</h3>
+      <p>Track gradient vàng, thumb trắng chứa icon ☀️/🌙. Thumb <strong>slide trái/phải</strong>. Glow vàng khi dark mode. Đây là pattern phổ biến nhất của animate-ui.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:24px;display:flex;align-items:center;justify-content:center;gap:16px;min-height:120px">
+      <!-- Toggle B: Icon-only với morphing animation -->
+      <div style="display:flex;align-items:center;gap:20px">
+        <div style="width:40px;height:40px;border-radius:10px;background:#1e293b;border:1px solid #334155;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <span style="font-size:20px">☀️</span>
+        </div>
+        <span style="color:#475569;font-size:14px">→</span>
+        <div style="width:40px;height:40px;border-radius:10px;background:#d97706;border:1px solid #d97706;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 16px rgba(217,119,6,0.5)">
+          <span style="font-size:20px">🌙</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Icon Button với rotate/scale morph</h3>
+      <p>Button hình vuông bo góc. Nhấn thì icon <strong>xoay + scale</strong> để chuyển từ ☀️ sang 🌙. Nền button đổi màu. Compact hơn, không có track.</p>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:120px">
+      <!-- Toggle C: Pill với cả 2 icon, highlight active -->
+      <div style="display:flex;background:#1e293b;border:1px solid #334155;border-radius:20px;padding:3px;gap:2px">
+        <div style="padding:6px 12px;border-radius:16px;display:flex;align-items:center;gap:6px;cursor:pointer;color:#94a3b8;font-size:13px">
+          <span>☀️</span><span style="font-family:monospace">Light</span>
+        </div>
+        <div style="padding:6px 12px;border-radius:16px;background:#d97706;display:flex;align-items:center;gap:6px;cursor:pointer;color:#fff;font-size:13px;box-shadow:0 2px 8px rgba(217,119,6,0.4)">
+          <span>🌙</span><span style="font-family:monospace">Dark</span>
+        </div>
+      </div>
+      <div style="color:#475569;font-size:11px;font-family:monospace">active pill slides between Light / Dark</div>
+    </div>
+    <div class="card-body">
+      <h3>C — Segmented Pill (sliding active state)</h3>
+      <p>Cả 2 option luôn visible. Pill vàng <strong>trượt</strong> để highlight trạng thái active. Rõ ràng nhất về UX, tương tự segment control của iOS.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:16px">
+  <p class="subtitle" style="font-size:13px">💡 <strong>Lưu ý:</strong> animate-ui <em>chưa được cài</em> trong project. Nếu chọn A (animate-ui pattern), chúng ta có 2 cách: (1) install package <code>animate-ui</code>, hoặc (2) implement animation tương đương bằng framer-motion đã có sẵn. Bạn prefer cách nào?</p>
+</div>

@@ -1,0 +1,66 @@
+---
+description: Dashboard-specific patterns — tables, charts, command palette, density
+globs: ["**/dashboard/**/*", "**/admin/**/*", "**/components/data-table/**/*"]
+alwaysApply: false
+---
+
+# Dashboard Patterns (Behance 2026 trend-aligned)
+
+## Layout (per Dammyjay93 + Leonxlnx rules)
+
+- Sidebar: SAME bg as canvas + border-r (NOT different color — fragments space)
+- Top bar: 56px height (NOT 64) — denser
+- Content max-width: NO max-width on admin (data-dense)
+- Spacing base: 4px (use 4, 8, 12, 16, 24, 32)
+
+## Data Tables (TanStack Table v8 + shadcn)
+
+- Server-side pagination — NEVER client-side for >100 rows
+- Use `nuqs` for URL state (search, filter, page) → shareable links
+- Row height: 36-40px (compact density)
+- Tabular nums: `font-variant-numeric: tabular-nums` on number columns
+- Mono font for IDs, timestamps, amounts
+
+## Charts (Recharts via shadcn/ui chart)
+
+- Use shadcn `<ChartContainer>` wrapper for theme integration
+- Single accent color per chart (Lila ban applies)
+- Tooltip: custom with mono font + tabular nums
+- Empty state: composed message, NOT empty chart skeleton
+
+## Cards (anti-generic)
+
+- Metric cards: each card has UNIQUE internal structure (sparkline / progress ring / delta badge)
+- NOT all cards icon-left-number-big-label-small (signals AI-generated)
+- For VISUAL_DENSITY > 7: NO card containers — use `divide-y` + `border-t` instead
+
+## Command Palette (cmdk, ⌘K)
+
+- Required for admin dashboards (power-user feature)
+- Routes + entities + actions all searchable
+- Recent items at top
+
+## States (mandatory, per Leonxlnx)
+
+- Loading: skeletal loaders matching layout (NOT spinner)
+- Empty: composed "getting started" view (NOT just empty)
+- Error: inline messages (NOT window.alert)
+- Tactile: `-translate-y-[1px]` on `:active`
+
+## Dark Mode (CSS vars)
+
+- OKLCh colors (Tailwind v4 native)
+- Off-black: `#0a0a0a` or `oklch(0.15 0 0)` — NOT pure `#000000`
+- Higher elevation = slightly lighter bg
+- Borders carry hierarchy in dark mode (shadows invisible)
+
+## Forbidden (Leonxlnx + Dammyjay93 combined)
+
+- ❌ Serif fonts (use Geist/Satoshi + Geist Mono/JetBrains Mono)
+- ❌ Purple/blue AI gradient ("Lila ban")
+- ❌ 3-column equal card rows (asymmetric/zig-zag instead)
+- ❌ Generic names: John Doe, Acme Corp, SmartFlow
+- ❌ Round numbers: 99.99%, 50%, $100.00 (use 47.2%, $99, +1 (312) 847-1928)
+- ❌ Mixing depth strategies (borders-only OR shadows — never both)
+- ❌ Different bg color for sidebar
+- ❌ Lighter bg for inputs (use darker)

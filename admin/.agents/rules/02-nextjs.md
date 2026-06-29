@@ -1,0 +1,652 @@
+---
+activation: model_decision
+description: Next.js App Router patterns and best practices for file-based routing, layouts, data fetching (SSR/SSG/ISR), streaming with Suspense, API routes, middleware, server actions, image optimization, and dynamic imports.
+globs: ["**/app/**/*.tsx", "**/app/**/*.ts", "**/components/**/*.tsx"]
+---
+
+# Next.js Development Rules
+
+## App Router Structure
+
+### File-based Routing
+```
+app/
+├── globals.css
+├── layout.tsx          # Root layout
+├── page.tsx           # Home page
+├── loading.tsx        # Loading UI
+├── error.tsx          # Error UI
+├── not-found.tsx      # 404 page
+├── dashboard/
+│   ├── layout.tsx     # Nested layout
+│   ├── page.tsx       # /dashboard
+│   ├── settings/
+│   │   └── page.tsx   # /dashboard/settings
+│   └── [id]/
+│       └── page.tsx   # /dashboard/[id]
+└── api/
+    └── users/
+        └── route.ts   # API endpoints
+```
+
+### Page Components
+```typescript
+// app/page.tsx - Server Component by default
+export default function HomePage() {
+  return (
+    <div>
+      <h1>Welcome</h1>
+    </div>
+  )
+}
+
+// With metadata
+export const metadata = {
+  title: 'Home',
+  description: 'Welcome to our app',
+}
+
+// Dynamic route với params — Next.js 16: params/searchParams là Promise, phải await
+// app/posts/[slug]/page.tsx
+export default async function PostPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const { slug } = await params
+  const query = await searchParams
+  return <div>Post: {slug}</div>
+}
+```
+
+### Layouts
+```typescript
+// app/layout.tsx - Root Layout
+import { Inter } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <nav>Navigation</nav>
+        <main>{children}</main>
+        <footer>Footer</footer>
+      </body>
+    </html>
+  )
+}
+
+// Nested layout
+// app/dashboard/layout.tsx
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="dashboard">
+      <aside>Sidebar</aside>
+      <div>{children}</div>
+    </div>
+  )
+}
+```
+
+## Data Fetching
+
+### Server Components (Default)
+```typescript
+// Next.js 16: dùng 'use cache' directive thay vì cache option trong fetch
+// Cached data — revalidate mỗi 1 giờ
+async function getCachedData() {
+  'use cache'
+  cacheLife('hours')
+  
+  const res = await fetch('https://api.example.com/data')
+  if (!res.ok) throw new Error('Failed to fetch data')
+  return res.json()
+}
+
+// Dynamic data (fresh mỗi request) — không dùng 'use cache'
+async function getDynamicData() {
+  const res = await fetch('https://api.example.com/data')
+  if (!res.ok) throw new Error('Failed to fetch data')
+  return res.json()
+}
+
+export default async function Page() {
+  const data = await getCachedData()
+ 
+  return (
+    <div>
+      {data.map((item: any) => (
+        <div key={item.id}>{item.name}</div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Streaming with Suspense
+```typescript
+// app/dashboard/page.tsx
+import { Suspense } from 'react'
+import { Posts } from './posts'
+import { Analytics } from './analytics'
+
+export default function Dashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <Posts />
+      </Suspense>
+      <Suspense fallback={<div>Loading analytics...</div>}>
+        <Analytics />
+      </Suspense>
+    </div>
+  )
+}
+
+// Slow component that fetches data
+async function Posts() {
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  const posts = await fetch('/api/posts').then(res => res.json())
+  
+  return (
+    <div>
+      {posts.map((post: any) => (
+        <div key={post.id}>{post.title}</div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Client Components
+```typescript
+'use client'
+
+import { useState, useEffect } from 'react'
+
+export default function ClientComponent() {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(data => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) return <div>Loading...</div>
+
+  return <div>{JSON.stringify(data)}</div>
+}
+```
+
+## API Routes
+
+### Basic API Route
+```typescript
+// app/api/users/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('query')
+
+  const users = await fetchUsers(query)
+  
+  return NextResponse.json({ users })
+}
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+  
+  try {
+    const user = await createUser(body)
+    return NextResponse.json({ user }, { status: 201 })
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to create user' },
+      { status: 500 }
+    )
+  }
+}
+```
+
+### Dynamic API Routes
+```typescript
+// app/api/users/[id]/route.ts
+// Next.js 16: params là Promise — phải await trước khi dùng
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  const user = await getUserById(id)
+  
+  if (!user) {
+    return NextResponse.json(
+      { error: 'User not found' },
+      { status: 404 }
+    )
+  }
+  
+  return NextResponse.json({ user })
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  const body = await request.json()
+  const updatedUser = await updateUser(id, body)
+  
+  return NextResponse.json({ user: updatedUser })
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  await deleteUser(id)
+  return NextResponse.json({ success: true })
+}
+```
+
+### API Route with Validation
+```typescript
+import { z } from 'zod'
+
+const CreateUserSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  age: z.number().min(0).max(120),
+})
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json()
+    const validatedData = CreateUserSchema.parse(body)
+    
+    const user = await createUser(validatedData)
+    return NextResponse.json({ user }, { status: 201 })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.errors },
+        { status: 400 }
+      )
+    }
+    
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+```
+
+## Proxy (Middleware)
+
+> **Next.js 16:** `middleware.ts` đã đổi tên thành `proxy.ts`. Runtime mặc định là Node.js (thay vì Edge), cho phép dùng toàn bộ Node.js API. Dùng `ProxyRequest`/`ProxyResponse` thay `NextRequest`/`NextResponse`.
+
+### Basic Proxy
+```typescript
+// proxy.ts  ← (trước là middleware.ts trong Next.js 15)
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  // Kiểm tra authentication trước khi vào dashboard
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    const token = request.cookies.get('token')
+    
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+  }
+
+  const response = NextResponse.next()
+  response.headers.set('x-custom-header', 'my-value')
+  
+  return response
+}
+
+export const config = {
+  // matcher bắt buộc trong Next.js 16
+  matcher: [
+    '/dashboard/:path*',
+    '/api/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+}
+```
+
+### Advanced Proxy with JWT
+```typescript
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { jwtVerify } from 'jose'
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET)
+
+export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/api/protected')) {
+    const token = request.headers.get('authorization')?.replace('Bearer ', '')
+    
+    if (!token) {
+      return NextResponse.json({ error: 'No token' }, { status: 401 })
+    }
+    
+    try {
+      await jwtVerify(token, JWT_SECRET)
+    } catch {
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+    }
+  }
+  
+  return NextResponse.next()
+}
+```
+
+## Server Actions
+
+### Form Actions
+```typescript
+// app/actions.ts
+'use server'
+
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+  
+  // Validate
+  if (!title || !content) {
+    throw new Error('Title and content are required')
+  }
+  
+  // Save to database
+  await savePost({ title, content })
+  
+  // Revalidate and redirect
+  revalidatePath('/posts')
+  redirect('/posts')
+}
+
+// In component
+export default function CreatePostForm() {
+  return (
+    <form action={createPost}>
+      <input name="title" placeholder="Title" required />
+      <textarea name="content" placeholder="Content" required />
+      <button type="submit">Create Post</button>
+    </form>
+  )
+}
+```
+
+### Server Actions with State
+```typescript
+'use server'
+
+import { z } from 'zod'
+
+const PostSchema = z.object({
+  title: z.string().min(1),
+  content: z.string().min(1),
+})
+
+type State = {
+  errors?: {
+    title?: string[]
+    content?: string[]
+  }
+  message?: string
+}
+
+export async function createPost(
+  prevState: State,
+  formData: FormData
+): Promise<State> {
+  const validatedFields = PostSchema.safeParse({
+    title: formData.get('title'),
+    content: formData.get('content'),
+  })
+  
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing fields',
+    }
+  }
+  
+  try {
+    await savePost(validatedFields.data)
+    revalidatePath('/posts')
+    return { message: 'Post created successfully' }
+  } catch (error) {
+    return { message: 'Failed to create post' }
+  }
+}
+```
+
+## Performance Optimization
+
+### Image Optimization
+```typescript
+import Image from 'next/image'
+
+// Responsive images
+<Image
+  src="/hero.jpg"
+  alt="Hero image"
+  width={800}
+  height={600}
+  priority // Load immediately
+  placeholder="blur"
+  blurDataURL="data:image/jpeg;base64,..."
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+/>
+
+// Fill container
+<div style={{ position: 'relative', width: '100%', height: '400px' }}>
+  <Image
+    src="/background.jpg"
+    alt="Background"
+    fill
+    style={{ objectFit: 'cover' }}
+  />
+</div>
+```
+
+### Dynamic Imports
+```typescript
+import dynamic from 'next/dynamic'
+
+// Lazy load component
+const DynamicComponent = dynamic(() => import('../components/Heavy'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false, // Client-side only
+})
+
+// Conditional loading
+const AdminPanel = dynamic(() => import('../components/AdminPanel'), {
+  loading: () => <div>Loading admin panel...</div>,
+})
+
+export default function Dashboard({ isAdmin }: { isAdmin: boolean }) {
+  return (
+    <div>
+      {isAdmin && <AdminPanel />}
+    </div>
+  )
+}
+```
+
+### Next.js 16 Production-Ready Config
+
+```typescript
+// next.config.ts — template chuẩn cho dự án Next.js 16
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  // ─── USER PERFORMANCE ───────────────────────────────────────────────────
+  // React Compiler STABLE (Next.js 16): auto-memoize, không cần viết useMemo/useCallback tay
+  // ⚠️ Yêu cầu cài peer dependency: npm install babel-plugin-react-compiler
+  reactCompiler: true,
+  // PPR: static shell + cached sections + dynamic stream trong cùng 1 route
+  cacheComponents: true,
+  poweredByHeader: false,
+  compress: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],  // AVIF nhỏ hơn WebP ~20%
+    remotePatterns: [{ protocol: 'https', hostname: '**' }],
+  },
+
+  // ─── DEVELOPER EXPERIENCE ───────────────────────────────────────────────
+  reactStrictMode: true,      // phát hiện side effects sớm
+  logging: {
+    fetches: { fullUrl: true } // xem full URL của mọi fetch trong terminal
+  },
+  experimental: {
+    // Turbopack FS Cache: lưu artifacts giữa restart, giảm ~87% cold-start
+    turbopackFileSystemCacheForDev: true,
+  },
+}
+
+export default nextConfig
+// ⚠️ KHÔNG dùng --turbopack flag trong scripts: Next.js 16 auto-enable Turbopack
+// ⚠️ KHÔNG dùng webpack config: sẽ fail build với Turbopack default
+```
+
+### Caching với `use cache` (Next.js 16)
+
+```typescript
+import { cacheLife, cacheTag } from 'next/cache'
+
+// Cached component — không re-fetch mỗi request
+async function FeaturedPosts() {
+  'use cache'
+  cacheLife('hours')
+  cacheTag('posts')
+  const posts = await db.posts.findMany({ take: 5 })
+  return <PostList posts={posts} />
+}
+
+// Dynamic — luôn fresh (wrap trong Suspense để stream)
+async function UserCart() {
+  const userId = (await cookies()).get('userId')?.value
+  const cart = await db.cart.findMany({ where: { userId } })
+  return <CartPreview items={cart} />
+}
+
+export default function HomePage() {
+  return (
+    <>
+      <FeaturedPosts />                          {/* cached */}
+      <Suspense fallback={<CartSkeleton />}>
+        <UserCart />                             {/* dynamic, streams */}
+      </Suspense>
+    </>
+  )
+}
+```
+
+## Known Gotchas (Next.js 16)
+
+### Gotcha 1 — `reactCompiler: true` cần cài thêm package
+
+```bash
+# Thiếu package này → runtime error ngay khi khởi động dev server:
+# "Failed to resolve package babel-plugin-react-compiler"
+npm install babel-plugin-react-compiler
+```
+
+`reactCompiler: true` trong `next.config.ts` **không tự bundled** trong Next.js 16 —
+phải cài `babel-plugin-react-compiler` riêng như một dependency.
+
+---
+
+### Gotcha 2 — `new Date()` trong Server Component với PPR bật
+
+Khi `cacheComponents: true` (PPR), Server Component **không được gọi `new Date()` trực tiếp**:
+
+```
+Error: Route "/..." used `new Date()` before accessing either uncached data...
+```
+
+**❌ SAI — `new Date()` trực tiếp trong Server Component:**
+```tsx
+// Footer.tsx (Server Component)
+export function Footer() {
+  const year = new Date().getFullYear()  // ← runtime error với PPR
+  return <footer>© {year}</footer>
+}
+```
+
+**❌ SAI — `"use client"` đặt trong function body (không có tác dụng):**
+```tsx
+function CopyrightYear() {
+  "use client"  // ← KHÔNG hoạt động, directive phải ở đầu file
+  return <>{new Date().getFullYear()}</>
+}
+```
+
+**✅ ĐÚNG — Tách ra file riêng với `"use client"` đầu file:**
+```tsx
+// CopyrightYear.tsx  ← file riêng
+"use client"  // ← PHẢI ở dòng đầu tiên của file
+
+export function CopyrightYear() {
+  return <>{new Date().getFullYear()}</>
+}
+
+// Footer.tsx (Server Component giữ nguyên)
+import { CopyrightYear } from "./CopyrightYear"
+
+export function Footer() {
+  return <footer>© <CopyrightYear /> VietnamEVisa</footer>
+}
+```
+
+**Các giá trị dynamic khác bị cấm tương tự trong Server Component với PPR:**
+- `new Date()`, `Date.now()`
+- `Math.random()`
+- `crypto.randomUUID()`
+
+→ Tất cả đều phải đưa vào Client Component hoặc dùng `connection()` để defer.
+
+---
+
+## Best Practices (Next.js 16)
+
+1. **Server Components là default** — dùng `'use client'` khi thực sự cần interactivity
+2. **React Compiler bật sẵn** — KHÔNG viết `useMemo`/`useCallback` tay; compiler tự xử lý
+3. **PPR (`cacheComponents`)** — Phân tách rõ static / cached (`use cache`) / dynamic (`Suspense`)
+4. **`params`/`searchParams` phải `await`** — Đây là Promise từ Next.js 16
+5. **Dùng `proxy.ts`** thay `middleware.ts` — Breaking change Next.js 16
+6. **`next/image`** luôn dùng, đặt `priority` cho LCP image
+7. **`next/font`** luôn dùng — zero CLS, tự host font
+8. **Dynamic imports** cho heavy components không cần SSR
+9. **`error.tsx` + `loading.tsx`** ở mọi route segment có async data
+10. **KHÔNG dùng `getStaticProps`/`getServerSideProps`** — Đó là Pages Router (legacy)

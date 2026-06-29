@@ -1,0 +1,263 @@
+---
+description: Custom AppError class hierarchy with i18n keys.
+alwaysApply: false
+globs: src/errors/**/*.ts
+---
+
+# Custom Error Classes
+
+## File location
+
+`src/utils/errors.ts` — ALL custom errors here, exported from one place.
+
+## Implementation
+
+```typescript
+// src/utils/errors.ts
+import { httpCodes } from "@/configs/constants";
+
+/**
+ * Base AppError — all app-thrown errors extend this.
+ * `message` is an i18n key, translated by errorHandler middleware via req.t().
+ */
+export class AppError extends Error {
+    public statusCode: number;
+    public code: string;
+
+    constructor(message: string, statusCode = 500, code = "APP_ERROR") {
+        super(message);
+        this.name = "AppError";
+        this.statusCode = statusCode;
+        this.code = code;
+        Object.setPrototypeOf(this, AppError.prototype);
+    }
+}
+
+// === Validation ===
+export class ValidationError extends AppError {
+    public fields: Record<string, string[]>;
+    constructor(
+        message = "errors.validation_failed",
+        fields: Record<string, string[]> = {},
+    ) {
+        super(message, httpCodes.badRequest, "VALIDATION_ERROR");
+        this.name = "ValidationError";
+        this.fields = fields;
+        Object.setPrototypeOf(this, ValidationError.prototype);
+    }
+}
+
+// === Auth ===
+export class UnauthorizedError extends AppError {
+    constructor(message = "errors.unauthorized") {
+        super(message, httpCodes.unauthorized, "UNAUTHORIZED");
+        this.name = "UnauthorizedError";
+        Object.setPrototypeOf(this, UnauthorizedError.prototype);
+    }
+}
+
+export class ForbiddenError extends AppError {
+    constructor(message = "errors.forbidden") {
+        super(message, httpCodes.forbidden, "FORBIDDEN");
+        this.name = "ForbiddenError";
+        Object.setPrototypeOf(this, ForbiddenError.prototype);
+    }
+}
+
+export class AuthError extends AppError {
+    constructor(message = "auth.invalid_credentials") {
+        super(message, httpCodes.unauthorized, "AUTH_ERROR");
+        this.name = "AuthError";
+        Object.setPrototypeOf(this, AuthError.prototype);
+    }
+}
+
+export class TokenExpiredError extends AppError {
+    constructor(message = "auth.token_expired") {
+        super(message, httpCodes.unauthorized, "TOKEN_EXPIRED");
+        this.name = "TokenExpiredError";
+        Object.setPrototypeOf(this, TokenExpiredError.prototype);
+    }
+}
+
+export class TokenRevokedError extends AppError {
+    constructor(message = "auth.token_revoked") {
+        super(message, httpCodes.unauthorized, "TOKEN_REVOKED");
+        this.name = "TokenRevokedError";
+        Object.setPrototypeOf(this, TokenRevokedError.prototype);
+    }
+}
+
+// === Resource ===
+export class NotFoundError extends AppError {
+    constructor(message = "errors.not_found") {
+        super(message, httpCodes.notFound, "NOT_FOUND");
+        this.name = "NotFoundError";
+        Object.setPrototypeOf(this, NotFoundError.prototype);
+    }
+}
+
+export class ConflictError extends AppError {
+    constructor(message = "errors.conflict") {
+        super(message, httpCodes.conflict, "CONFLICT");
+        this.name = "ConflictError";
+        Object.setPrototypeOf(this, ConflictError.prototype);
+    }
+}
+
+export class EmailExistError extends ConflictError {
+    constructor(message = "auth.register.email_exists") {
+        super(message);
+        this.name = "EmailExistError";
+        this.code = "EMAIL_EXISTS";
+        Object.setPrototypeOf(this, EmailExistError.prototype);
+    }
+}
+
+// === Rate limit ===
+export class RateLimitError extends AppError {
+    public retryAfter?: number; // seconds
+    constructor(message = "errors.rate_limit", retryAfter?: number) {
+        super(message, httpCodes.tooManyRequests, "RATE_LIMIT");
+        this.name = "RateLimitError";
+        this.retryAfter = retryAfter;
+        Object.setPrototypeOf(this, RateLimitError.prototype);
+    }
+}
+
+// === External service ===
+export class ExternalServiceError extends AppError {
+    public service: string;
+    constructor(service: string, message = "errors.external_service") {
+        super(message, httpCodes.serviceUnavailable, "EXTERNAL_ERROR");
+        this.name = "ExternalServiceError";
+        this.service = service;
+        Object.setPrototypeOf(this, ExternalServiceError.prototype);
+    }
+}
+
+// === Business logic ===
+export class BusinessError extends AppError {
+    constructor(message: string, code = "BUSINESS_ERROR") {
+        super(message, httpCodes.unprocessableEntity, code);
+        this.name = "BusinessError";
+        Object.setPrototypeOf(this, BusinessError.prototype);
+    }
+}
+
+// === Programming errors (should never happen) ===
+export class InternalError extends AppError {
+    constructor(message = "errors.internal_server") {
+        super(message, httpCodes.serverError, "INTERNAL_ERROR");
+        this.name = "InternalError";
+        Object.setPrototypeOf(this, InternalError.prototype);
+    }
+}
+```
+
+## Usage in services
+
+```typescript
+// src/services/auth.service.ts
+import {
+    EmailExistError,
+    AuthError,
+    NotFoundError,
+    TokenExpiredError,
+} from "@/utils/errors";
+
+class AuthService {
+    async register(data: RegisterDto) {
+        const existing = await prisma.user.findUnique({
+            where: { email: data.email },
+        });
+        if (existing) throw new EmailExistError(); // → 409 + i18n "auth.register.email_exists"
+        // ...
+    }
+
+    async login(email: string, password: string) {
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) throw new AuthError(); // → 401 + i18n "auth.invalid_credentials"
+
+        const ok = await bcrypt.compare(password, user.passwordHash);
+        if (!ok) throw new AuthError(); // Same message — không leak "email exists vs wrong password"
+
+        return this.issueTokens(user);
+    }
+
+    async refreshAccess(refreshToken: string) {
+        const record = await prisma.refreshToken.findUnique({
+            where: { token: refreshToken },
+        });
+        if (!record) throw new TokenExpiredError();
+        if (record.expiresAt < new Date()) {
+            await prisma.refreshToken.delete({
+                where: { token: refreshToken },
+            });
+            throw new TokenExpiredError();
+        }
+        // ...
+    }
+}
+```
+
+## Constants (src/configs/constants.ts)
+
+```typescript
+export const httpCodes = {
+    ok: 200,
+    created: 201,
+    noContent: 204,
+    badRequest: 400,
+    unauthorized: 401,
+    forbidden: 403,
+    notFound: 404,
+    conflict: 409,
+    unprocessableEntity: 422,
+    tooManyRequests: 429,
+    serverError: 500,
+    badGateway: 502,
+    serviceUnavailable: 503,
+} as const;
+
+export const errorCodes = {
+    // Auth
+    INVALID_CREDENTIALS: "auth.invalid_credentials",
+    EMAIL_EXISTS: "auth.register.email_exists",
+    TOKEN_EXPIRED: "auth.token_expired",
+    TOKEN_REVOKED: "auth.token_revoked",
+    // Validation
+    VALIDATION_FAILED: "errors.validation_failed",
+    // Generic
+    NOT_FOUND: "errors.not_found",
+    FORBIDDEN: "errors.forbidden",
+    INTERNAL: "errors.internal_server",
+} as const;
+
+export const prismaCodes = {
+    UNIQUE_VIOLATION: "P2002",
+    NOT_FOUND: "P2025",
+    FK_VIOLATION: "P2003",
+    INVALID_RELATION: "P2014",
+} as const;
+```
+
+## Why this pattern
+
+| Without custom errors                              | With custom errors                                           |
+| -------------------------------------------------- | ------------------------------------------------------------ |
+| `throw new Error("Email exists")`                  | `throw new EmailExistError()`                                |
+| Catch with `if (err.message === "...")` (fragile)  | Catch with `if (err instanceof EmailExistError)` (type-safe) |
+| Manual HTTP status code mapping in each controller | Auto-mapped via `err.statusCode`                             |
+| Hardcoded message (no i18n)                        | i18n key auto-translated                                     |
+| Error.stack leaked to client                       | errorHandler hides stack in production                       |
+
+## Rules
+
+1. **ALWAYS** extend `AppError` (or its children) — never throw raw `Error` in services
+2. Message = **i18n key** (e.g. `"product.not_found"`) — NOT hardcoded text
+3. `instanceof` check in errorHandler (rule 09) — KHÔNG dùng error.name string compare
+4. Login error: ALWAYS same `AuthError` regardless of "email not found" or "wrong password" (security — no user enumeration)
+5. Programming errors (e.g. unreachable code) → `InternalError` + Sentry capture
+6. External API failures → `ExternalServiceError` with `service` tag for Sentry
+7. New error class → add to `errors.ts` + check `errorHandler.ts` instanceof chain

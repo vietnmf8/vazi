@@ -1,0 +1,232 @@
+---
+description: Quy tắc viết comment code bằng tiếng Việt — giải thích WHY không phải WHAT
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.prisma"
+alwaysApply: true
+---
+
+# Quy tắc Comment Code bằng Tiếng Việt
+
+## Nguyên tắc cốt lõi
+
+Mọi comment trong code **PHẢI viết bằng tiếng Việt có dấu**, ngoại trừ:
+- JSDoc tag (`@param`, `@returns`, `@throws`...) giữ nguyên tiếng Anh
+- Tên biến, hàm, class — luôn dùng tiếng Anh
+- TODO/FIXME marker — giữ nguyên tiếng Anh nhưng nội dung mô tả bằng tiếng Việt
+- Identifier kỹ thuật (HTTP status, error code, tên thư viện...)
+
+## Comment giải thích "Tại sao", không phải "Cái gì"
+
+Tuyệt đối không viết comment lặp lại code. Comment phải bổ sung giá trị: lý do business, edge case, workaround, hoặc context không thể đọc từ code.
+
+### ❌ SAI — Comment lặp lại code
+```typescript
+// Tăng biến counter lên 1
+counter++;
+
+// Kiểm tra nếu user dưới 18 tuổi
+if (user.age < 18) {
+  return false;
+}
+
+// Function validate email
+function validateEmail(email: string) {
+  return EMAIL_REGEX.test(email);
+}
+```
+
+### ✅ ĐÚNG — Comment giải thích lý do
+```typescript
+// Retry tối đa 3 lần vì test latency mạng cho thấy 3 là điểm cân bằng tốt nhất
+counter++;
+
+if (user.age < 18) {
+  // Tuân thủ luật bảo vệ trẻ em (theo nghị định 13/2023/NĐ-CP),
+  // user dưới 18 tuổi cần xác nhận từ phụ huynh trước khi đăng ký
+  return false;
+}
+
+function validateEmail(email: string) {
+  // Dùng regex đơn giản phủ ~99.9% email thực tế.
+  // Regex chuẩn RFC 5322 dài ~4KB và không cần thiết cho use case này.
+  return EMAIL_REGEX.test(email);
+}
+```
+
+## JSDoc cho hàm public
+
+Mọi hàm export, class method public, và type/interface dùng chung **bắt buộc** có JSDoc tiếng Việt:
+
+```typescript
+/**
+ * Tính tổng tiền đơn hàng đã áp dụng voucher và phí ship.
+ *
+ * Quy tắc nghiệp vụ: voucher chỉ áp dụng cho subtotal,
+ * không áp dụng cho phí ship để tránh trường hợp khuyến mãi vượt giá trị đơn.
+ *
+ * @param items - Danh sách sản phẩm trong giỏ hàng
+ * @param voucher - Voucher đang áp dụng, null nếu không có
+ * @param shippingFee - Phí vận chuyển tính theo zone
+ * @returns Tổng tiền cuối cùng (đã làm tròn xuống đơn vị nghìn đồng)
+ * @throws {InvalidVoucherError} Khi voucher đã hết hạn hoặc không hợp lệ
+ */
+export function calculateOrderTotal(
+  items: CartItem[],
+  voucher: Voucher | null,
+  shippingFee: number
+): number {
+  // ...
+}
+```
+
+## Comment trong React Component
+
+Component comment phải nêu rõ vai trò, không mô tả implementation:
+
+```tsx
+/**
+ * Form đăng ký tài khoản cho khách hàng mới.
+ *
+ * Dùng react-hook-form + zod để validate client-side,
+ * server validate lại lần nữa qua API /api/auth/register.
+ *
+ * Lưu ý: Trường email được kiểm tra trùng lặp realtime với debounce 500ms.
+ */
+export function RegisterForm() {
+  // ...
+}
+```
+
+## Comment trong Server Component / Server Action
+
+Phân biệt rõ phần chạy trên server vs client:
+
+```tsx
+// Server Component — fetch trực tiếp từ DB, không qua API route
+export default async function ProductPage({ params }: PageProps) {
+  // Cache 60s vì danh sách sản phẩm thay đổi ít, giảm tải cho MySQL
+  const products = await db.product.findMany({ /* ... */ });
+
+  return <ProductList products={products} />;
+}
+```
+
+```tsx
+'use server';
+
+/**
+ * Server Action xử lý đăng nhập.
+ *
+ * Bảo mật: rate-limit 5 request/phút theo IP để chống brute-force.
+ * Token JWT lưu trong httpOnly cookie, không expose ra client.
+ */
+export async function loginAction(formData: FormData) {
+  // ...
+}
+```
+
+## Comment trong Prisma Schema
+
+Mọi model, field non-trivial và relation phải có comment giải thích nghiệp vụ:
+
+```prisma
+/// Đơn hàng của khách hàng. Một đơn có thể chứa nhiều sản phẩm
+/// và liên kết tới 1 voucher (optional).
+model Order {
+  id        String      @id @default(cuid())
+  // Mã đơn hàng hiển thị cho khách (VD: "DH202601-0001"),
+  // unique để dùng làm tham chiếu khi liên hệ CSKH
+  orderCode String      @unique
+  // Tổng tiền đã trừ voucher và cộng phí ship, đơn vị: VND
+  totalVnd  Int
+  status    OrderStatus @default(PENDING)
+
+  userId    String
+  user      User        @relation(fields: [userId], references: [id])
+
+  // Soft delete để giữ lịch sử cho báo cáo doanh thu
+  deletedAt DateTime?
+}
+```
+
+## Comment trong Express Route / Middleware
+
+```typescript
+/**
+ * Middleware xác thực JWT từ cookie.
+ *
+ * Khác với authBearer ở chỗ token đến từ httpOnly cookie (chống XSS),
+ * dùng cho route gọi trực tiếp từ browser thay vì server-to-server.
+ */
+export function authCookie(req: Request, res: Response, next: NextFunction) {
+  // ...
+}
+
+router.post(
+  '/orders',
+  authCookie,
+  validateBody(createOrderSchema),
+  // Wrap trong asyncHandler để forward error về global error middleware
+  asyncHandler(orderController.create)
+);
+```
+
+## Khi nào KHÔNG cần comment
+
+- Code đã self-documenting qua tên biến/hàm tốt
+- Logic đơn giản, đọc 1 lần là hiểu
+- Comment chỉ để "trang trí" hoặc làm dày code
+
+Nếu phải viết comment vì code khó hiểu → ưu tiên **refactor lại code** thay vì comment.
+
+## Format & quy ước
+
+- Comment 1 dòng: `// `, có khoảng trắng sau `//`
+- Comment nhiều dòng cho logic phức tạp: dùng block `/* */` hoặc nhiều dòng `//` liên tiếp
+- JSDoc: dùng `/** */`, mỗi tag 1 dòng
+- TODO: `// TODO(tên-người-phụ-trách): mô tả công việc bằng tiếng Việt`
+- FIXME: `// FIXME: mô tả bug và workaround tạm thời`
+- HACK: `// HACK: giải thích lý do phải dùng giải pháp tạm`
+
+```typescript
+// TODO(quan): chuyển từ in-memory cache sang Redis khi traffic tăng
+// FIXME: race condition khi 2 request cùng update inventory, cần dùng transaction
+// HACK: ép kiểu vì lib này có type definition sai, đã báo issue #1234
+```
+
+## Code mẫu sai và sửa
+
+### ❌ Tuyệt đối tránh
+
+```typescript
+// Function này get user by id
+async function getUser(id: string) {
+  // Query database
+  const user = await prisma.user.findUnique({ where: { id } });
+  // Return user
+  return user;
+}
+```
+
+### ✅ Đúng chuẩn
+
+```typescript
+/**
+ * Lấy thông tin user theo ID, bao gồm cả profile và role.
+ * Trả về null nếu không tìm thấy hoặc user đã bị soft-delete.
+ */
+async function getUser(id: string) {
+  return prisma.user.findFirst({
+    where: {
+      id,
+      // Soft-delete: loại bỏ user đã xóa khỏi kết quả
+      deletedAt: null,
+    },
+    include: { profile: true, role: true },
+  });
+}
+```

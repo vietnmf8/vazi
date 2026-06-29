@@ -1,0 +1,281 @@
+<h2>Câu hỏi 1: Khi nào hiển thị validation indicator?</h2>
+<p class="subtitle">Step 1 có một số field đã có giá trị mặc định (visa_type = E-Visa, applicant_count = 1...), một số field bắt buộc nhưng bỏ trống (arrival_date, port_of_entry, purpose_of_visit). Chọn behavior phù hợp nhất.</p>
+
+<style>
+  .demo-form {
+    background: #0f0f11;
+    border: 1px solid #2a2a35;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .field-row {
+    margin-bottom: 16px;
+  }
+  .field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a0a0b0;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .mock-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #2a2a35;
+    background: #1a1a22;
+    color: #e0e0f0;
+    font-size: 14px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .mock-input.has-value {
+    border-color: #2a2a35;
+    color: #e0e0f0;
+  }
+  .mock-input.empty {
+    color: #555566;
+  }
+  .mock-input.input-error {
+    border-color: #ef4444;
+  }
+  .mock-input.input-success {
+    border-color: #22c55e;
+  }
+
+  /* Validation badge */
+  .validation-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+    width: fit-content;
+  }
+  .badge-success {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.08);
+  }
+  .badge-error {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+  }
+  .badge-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .badge-icon.ok { background: #22c55e; color: white; }
+  .badge-icon.err { background: #ef4444; color: white; }
+  .badge-icon.none { background: transparent; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: #1e2a1e;
+    color: #22c55e;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .section-tag.warning {
+    background: #2a1e1e;
+    color: #ef4444;
+  }
+  .section-tag.neutral {
+    background: #1e1e2a;
+    color: #888;
+  }
+</style>
+
+<div class="options">
+
+  <!-- OPTION A -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Aggressive — Hiện ngay trên mount</h3>
+      <p>Khi trang load xong: field có default → ✅ success ngay. Field bỏ trống → ❌ error ngay. User luôn biết trạng thái toàn bộ form.</p>
+
+      <div class="demo-form">
+        <div class="section-tag">Có default → Success ngay</div>
+        <div class="grid-2">
+          <div class="field-row">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input has-value input-success">E-Visa — All border crossings</div>
+            <div class="validation-badge badge-success">
+              <div class="badge-icon ok">✓</div> E-Visa selected
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Applicants</div>
+            <div class="mock-input has-value input-success">1 Person</div>
+            <div class="validation-badge badge-success">
+              <div class="badge-icon ok">✓</div> 1 applicant confirmed
+            </div>
+          </div>
+        </div>
+        <div class="section-tag warning">Bỏ trống → Error ngay</div>
+        <div class="grid-2">
+          <div class="field-row">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input empty input-error">Select arrival date</div>
+            <div class="validation-badge badge-error">
+              <div class="badge-icon err">✕</div> Arrival date is required
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Port of Entry *</div>
+            <div class="mock-input empty input-error">Select airport / border gate</div>
+            <div class="validation-badge badge-error">
+              <div class="badge-icon err">✕</div> Port of entry is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>User biết ngay mình cần làm gì</li>
+          <li>Nhất quán — mọi field đều có status</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Nhiều đỏ ngay khi vừa vào → cảm giác "bị blame"</li>
+          <li>Có thể gây anxiety cho người dùng lần đầu</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Conservative — Chỉ sau khi user interact</h3>
+      <p>Không hiện gì khi mount. Validation badge chỉ xuất hiện sau khi user chạm vào field (onChange/onBlur). Trải nghiệm thoải mái hơn.</p>
+
+      <div class="demo-form">
+        <div class="section-tag neutral">Trên mount — không hiện gì</div>
+        <div class="grid-2">
+          <div class="field-row">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input has-value">E-Visa — All border crossings</div>
+            <!-- không có badge -->
+          </div>
+          <div class="field-row">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input empty">Select arrival date</div>
+            <!-- không có badge -->
+          </div>
+        </div>
+
+        <div class="section-tag">Sau khi user chọn → hiện badge</div>
+        <div class="grid-2">
+          <div class="field-row">
+            <div class="field-label">Port of Entry *</div>
+            <div class="mock-input has-value input-success">Noi Bai International Airport (HAN)</div>
+            <div class="validation-badge badge-success">
+              <div class="badge-icon ok">✓</div> Port of entry confirmed
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Arrival Date *</div>
+            <div class="mock-input has-value input-error">2026-06-03 (quá gần)</div>
+            <div class="validation-badge badge-error">
+              <div class="badge-icon err">✕</div> Must be at least 3 days from today
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Không đáng sợ khi vừa vào</li>
+          <li>Feedback đúng lúc — khi user đang focus vào field đó</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Cần điền xong mới biết trạng thái toàn bộ form</li>
+          <li>Không tận dụng được các field đã có default sẵn</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid — Success ngay, Error sau interact <span style="color:#f59e0b;font-size:11px;margin-left:8px;">⭐ Recommended</span></h3>
+      <p>Field đã có giá trị hợp lệ (default hoặc draft saved) → hiện ✅ sau delay ngắn (300ms). Field bỏ trống → không hiện gì, chỉ hiện ❌ khi user blur/change. Riêng Arrival Date luôn hiện error ngay (theo spec của bạn).</p>
+
+      <div class="demo-form">
+        <div class="section-tag">Default valid → ✅ sau 300ms delay</div>
+        <div class="grid-2">
+          <div class="field-row">
+            <div class="field-label">Visa Type</div>
+            <div class="mock-input has-value input-success">E-Visa — All border crossings</div>
+            <div class="validation-badge badge-success">
+              <div class="badge-icon ok">✓</div> E-Visa selected
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-label">Number of Applicants</div>
+            <div class="mock-input has-value input-success">1 Person</div>
+            <div class="validation-badge badge-success">
+              <div class="badge-icon ok">✓</div> 1 applicant confirmed
+            </div>
+          </div>
+        </div>
+
+        <div class="section-tag warning">Arrival Date → Error ngay (special case)</div>
+        <div class="field-row">
+          <div class="field-label">Arrival Date *</div>
+          <div class="mock-input empty input-error">Select arrival date</div>
+          <div class="validation-badge badge-error">
+            <div class="badge-icon err">✕</div> Please select your arrival date
+          </div>
+        </div>
+
+        <div class="section-tag neutral">Port of Entry — chờ user interact</div>
+        <div class="field-row">
+          <div class="field-label">Port of Entry *</div>
+          <div class="mock-input empty">Select airport / border gate</div>
+          <!-- chưa interact, không hiện gì -->
+        </div>
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Tận dụng defaults để show progress ngay lập tức</li>
+          <li>Arrival Date được xử lý đặc biệt — đúng spec</li>
+          <li>Không "blame" user cho các field chưa chạm</li>
+          <li>Cảm giác form đang "sống" và responsive</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Logic phức tạp hơn một chút (hai trigger mode)</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

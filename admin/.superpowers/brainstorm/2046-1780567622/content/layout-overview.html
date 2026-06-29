@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Team — Layout Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; color: #fff; }
+  .header p { font-size: 13px; color: #888; margin-top: 6px; }
+
+  /* === SPLIT: OLD vs NEW === */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .panel {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
+  .panel-label {
+    background: #1a1a1a;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-old { background: #333; color: #888; padding: 2px 8px; border-radius: 4px; font-size: 10px; }
+  .badge-new { background: #E87613; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 10px; }
+
+  /* ── OLD DESIGN ── */
+  .old-design {
+    background: #1c1c1e;
+    padding: 20px;
+  }
+  .old-title { text-align: center; margin-bottom: 16px; }
+  .old-title .tag {
+    display: inline-block;
+    background: rgba(232,118,19,0.15);
+    color: #E87613;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+  }
+  .old-title h2 { font-size: 16px; font-weight: 700; color: #fff; }
+  .old-title p { font-size: 10px; color: #666; margin-top: 4px; }
+  .old-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .old-card {
+    background: #252527;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #333;
+  }
+  .old-card-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #2a2a3e 0%, #3a3a5a 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .old-card-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+  }
+  .old-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    opacity: 0.5;
+  }
+  .old-card-body { padding: 10px; }
+  .old-card-body h3 { font-size: 11px; font-weight: 700; color: #fff; }
+  .old-card-body .role { font-size: 8px; color: #E87613; font-family: monospace; text-transform: uppercase; margin-top: 2px; }
+  .old-card-body p { font-size: 8px; color: #777; margin-top: 4px; line-height: 1.4; }
+  .old-cta {
+    margin-top: 14px;
+    background: #252527;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #333;
+  }
+  .old-cta-text h4 { font-size: 10px; font-weight: 700; color: #fff; }
+  .old-cta-text p { font-size: 8px; color: #666; margin-top: 2px; }
+  .old-cta-btn {
+    background: #E87613;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    margin-left: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ── NEW DESIGN ── */
+  .new-design {
+    background: #FBFBF9;
+    padding: 0;
+    min-height: 380px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Subtle texture overlay */
+  .new-design::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(0,0,0,0.018) 4px, rgba(0,0,0,0.018) 5px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .new-inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    height: 100%;
+    min-height: 380px;
+  }
+  /* Left: Character portrait */
+  .char-col {
+    position: relative;
+    background: #f0ede8;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 380px;
+  }
+  .char-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px; height: 160px;
+    background: #E87613;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .char-figure {
+    width: 80%;
+    height: 90%;
+    background: linear-gradient(160deg, #c5c0b8 0%, #a8a39b 100%);
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .char-figure::before {
+    content: '👤';
+    font-size: 60px;
+    opacity: 0.25;
+    margin-bottom: -20px;
+  }
+  .char-figure::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+  }
+  /* Right: Info */
+  .info-col {
+    padding: 24px 20px 16px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #FBFBF9;
+  }
+  .info-main {}
+  .char-name {
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: #111;
+    line-height: 1;
+  }
+  .char-role {
+    font-size: 14px;
+    font-weight: 700;
+    color: #E87613;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+  .char-desc {
+    font-size: 9px;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 10px;
+    max-width: 240px;
+  }
+  .char-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 14px;
+    background: #111;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 7px 14px;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    box-shadow: 3px 3px 0 #E87613;
+  }
+  /* Thumbnail strip */
+  .thumb-strip {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1.5px solid #e8e5e0;
+  }
+  .thumbs {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .thumb {
+    width: 48px;
+    height: 64px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #4A88C8;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    opacity: 0.45;
+    filter: grayscale(1);
+    transition: all 0.2s;
+  }
+  .thumb.active {
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 0 0 2.5px #E87613, 0 0 0 5px #FBFBF9, 0 0 14px rgba(232,118,19,0.4);
+  }
+  .thumb span { color: #fff; opacity: 0.6; font-size: 18px; }
+
+  /* === QUESTION === */
+  .question-block {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border: 1px solid #2a2a2a;
+    margin-bottom: 20px;
+  }
+  .question-block h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .question-block p { font-size: 12px; color: #888; line-height: 1.6; }
+
+  /* Options */
+  .options-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .opt {
+    background: #1a1a1a;
+    border: 2px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .opt:hover { border-color: #E87613; background: #1e1a16; }
+  .opt.selected { border-color: #E87613; background: rgba(232,118,19,0.08); }
+  .opt-label {
+    display: inline-block;
+    background: #E87613;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .opt h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .opt p { font-size: 11px; color: #777; line-height: 1.5; }
+  .opt .tag-good {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 9px;
+    background: rgba(34,197,94,0.12);
+    color: #4ade80;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .opt .tag-neutral {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 9px;
+    background: rgba(148,163,184,0.12);
+    color: #94a3b8;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .highlight-note {
+    background: rgba(232,118,19,0.08);
+    border-left: 3px solid #E87613;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 11px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .highlight-note strong { color: #E87613; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Our Core Team — Layout Redesign</h1>
+  <p>So sánh thiết kế cũ và thiết kế mới theo prototype</p>
+</div>
+
+<!-- COMPARISON -->
+<div class="comparison">
+  <!-- OLD -->
+  <div class="panel">
+    <div class="panel-label"><span class="badge-old">HIỆN TẠI</span> 3-Column Portrait Grid</div>
+    <div class="old-design">
+      <div class="old-title">
+        <div class="tag">Expert Assistance</div>
+        <h2>Our Core Team</h2>
+        <p>Visa specialists based in Hanoi, serving 120+ countries</p>
+      </div>
+      <div class="old-grid">
+        <div class="old-card">
+          <div class="old-card-img"><div class="old-avatar">👩</div></div>
+          <div class="old-card-body">
+            <h3>Elena Rostova</h3>
+            <div class="role">Head of Visa Ops</div>
+            <p>Ex-immigration counsel, 10+ years Southeast Asian frameworks</p>
+          </div>
+        </div>
+        <div class="old-card">
+          <div class="old-card-img"><div class="old-avatar">👨</div></div>
+          <div class="old-card-body">
+            <h3>Minh Nguyen</h3>
+            <div class="role">Senior Specialist</div>
+            <p>Former consular liaison in Hanoi, complex visa applications</p>
+          </div>
+        </div>
+        <div class="old-card">
+          <div class="old-card-img"><div class="old-avatar">👩</div></div>
+          <div class="old-card-body">
+            <h3>Sophia Gallagher</h3>
+            <div class="role">Customer Success</div>
+            <p>24/7 global support, seamless traveler journeys</p>
+          </div>
+        </div>
+      </div>
+      <div class="old-cta">
+        <div class="old-cta-text">
+          <h4>Have questions about Vietnam Visa?</h4>
+          <p>Specialists ready to help with custom solutions</p>
+        </div>
+        <div class="old-cta-btn">Contact Our Team →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW -->
+  <div class="panel">
+    <div class="panel-label"><span class="badge-new">MỚI</span> Game Character Selection UI</div>
+    <div class="new-design">
+      <div class="new-inner">
+        <!-- Portrait -->
+        <div class="char-col">
+          <div class="char-glow"></div>
+          <div class="char-figure"></div>
+        </div>
+        <!-- Info -->
+        <div class="info-col">
+          <div class="info-main">
+            <div class="char-name">Nguyễn Văn A</div>
+            <div class="char-role">Marketer</div>
+            <div class="char-desc">
+              Chuyên gia hoạch định chiến lược với khả năng thấu hiểu tâm lý khách hàng.
+              Kẻ thù của những chiến dịch nhàm chán, luôn mang đến những ý tưởng bùng nổ.
+            </div>
+            <div class="char-btn">View Profile →</div>
+          </div>
+          <div class="thumb-strip">
+            <div class="thumbs">
+              <div class="thumb active"><span>👤</span></div>
+              <div class="thumb"><span>👤</span></div>
+              <div class="thumb"><span>👤</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION 1: CTA POSITION -->
+<div class="question-block">
+  <h3>📍 Câu hỏi chính: Vị trí CTA "Have questions?"</h3>
+  <p>Bạn muốn đẩy phần CTA lên trên — cụ thể là đặt ở đâu trong trang?</p>
+</div>
+
+<div class="options-row">
+  <div class="opt" data-choice="A" onclick="toggleSelect(this)">
+    <div class="opt-label">A</div>
+    <h4>Ngay trước section Team</h4>
+    <p>CTA nằm liền phía trên khối character selection, trong cùng component AboutTeam. Vẫn là một khối trong page.tsx.</p>
+    <span class="tag-good">✓ Đơn giản, giữ nguyên cấu trúc</span>
+  </div>
+  <div class="opt" data-choice="B" onclick="toggleSelect(this)">
+    <div class="opt-label">B</div>
+    <h4>Sau AboutFeatures, trước AboutTeam</h4>
+    <p>CTA tách hẳn ra khỏi AboutTeam, trở thành section riêng giữa "Why Apply" và "Meet the Team" trong page.tsx.</p>
+    <span class="tag-neutral">→ Phân tách rõ hơn về UX flow</span>
+  </div>
+</div>
+
+<div class="highlight-note">
+  💡 <strong>Lưu ý từ prototype:</strong> Background texture (cube pattern) trong prototype khá nhẹ. Tôi sẽ dùng dạng <strong>dot pattern hoặc noise texture</strong> phù hợp với design system FastVisa hiện tại (màu cream <code>#FBFBF9</code>) thay vì hard-code URL texture ngoài.
+</div>
+
+<script>
+function toggleSelect(el) {
+  const parent = el.closest('.options-row, .cards, .options');
+  if (!parent) return;
+  const isMulti = parent.hasAttribute('data-multiselect');
+  if (!isMulti) {
+    parent.querySelectorAll('.opt, .card, .option').forEach(o => o.classList.remove('selected'));
+  }
+  el.classList.toggle('selected');
+  const choice = el.dataset.choice || el.dataset.value;
+  const text = el.querySelector('h4, h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+
+</body>
+</html>

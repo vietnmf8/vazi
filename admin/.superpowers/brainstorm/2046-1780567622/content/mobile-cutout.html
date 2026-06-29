@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile — Cutout PNG</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f; color: #f0f0f0;
+    padding: 24px;
+  }
+  h1 { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+  .sub { font-size: 12px; color: #888; text-align: center; margin-bottom: 28px; line-height: 1.6; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 14px;
+    overflow: hidden; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+  }
+  .card:hover { border-color: #E87613; }
+  .card.selected { border-color: #E87613; box-shadow: 0 0 0 1px #E87613, 0 0 24px rgba(232,118,19,.2); }
+  .card-header {
+    padding: 10px 14px 9px; border-bottom: 1px solid #2a2a2a; background: #141414;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .letter {
+    width: 22px; height: 22px; border-radius: 50%; background: #E87613; color: #fff;
+    font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .card-header h3 { font-size: 11px; font-weight: 700; color: #fff; }
+  .card-preview { padding: 12px; background: #111; display: flex; justify-content: center; }
+  .card-body { padding: 10px 14px 14px; }
+  .card-body p { font-size: 11px; color: #888; line-height: 1.6; }
+  .tag-rec { display: inline-block; margin-top: 8px; font-size: 9px; font-weight: 700; background: rgba(232,118,19,.15); color: #E87613; padding: 2px 8px; border-radius: 4px; }
+  .tag-ok  { display: inline-block; margin-top: 8px; font-size: 9px; background: rgba(148,163,184,.1); color: #94a3b8; padding: 2px 8px; border-radius: 4px; }
+
+  /* shared phone shell */
+  .phone {
+    width: 130px; background: #FBFBF9; border-radius: 18px;
+    border: 2.5px solid #333; overflow: hidden; position: relative;
+    box-shadow: 0 6px 24px rgba(0,0,0,.5);
+  }
+  .phone-footer {
+    background: #1a1a1a; height: 28px; display: flex; align-items: center;
+    padding: 0 10px; position: relative; z-index: 10;
+  }
+  .phone-footer span { font-size: 7px; color: #444; }
+  .footer-mark { margin-left: auto; font-size: 6px; color: #E87613; font-weight: 700; }
+
+  /* ── OPTION A: Stacked — info trên, cutout nhân vật phía dưới bleed footer ── */
+  .phone-a .body {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 10px 10px;
+    padding: 12px 10px 0;
+    position: relative;
+    min-height: 200px;
+    overflow: visible;
+  }
+  .mini-name { font-size: 11px; font-weight: 900; text-transform: uppercase; color: #111; letter-spacing: -.02em; line-height: 1; }
+  .mini-role { font-size: 7px; color: #E87613; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .mini-desc { font-size: 6px; color: #666; line-height: 1.5; margin-top: 5px; }
+  .mini-thumbs { display: flex; gap: 4px; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e0ddd8; }
+  .mini-thumb { width: 20px; height: 26px; background: #4A88C8; border-radius: 2px; opacity: .4; filter: grayscale(1); display: flex; align-items: center; justify-content: center; font-size: 8px; }
+  .mini-thumb.act { opacity: 1; filter: grayscale(0); box-shadow: 0 0 0 1.5px #E87613, 0 0 0 3px #FBFBF9; transform: scale(1.1) translateY(-2px); }
+
+  /* character cutout in A — centered below info, bleed into footer */
+  .cutout-wrap-a {
+    position: relative;
+    height: 80px;
+    margin-top: 10px;
+    overflow: visible;
+    display: flex; justify-content: center; align-items: flex-end;
+  }
+  .cutout-figure-a {
+    width: 58px; height: 110px;
+    position: absolute;
+    bottom: -28px; /* bleed into footer */
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 6px 6px 0 0;
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 10px;
+    z-index: 5;
+  }
+  .cutout-figure-a::before { content: '👤'; font-size: 22px; opacity: .5; }
+  .glow-a {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 60px; background: #E87613; border-radius: 50%;
+    filter: blur(22px); opacity: .2; pointer-events: none; z-index: 1;
+  }
+
+  /* ── OPTION B: Cutout floating absolute right, text left ── */
+  .phone-b .body {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 10px 10px;
+    padding: 12px 10px 12px;
+    position: relative;
+    min-height: 180px;
+    overflow: visible;
+  }
+  .text-block-b { position: relative; z-index: 2; max-width: 75px; }
+  .cutout-figure-b {
+    width: 60px; height: 140px;
+    position: absolute;
+    right: -4px; bottom: -28px;
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 6px 6px 0 0;
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 12px;
+    z-index: 3;
+  }
+  .cutout-figure-b::before { content: '👤'; font-size: 22px; opacity: .5; }
+  .glow-b {
+    position: absolute; right: 20px; bottom: 30px;
+    width: 60px; height: 60px; background: #E87613; border-radius: 50%;
+    filter: blur(24px); opacity: .18; pointer-events: none; z-index: 1;
+  }
+  .thumbs-b { display: flex; gap: 4px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #e0ddd8; position: relative; z-index: 2; }
+
+  /* ── OPTION C: Full-width portrait section (no split on mobile), bleed footer ── */
+  .phone-c .body {
+    background: #FBFBF9;
+    background-image: radial-gradient(circle, #d4d0ca 1px, transparent 1px);
+    background-size: 10px 10px;
+    padding: 0;
+    position: relative;
+    overflow: visible;
+  }
+  .portrait-section-c {
+    width: 100%; height: 120px;
+    background: linear-gradient(160deg, #e8e4de 0%, #d4cfc8 100%);
+    position: relative;
+    display: flex; align-items: flex-end; justify-content: center;
+    overflow: visible;
+  }
+  .cutout-figure-c {
+    width: 70px; height: 160px;
+    position: absolute;
+    bottom: -30px;
+    background: linear-gradient(160deg, #5a5a6a 0%, #3a3a4a 100%);
+    border-radius: 6px 6px 0 0;
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 14px;
+    z-index: 5;
+  }
+  .cutout-figure-c::before { content: '👤'; font-size: 26px; opacity: .5; }
+  .glow-c {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 70px; background: #E87613; border-radius: 50%;
+    filter: blur(26px); opacity: .2; z-index: 1;
+  }
+  .info-section-c {
+    padding: 40px 10px 10px; /* space for cutout overlap */
+    text-align: center;
+    position: relative; z-index: 2;
+  }
+  .thumbs-c { display: flex; gap: 4px; justify-content: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e0ddd8; }
+</style>
+</head>
+<body>
+
+<h1>Mobile — Cutout PNG, Bleed Footer</h1>
+<p class="sub">Desktop: split 5:7, PNG bleed ~40px vào footer. <br>Mobile (&lt;640px): bạn muốn layout nào?</p>
+
+<div class="cards">
+
+  <!-- A: Stacked, cutout centered bottom, bleed footer -->
+  <div class="card phone-a" data-choice="A" onclick="toggleSelect(this)">
+    <div class="card-header"><div class="letter">A</div><h3>Info trên — cutout dưới, bleed footer</h3></div>
+    <div class="card-preview">
+      <div class="phone phone-a">
+        <div class="body">
+          <div class="mini-name">Nguyễn Văn A</div>
+          <div class="mini-role">Marketer</div>
+          <div class="mini-desc">Chuyên gia hoạch định chiến lược với khả năng thấu hiểu tâm lý khách hàng.</div>
+          <div class="mini-thumbs">
+            <div class="mini-thumb act">👤</div>
+            <div class="mini-thumb">👤</div>
+            <div class="mini-thumb">👤</div>
+          </div>
+          <div class="cutout-wrap-a">
+            <div class="glow-a"></div>
+            <div class="cutout-figure-a"></div>
+          </div>
+        </div>
+        <div class="phone-footer">
+          <span>© FastVisa</span>
+          <span class="footer-mark">↑ che chân</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Text + thumbnail nằm phía trên, nhân vật cutout canh giữa ở dưới, chân chìm vào footer. Giữ được hết nội dung và visual impact.</p>
+      <span class="tag-rec">★ Đề xuất</span>
+    </div>
+  </div>
+
+  <!-- B: Text left, cutout right (mini split), bleed footer -->
+  <div class="card phone-b" data-choice="B" onclick="toggleSelect(this)">
+    <div class="card-header"><div class="letter">B</div><h3>Text trái — cutout phải, bleed footer</h3></div>
+    <div class="card-preview">
+      <div class="phone phone-b">
+        <div class="body">
+          <div class="glow-b"></div>
+          <div class="cutout-figure-b"></div>
+          <div class="text-block-b">
+            <div class="mini-name" style="font-size:9px;">Nguyễn Văn A</div>
+            <div class="mini-role">Marketer</div>
+            <div class="mini-desc" style="margin-top:4px;">Chuyên gia hoạch định chiến lược...</div>
+          </div>
+          <div class="thumbs-b">
+            <div class="mini-thumb act">👤</div>
+            <div class="mini-thumb">👤</div>
+            <div class="mini-thumb">👤</div>
+          </div>
+        </div>
+        <div class="phone-footer">
+          <span>© FastVisa</span>
+          <span class="footer-mark">↑ che chân</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Giữ tinh thần split layout ở mobile — text bên trái, cutout bên phải nổi lên. Dramatic nhưng text area bị thu hẹp.</p>
+      <span class="tag-ok">Bold — text hơi chật</span>
+    </div>
+  </div>
+
+  <!-- C: Portrait zone trên (nền riêng), info + center text dưới -->
+  <div class="card phone-c" data-choice="C" onclick="toggleSelect(this)">
+    <div class="card-header"><div class="letter">C</div><h3>Portrait zone riêng — info dưới, cutout bleed cả 2</h3></div>
+    <div class="card-preview">
+      <div class="phone phone-c">
+        <div class="body">
+          <div class="portrait-section-c">
+            <div class="glow-c"></div>
+            <div class="cutout-figure-c"></div>
+          </div>
+          <div class="info-section-c">
+            <div class="mini-name" style="text-align:center; font-size:10px;">Nguyễn Văn A</div>
+            <div class="mini-role" style="text-align:center;">Marketer</div>
+            <div class="mini-desc" style="text-align:center; margin-top:4px;">Chuyên gia chiến lược...</div>
+            <div class="thumbs-c">
+              <div class="mini-thumb act">👤</div>
+              <div class="mini-thumb">👤</div>
+              <div class="mini-thumb">👤</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-footer">
+          <span>© FastVisa</span>
+          <span class="footer-mark">↑ che chân</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Portrait zone có nền riêng (~120px), cutout bleed xuống vùng info. Info center-aligned phía dưới. Cinematic nhất ở mobile.</p>
+      <span class="tag-ok">Cinematic — phức tạp nhất</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const text = el.querySelector('h3')?.textContent || choice;
+  if (window.recordEvent) window.recordEvent('click', choice, text);
+}
+</script>
+</body>
+</html>

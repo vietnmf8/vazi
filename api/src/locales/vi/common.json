@@ -1,0 +1,96 @@
+{
+    "auth": {
+        "invalid_credentials": "Email hoặc mật khẩu không đúng.",
+        "forbidden_role": "Tài khoản không có quyền truy cập admin.",
+        "email_not_allowed": "Email này không được phép đăng nhập.",
+        "jwt_not_configured": "Hệ thống xác thực chưa được cấu hình.",
+        "token_missing": "Thiếu token xác thực.",
+        "token_invalid": "Token không hợp lệ hoặc đã hết hạn."
+    },
+    "admin": {
+        "support_ticket_not_found": "Không tìm thấy yêu cầu hỗ trợ."
+    },
+    "payments": {
+        "paypal_not_configured": "Cấu hình PayPal (client id / secret) chưa đầy đủ.",
+        "paypal_oauth_failed": "Không lấy được token PayPal — kiểm tra sandbox/live và thông tin đăng nhập.",
+        "paypal_api_error": "PayPal từ chối yêu cầu — vui lòng thử lại hoặc liên hệ hỗ trợ.",
+        "session_url_missing": "PayPal không trả link thanh toán — cấu hình order có thể không hợp lệ.",
+        "paypal_order_not_approvable": "Đơn PayPal chưa được phê duyệt hoặc đã hết hạn.",
+        "paypal_order_missing_custom_id": "Thiếu mã đơn ứng dụng trong order PayPal.",
+        "paypal_capture_failed": "Không hoàn tất capture thanh toán PayPal.",
+        "paypal_capture_incomplete": "Phản hồi capture không đầy đủ — không thể xác nhận thanh toán.",
+        "paypal_vnd_per_usd_invalid": "Tỷ giá PAYPAL_VND_PER_USD chưa hợp lệ hoặc chưa cấu hình.",
+        "paypal_webhook_not_configured": "Webhook PayPal (webhook id) chưa được cấu hình.",
+        "paypal_webhook_headers_missing": "Thiếu header chữ ký webhook PayPal.",
+        "paypal_webhook_verification_failed": "Xác minh chữ ký webhook PayPal thất bại.",
+        "application_not_payable": "Nháp đơn không tồn tại hoặc đã hết hạn — không thể thanh toán.",
+        "draft_not_found": "Không tìm thấy nháp đơn hoặc nháp đã hết hạn.",
+        "draft_invalid": "Dữ liệu nháp đơn không hợp lệ.",
+        "invalid_amount": "Số tiền thanh toán không hợp lệ.",
+        "paypal_order_id": {
+            "invalid": "Mã order PayPal không hợp lệ."
+        }
+    },
+    "applications": {
+        "retry_payment_not_allowed": "Không thể thử thanh toán lại — nháp đơn không tồn tại hoặc đã hết hạn.",
+        "status_transition_invalid": "Không thể chuyển trạng thái đơn theo hướng này.",
+        "nationality_not_eligible_evisa": "Quốc tịch không đủ điều kiện e-visa."
+    },
+    "chat": {
+        "session_not_found": "Phiên chat không tồn tại hoặc đã hết hạn.",
+        "pusher_not_configured": "Realtime chat chưa được cấu hình Soketi/Pusher.",
+        "gemini_not_configured": "Trợ lý AI chưa được bật — thiếu GEMINI_API_KEY.",
+        "rate_limited": "Bạn đang gửi tin nhắn quá nhanh — vui lòng chờ một chút.",
+        "ai_failed": "Không thể nhận phản hồi từ trợ lý AI — vui lòng thử lại.",
+        "translate_failed": "Không thể dịch nội dung — vui lòng thử lại sau."
+    },
+    "errors": {
+        "validation_failed": "Dữ liệu không hợp lệ.",
+        "post_not_found": "Không tìm thấy bài viết hoặc bài chưa được xuất bản.",
+        "exemption_not_found": "Không có dữ liệu miễn thị thự / quốc tịch cho mã quốc gia này.",
+        "application_not_found": "Không tìm thấy đơn visa.",
+        "application_code_generation_failed": "Không thể tạo mã hồ sơ — vui lòng thử lại.",
+        "not_found": "Không tìm thấy dữ liệu.",
+        "unauthorized": "Bạn cần đăng nhập để tiếp tục.",
+        "forbidden": "Bạn không có quyền thực hiện thao tác này."
+    },
+    "validation": {
+        "id": {
+            "required": "Thiếu mã định danh.",
+            "invalid": "Mã định danh không hợp lệ."
+        },
+            "required": "Vui lòng nhập chủ đề."
+        },
+        "message": {
+            "required": "Vui lòng nhập nội dung tin nhắn."
+        },
+        "country_code": {
+            "length": "Mã quốc gia phải đúng 2 ký tự ISO.",
+            "invalid": "Mã quốc gia không hợp lệ."
+        },
+        "chat": {
+            "session_id": {
+                "short": "session_id phải có ít nhất 8 ký tự.",
+                "long": "session_id không được vượt quá 64 ký tự."
+            },
+            "user_name": {
+                "required": "Vui lòng nhập tên hiển thị.",
+                "max": "Tên hiển thị không được quá 120 ký tự."
+            },
+            "message": {
+                "required": "Vui lòng nhập nội dung tin nhắn.",
+                "max": "Tin nhắn không được quá 8000 ký tự."
+            },
+            "sender": {
+                "invalid": "Giá trị sender không hợp lệ (USER hoặc ADMIN)."
+            },
+            "text": {
+                "required": "Vui lòng nhập nội dung cần dịch.",
+                "max": "Nội dung dịch không được quá 5000 ký tự."
+            },
+            "lang": {
+                "invalid": "Mã ngôn ngữ không hợp lệ."
+            }
+        }
+    }
+}

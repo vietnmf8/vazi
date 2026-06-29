@@ -1,0 +1,361 @@
+<style>
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .scenario-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .scenario-card:hover { border-color: #94a3b8; transform: translateY(-2px); }
+  .scenario-card.selected { border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
+  .scenario-header {
+    padding: 14px 18px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .scenario-header.current { background: #f1f5f9; color: #475569; }
+  .scenario-header.proposed { background: #f0fdfa; color: #0d9488; }
+  .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+  .badge-current { background: #e2e8f0; color: #64748b; }
+  .badge-proposed { background: #ccfbf1; color: #0f766e; }
+
+  /* Phone mockup */
+  .phone {
+    width: 100%;
+    height: 420px;
+    background: #f8fafc;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .phone-header {
+    height: 44px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .stepper-bar {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 2;
+  }
+  .step-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-dot.done { background: #0d9488; color: #fff; border: 2px solid #0d9488; }
+  .step-dot.active { background: #1e293b; color: #fff; border: 2px solid #1e293b; }
+  .step-dot.todo { background: #f1f5f9; color: #94a3b8; border: 2px solid #e2e8f0; }
+  .step-line { height: 2px; flex: 1; min-width: 20px; }
+  .step-line.done { background: #0d9488; }
+  .step-line.todo { background: #e2e8f0; }
+
+  .content-area {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .content-scroll {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .content-block {
+    height: 18px;
+    border-radius: 4px;
+    background: #e2e8f0;
+  }
+  .content-block.w-full { width: 100%; }
+  .content-block.w-3-4 { width: 75%; }
+  .content-block.w-half { width: 50%; }
+  .content-block.tall {
+    height: 48px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Scroll direction arrows */
+  .scroll-arrow {
+    position: absolute;
+    right: 14px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    font-weight: bold;
+  }
+  .arrow-down { background: #dbeafe; color: #2563eb; bottom: 14px; }
+  .arrow-up { background: #dcfce7; color: #16a34a; bottom: 54px; }
+
+  /* Eye indicator */
+  .eye-zone {
+    position: absolute;
+    left: 0; right: 0;
+    pointer-events: none;
+  }
+  .eye-zone-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+  }
+  .eye-mid {
+    top: 45%;
+    height: 80px;
+    background: rgba(251,191,36,0.08);
+    border-top: 1px dashed rgba(251,191,36,0.5);
+    border-bottom: 1px dashed rgba(251,191,36,0.5);
+    display: flex; align-items: center;
+    padding-left: 6px;
+  }
+  .eye-mid .eye-zone-label { color: #d97706; }
+
+  /* State animations */
+  .stepper-hidden { transform: translateY(-100%); opacity: 0; }
+  .stepper-visible { transform: translateY(0); opacity: 1; }
+
+  .arrow-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 6px;
+    color: #64748b;
+  }
+  .scroll-legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: #64748b;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .state-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+  .state-hidden { background: #fee2e2; color: #b91c1c; }
+  .state-visible { background: #dcfce7; color: #15803d; }
+
+  .scenario-desc {
+    padding: 12px 18px;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    border-top: 1px solid #f1f5f9;
+  }
+  .scenario-desc strong { color: #1e293b; }
+
+  .state-frames {
+    display: flex;
+    gap: 0;
+  }
+  .state-frame {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .state-divider {
+    width: 1px;
+    background: #e2e8f0;
+    margin: 8px 0;
+  }
+  .frame-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    padding: 6px 0 4px;
+    text-align: center;
+  }
+</style>
+
+<h2>Scroll Behavior: Khi nào Stepper xuất hiện?</h2>
+<p class="subtitle">Bấm vào phương án bạn muốn chọn</p>
+
+<div class="scenario-grid">
+
+  <!-- OPTION A: Current (hide on down) -->
+  <div class="scenario-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="scenario-header current">
+      <span>A — Hiện tại</span>
+      <span class="badge badge-current">Đang dùng</span>
+    </div>
+    <div style="padding: 14px 18px;">
+      <div class="state-frames">
+        <!-- Frame 1: scroll down -->
+        <div class="state-frame">
+          <div class="frame-label">↓ Scroll xuống</div>
+          <div class="phone" style="height:220px; border-radius:8px; border:1px solid #e2e8f0;">
+            <div class="phone-header">fastvisa.com/apply</div>
+            <div class="stepper-bar stepper-hidden" style="background:#fff9c4; border-bottom:1px dashed #f59e0b;">
+              <span style="font-size:10px;color:#b45309;font-weight:600;">Stepper ẨN</span>
+            </div>
+            <div class="content-scroll" style="padding-top:10px;">
+              <div class="content-block w-3-4"></div>
+              <div class="content-block w-full"></div>
+              <div class="content-block tall"></div>
+              <div class="content-block w-half"></div>
+              <div class="content-block w-full"></div>
+              <!-- Eye zone -->
+              <div style="text-align:center;margin-top:4px;">
+                <span style="font-size:10px;color:#d97706;">👁️ Mắt user ở đây</span>
+              </div>
+            </div>
+          </div>
+          <div class="state-label state-hidden" style="margin-top:6px;">Stepper ẩn</div>
+        </div>
+
+        <div class="state-divider"></div>
+
+        <!-- Frame 2: scroll up -->
+        <div class="state-frame">
+          <div class="frame-label">↑ Scroll lên</div>
+          <div class="phone" style="height:220px; border-radius:8px; border:1px solid #e2e8f0;">
+            <div class="phone-header">fastvisa.com/apply</div>
+            <div class="stepper-bar" style="background:#fff;">
+              <div class="step-dot done">✓</div>
+              <div class="step-line done"></div>
+              <div class="step-dot active">2</div>
+              <div class="step-line todo"></div>
+              <div class="step-dot todo">3</div>
+            </div>
+            <div class="content-scroll" style="padding-top:6px;">
+              <div style="text-align:center;margin-bottom:4px;">
+                <span style="font-size:10px;color:#d97706;">👁️ Mắt user ở đây</span>
+              </div>
+              <div class="content-block w-3-4"></div>
+              <div class="content-block w-full"></div>
+              <div class="content-block tall"></div>
+            </div>
+          </div>
+          <div class="state-label state-visible" style="margin-top:6px;">Stepper hiện — đè nội dung</div>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-desc">
+      <strong>Vấn đề:</strong> Khi scroll lên, mắt user đang nhìn vào <em>giữa màn hình</em> — Stepper hiện ra trên đỉnh lại <strong>che mất nội dung</strong> họ muốn đọc.
+    </div>
+  </div>
+
+  <!-- OPTION B: Proposed (show on down, hide on up) -->
+  <div class="scenario-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="scenario-header proposed">
+      <span>B — Đề xuất mới</span>
+      <span class="badge badge-proposed">Recommended</span>
+    </div>
+    <div style="padding: 14px 18px;">
+      <div class="state-frames">
+        <!-- Frame 1: scroll down -->
+        <div class="state-frame">
+          <div class="frame-label">↓ Scroll xuống</div>
+          <div class="phone" style="height:220px; border-radius:8px; border:1px solid #e2e8f0;">
+            <div class="phone-header">fastvisa.com/apply</div>
+            <div class="stepper-bar" style="background:#fff;">
+              <div class="step-dot done">✓</div>
+              <div class="step-line done"></div>
+              <div class="step-dot active">2</div>
+              <div class="step-line todo"></div>
+              <div class="step-dot todo">3</div>
+            </div>
+            <div class="content-scroll" style="padding-top:6px;">
+              <div class="content-block w-3-4"></div>
+              <div class="content-block w-full"></div>
+              <div class="content-block tall"></div>
+              <div style="text-align:center;margin-top:4px;">
+                <span style="font-size:10px;color:#d97706;">👁️ Mắt user nhìn xuống</span>
+              </div>
+            </div>
+          </div>
+          <div class="state-label state-visible" style="margin-top:6px;">Stepper hiện — user thấy tiến trình</div>
+        </div>
+
+        <div class="state-divider"></div>
+
+        <!-- Frame 2: scroll up -->
+        <div class="state-frame">
+          <div class="frame-label">↑ Scroll lên</div>
+          <div class="phone" style="height:220px; border-radius:8px; border:1px solid #e2e8f0;">
+            <div class="phone-header">fastvisa.com/apply</div>
+            <div class="stepper-bar stepper-hidden" style="background:#fff9c4; border-bottom:1px dashed #f59e0b;">
+              <span style="font-size:10px;color:#b45309;font-weight:600;">Stepper ẨN</span>
+            </div>
+            <div class="content-scroll" style="padding-top:10px;">
+              <div style="text-align:center;margin-bottom:4px;">
+                <span style="font-size:10px;color:#d97706;">👁️ Mắt user nhìn lên</span>
+              </div>
+              <div class="content-block w-3-4"></div>
+              <div class="content-block w-full"></div>
+              <div class="content-block tall"></div>
+            </div>
+          </div>
+          <div class="state-label state-hidden" style="margin-top:6px;">Stepper ẩn — không che nội dung</div>
+        </div>
+      </div>
+    </div>
+    <div class="scenario-desc">
+      <strong>Logic:</strong> Khi scroll xuống, user muốn biết mình đang ở đâu → Stepper hữu ích. Khi scroll lên để đọc lại nội dung → ẩn Stepper để <strong>không che khuất</strong>.
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px; padding:14px 18px; background:#f8fafc; border-radius:10px; border:1px solid #e2e8f0;">
+  <div style="font-size:13px; color:#475569; line-height:1.6;">
+    💡 <strong>Ghi chú thêm:</strong> Ngoài 2 phương án trên, còn có thể xem xét:
+    <ul style="margin:6px 0 0 16px; color:#64748b;">
+      <li>Chỉ ẩn/hiện sau ngưỡng scroll nhất định (tránh flicker)</li>
+      <li>Luôn hiện Stepper (không có ẩn/hiện) — đơn giản nhất</li>
+    </ul>
+  </div>
+</div>

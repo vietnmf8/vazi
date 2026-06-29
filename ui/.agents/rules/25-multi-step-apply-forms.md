@@ -1,0 +1,89 @@
+---
+activation: model_decision
+description: Multi-step Apply form patterns — RHF + Zod, localStorage draft, route layouts, pricing sidebar. Lessons from Stage 6 Step 2.
+globs: ["**/app/apply/**/*.tsx", "**/app/apply/**/*.ts"]
+---
+
+# Multi-step Apply Forms (FASTVISA UI)
+
+> Áp dụng khi làm/sửa `src/app/apply/`. Tham chiếu thêm: `09-react-hook-form.mdc`, `10-zod-v4.mdc`, `12-accessibility.mdc`.
+
+## Layout — Route groups
+
+Luồng Apply **không có Footer** (giảm distraction). Không gắn Footer ở root rồi ẩn bằng CSS.
+
+```
+app/
+├── layout.tsx              # Chỉ html/body/font — KHÔNG Header/Footer
+├── (main)/layout.tsx       # Header + Footer cho trang marketing
+└── apply/layout.tsx        # Chỉ Header + main
+```
+
+URL `/apply` không đổi khi dùng route group `(main)`.
+
+## Orchestrator pattern (`apply/page.tsx`)
+
+- State: `currentStep`, `step1Data`, `step2Data`, `step1Live` (giá realtime Step 1).
+- Hydrate draft **một lần** sau mount (`hydrated` flag) — tránh mismatch SSR/client.
+- Restore `currentStep > 1` **chỉ khi** đã có `step1` trong draft — tránh Step 2 orphan.
+
+## React Hook Form — CẤM infinite loop
+
+### ❌ SAI — `watch()` trong dependency `useEffect`
+
+```tsx
+const allValues = watch()
+useEffect(() => {
+  onDraftChange?.(allValues) // parent setState → re-render → loop
+}, [allValues, onDraftChange])
+```
+
+`watch()` không có đối số trả **object mới mỗi render** → effect chạy liên tục → `Maximum update depth exceeded` (thường crash tại Radix `SelectTrigger`).
+
+### ✅ ĐÚNG — Subscription
+
+```tsx
+useEffect(() => {
+  if (!onDraftChange) return
+  const sub = watch((data) => onDraftChange(data as Step2FormValues))
+  return () => sub.unsubscribe()
+}, [watch, onDraftChange])
+```
+
+### localStorage auto-save
+
+- **Chỉ** ghi `localStorage` trong callback draft — **không** `setStep2Data` parent khi user đang gõ.
+- Cập nhật state parent Step 2 **chỉ** khi `onNext` (submit step) hoặc hydrate lần đầu.
+- Key: `fastvisa_apply_draft` — bọc `try/catch` (Safari private mode).
+
+## Giá realtime (PriceBreakdown)
+
+- Tính local qua `priceCalculator.ts` (Stage 6) — Stage 7 thay bằng API.
+- Desktop: sidebar `lg:sticky lg:top-24`.
+- Mobile: bar cố định bottom — form cần `pb-24`/`pb-32` để không bị che.
+- `step1Live` từ subscription Step 1; sau submit Step 1 dùng `step1Data`.
+
+## Validation UX (roadmap §9)
+
+- `mode: "onBlur"` + validate lúc submit từng step.
+- Inline error dưới field (`role="alert"`).
+- `scrollToFirstError()` — hỗ trợ nested path `applicants.0.full_name` qua `data-field`.
+- Toast: optional Stage 6; có thể bổ sung khi polish.
+
+## Radix Select + RHF
+
+- Luôn bọc `Select` trong `Controller` — không bind `register` trực tiếp.
+- `value` + `onValueChange` bắt buộc controlled.
+
+## Zod
+
+- Import `zod/v4` (xem `10-zod-v4.mdc`).
+- Schema Step 2 phụ thuộc VIP: `buildStep2Schema(vipEnabled)` — portrait bắt buộc khi VIP.
+
+## Checklist trước khi báo Stage 6 Step 2 done
+
+- [ ] `npm run build` exit 0
+- [ ] Homepage → Apply Now → Step 1 → 2 → 3 không crash
+- [ ] Gender Select / upload zones hoạt động Step 2
+- [ ] Refresh giữ draft (`fastvisa_apply_draft`)
+- [ ] Không `useEffect([watch()])` + parent `setState` cùng lúc

@@ -1,0 +1,54 @@
+---
+description: Server Components in Next.js 15 (App Router). Apply when writing async page/layout/component files that fetch data directly.
+globs: "**/app/**/*.tsx"
+alwaysApply: false
+---
+
+## Context
+
+- Next.js 15 + React 19: Server Components run exclusively on the server — never shipped to the client.
+- Server Components can call Prisma, `fs`, third-party SDKs, or any Node.js API directly inside the component body.
+- ⚠️ In this project, most DB access goes through the `api/` ExpressJS service via HTTP. Only use Prisma directly in Server Components for admin-internal reads where latency matters and bypassing the API is intentional.
+
+## Usage
+
+```tsx
+// app/dashboard/users/page.tsx — async = Server Component
+export default async function UsersPage() {
+    const users = await prisma.user.findMany({
+        select: { id: true, name: true, email: true },
+        take: 50,
+        orderBy: { createdAt: "desc" },
+    });
+
+    return (
+        <div>
+            {users.map((user) => (
+                <p key={user.id}>{user.name}</p>
+            ))}
+        </div>
+    );
+}
+```
+
+## Available Next.js server utilities
+
+```tsx
+import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import { headers } from "next/headers";
+
+redirect("/login");     // Redirect
+notFound();             // Show not-found.tsx
+cookies().get("token"); // Read cookies (server-only)
+```
+
+## Rules
+
+1. Server Components are always `async`
+2. Server Components **cannot** use hooks (`useState`, `useEffect`, etc.)
+3. Server Components **cannot** access `document` or `window`
+4. Add `"use client"` only when interactivity is needed — default to Server Component
+5. Never import server-only code in Client Components — use `server-only` package to guard
+6. Pass data from Server → Client as props, not via shared state

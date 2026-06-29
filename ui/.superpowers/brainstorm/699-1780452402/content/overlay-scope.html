@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Autofill Animation — Brainstorm</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d0d;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #e5e5e5;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
+
+  /* Grid layout */
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media (max-width: 1100px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  .option-wrapper { display: flex; flex-direction: column; gap: 12px; }
+  .option-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600; color: #bbb;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 8px 12px;
+    transition: all 0.2s;
+    background: #1a1a1a;
+  }
+  .option-label:hover { border-color: #444; background: #222; }
+  .option-label.selected { border-color: #f59e0b; background: #1c1500; color: #f59e0b; }
+  .option-label .letter {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #333; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .option-label.selected .letter { background: #f59e0b; color: #000; }
+
+  .option-desc { font-size: 11px; color: #666; margin-top: 2px; }
+  .pros-cons { display: flex; gap: 12px; font-size: 11px; margin-top: 4px; }
+  .pro { color: #4ade80; } .con { color: #f87171; }
+
+  /* ===== CARD MOCKUP ===== */
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Upload zone */
+  .upload-zone {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 12px;
+    background: #161616;
+    border-bottom: 1px solid #242424;
+  }
+  .upload-box {
+    border: 1.5px dashed #333;
+    border-radius: 8px;
+    padding: 14px 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; min-height: 80px;
+  }
+  .upload-box.has-image { border-color: #2a5c3a; }
+  .upload-icon { width: 20px; height: 20px; background: #333; border-radius: 50%; }
+  .upload-text { font-size: 10px; color: #666; text-align: center; }
+  .passport-thumb {
+    width: 100%; height: 60px; border-radius: 4px;
+    background: linear-gradient(135deg, #1e3a2a, #2a4a3a);
+    position: relative; overflow: hidden;
+  }
+  .passport-thumb::after {
+    content: 'PASSPORT IMAGE';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; color: #4ade80; opacity: 0.6; letter-spacing: 1px;
+  }
+
+  /* Form fields */
+  .form-area { padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field-label { font-size: 9px; color: #666; }
+  .field-input {
+    height: 28px; border-radius: 6px;
+    border: 1px solid #2a2a2a; background: #222;
+    font-size: 10px; color: #888; padding: 0 8px;
+    display: flex; align-items: center;
+    transition: all 0.4s ease;
+  }
+  .field-input.filled {
+    border-color: #3b82f6;
+    color: #bfdbfe;
+    box-shadow: 0 0 8px rgba(59,130,246,0.2);
+  }
+
+  /* CURRENT: Skeleton shimmer on fields */
+  .skeleton {
+    height: 28px; border-radius: 6px;
+    background: linear-gradient(90deg, #222 25%, #2a2a2a 50%, #222 75%);
+    background-size: 200% 100%;
+    animation: skeleton-sweep 1.4s infinite;
+  }
+  @keyframes skeleton-sweep {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Status badge */
+  .status-badge {
+    font-size: 10px; padding: 6px 10px; border-radius: 6px;
+    display: flex; align-items: center; gap: 6px;
+    margin: 0 12px 10px;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .status-scanning { background: rgba(59,130,246,0.1); color: #60a5fa; }
+  .status-dot-scanning { background: #60a5fa; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  /* ===== OPTION A: Current state ===== */
+  /* Already shown above with skeleton + badge */
+
+  /* ===== OPTION B: Full-card hologram overlay ===== */
+  .hologram-overlay {
+    position: absolute; inset: 0; z-index: 10;
+    background: rgba(8,12,10,0.92);
+    background-image:
+      linear-gradient(rgba(16,185,129,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hologram-sweep {
+    position: absolute; top: 0; bottom: 0; width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(16,185,129,0.08) 40%, rgba(16,185,129,0.25) 50%, rgba(16,185,129,0.08) 60%, transparent);
+    animation: sweep 2.2s infinite linear;
+    pointer-events: none;
+    transform: skewX(-12deg);
+  }
+  @keyframes sweep {
+    0% { transform: translateX(-120%) skewX(-12deg); }
+    100% { transform: translateX(220%) skewX(-12deg); }
+  }
+  .hologram-center {
+    position: relative; z-index: 2; text-align: center;
+  }
+  .hologram-box {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    backdrop-filter: blur(8px);
+    margin-bottom: 10px;
+  }
+  .sparkle-icon {
+    font-size: 22px; margin-bottom: 4px; display: block;
+    animation: spin-slow 3s linear infinite;
+  }
+  @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .extracting-text {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #34d399;
+  }
+  .dots { display: flex; gap: 4px; justify-content: center; margin-top: 6px; }
+  .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #10b981;
+    animation: bounce 0.8s infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.15s; }
+  .dot:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* ===== OPTION C: Form-only overlay (upload zones stay visible) ===== */
+  .form-only-overlay {
+    position: absolute; top: 116px; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: rgba(8,12,10,0.92);
+    background-image:
+      linear-gradient(rgba(16,185,129,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.06) 1px, transparent 1px);
+    background-size: 18px 18px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Success toast */
+  .toast {
+    position: absolute; top: 8px; right: 8px; z-index: 20;
+    background: rgba(16,185,129,0.15); border: 1px solid #10b981;
+    color: #34d399; font-size: 10px; padding: 6px 10px; border-radius: 6px;
+    display: flex; align-items: center; gap: 5px;
+    animation: fadeInDown 0.4s ease forwards;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* After state label */
+  .state-tag {
+    font-size: 10px; padding: 3px 8px; border-radius: 4px;
+    font-weight: 600; display: inline-block; margin-bottom: 8px;
+  }
+  .state-during { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .state-after { background: rgba(16,185,129,0.15); color: #34d399; }
+
+  .divider { height: 1px; background: #222; margin: 8px 12px; }
+
+  /* Current option tag */
+  .current-tag {
+    background: #2a2000; color: #f59e0b; font-size: 10px;
+    padding: 2px 8px; border-radius: 4px; font-weight: 600;
+    display: inline-block;
+  }
+
+  /* Bottom CTA */
+  .bottom { margin-top: 32px; text-align: center; font-size: 12px; color: #666; }
+  .cta { color: #f59e0b; font-weight: 600; }
+</style>
+</head>
+<body>
+<h1>Câu hỏi 1: Phạm vi hiệu ứng Hologram Overlay?</h1>
+<p class="subtitle">Khi AI đang extract passport — overlay nên bao phủ phạm vi nào? Nhấp vào option bạn thích.</p>
+
+<div class="grid">
+
+  <!-- OPTION A: Current (for reference) -->
+  <div class="option-wrapper">
+    <div class="option-label" id="opt-a" onclick="select('a')" data-choice="a">
+      <span class="letter">A</span>
+      <span>
+        <div>Giữ nguyên hiện tại</div>
+        <div class="option-desc">Skeleton + badge text bên dưới</div>
+      </span>
+    </div>
+    <div style="font-size:10px;color:#555;padding:0 4px;">
+      <span class="current-tag">CURRENT</span>
+    </div>
+
+    <!-- DURING state -->
+    <div class="state-tag state-during">Đang scanning...</div>
+    <div class="card">
+      <div class="upload-zone">
+        <div class="upload-box has-image">
+          <div class="passport-thumb"></div>
+        </div>
+        <div class="upload-box">
+          <div class="upload-icon"></div>
+          <div class="upload-text">Upload flight ticket</div>
+        </div>
+      </div>
+      <div class="status-badge status-scanning">
+        <div class="status-dot status-dot-scanning"></div>
+        AI is reading passport data...
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="skeleton"></div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="skeleton"></div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="skeleton"></div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="skeleton"></div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="skeleton"></div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="skeleton"></div></div>
+      </div>
+    </div>
+
+    <!-- AFTER state -->
+    <div class="state-tag state-after" style="margin-top:8px;">Sau khi xong</div>
+    <div class="card">
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="status-badge" style="background:rgba(16,185,129,0.1);color:#34d399;margin:0 12px 8px;">
+        <div class="status-dot" style="background:#34d399;"></div>
+        All fields extracted successfully
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input filled">JUGALBOT MARDY</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input filled">Male</div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input filled">Filipino</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input filled">04/05/1982</div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input filled">P8257603B</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input filled">23/11/2031</div></div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <span class="con">✗ Nhạt, ít ấn tượng</span>
+    </div>
+  </div>
+
+  <!-- OPTION B: Full card hologram -->
+  <div class="option-wrapper">
+    <div class="option-label" id="opt-b" onclick="select('b')" data-choice="b">
+      <span class="letter">B</span>
+      <span>
+        <div>Hologram toàn bộ card</div>
+        <div class="option-desc">Overlay phủ cả upload zone + form</div>
+      </span>
+    </div>
+    <div style="font-size:10px;color:#555;padding:0 4px;">
+      <span class="state-tag state-during" style="font-size:10px;">Đề xuất từ prototype</span>
+    </div>
+
+    <!-- DURING state -->
+    <div class="state-tag state-during">Đang scanning...</div>
+    <div class="card" style="min-height:250px;">
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input"></div></div>
+      </div>
+      <!-- Full overlay -->
+      <div class="hologram-overlay">
+        <div class="hologram-sweep"></div>
+        <div class="hologram-center">
+          <div class="hologram-box">
+            <span class="sparkle-icon">✦</span>
+            <div class="extracting-text">EXTRACTING DATA</div>
+          </div>
+          <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFTER state -->
+    <div class="state-tag state-after" style="margin-top:8px;">Sau khi xong</div>
+    <div class="card" style="position:relative;">
+      <div class="toast">✓ AI đã điền form tự động!</div>
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input filled">JUGALBOT MARDY</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input filled">Male</div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input filled">Filipino</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input filled">04/05/1982</div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input filled">P8257603B</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input filled">23/11/2031</div></div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <span class="pro">✓ Ấn tượng, premium feel</span>
+      <span class="con">✗ Che cả ảnh passport</span>
+    </div>
+  </div>
+
+  <!-- OPTION C: Form-only overlay -->
+  <div class="option-wrapper">
+    <div class="option-label" id="opt-c" onclick="select('c')" data-choice="c">
+      <span class="letter">C</span>
+      <span>
+        <div>Hologram chỉ phần form</div>
+        <div class="option-desc">Upload zone vẫn thấy, overlay chỉ dưới</div>
+      </span>
+    </div>
+    <div style="font-size:10px;color:#555;padding:0 4px;">&nbsp;</div>
+
+    <!-- DURING state -->
+    <div class="state-tag state-during">Đang scanning...</div>
+    <div class="card" style="min-height:250px;">
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input"></div></div>
+      </div>
+      <!-- Form-only overlay -->
+      <div class="form-only-overlay">
+        <div class="hologram-sweep" style="animation-duration:2.5s;"></div>
+        <div class="hologram-center">
+          <div class="hologram-box">
+            <span class="sparkle-icon">✦</span>
+            <div class="extracting-text">EXTRACTING DATA</div>
+          </div>
+          <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFTER state -->
+    <div class="state-tag state-after" style="margin-top:8px;">Sau khi xong</div>
+    <div class="card">
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input filled">JUGALBOT MARDY</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input filled">Male</div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input filled">Filipino</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input filled">04/05/1982</div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input filled">P8257603B</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input filled">23/11/2031</div></div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <span class="pro">✓ Thấy ảnh, thấy overlay</span>
+      <span class="pro">✓ UX cân bằng hơn</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom">
+  Nhấp vào option bạn muốn chọn, sau đó trả lời trong terminal. <span class="cta">→ Câu hỏi đầu tiên trong 3 câu.</span>
+</div>
+
+<script>
+  function select(choice) {
+    document.querySelectorAll('.option-label').forEach(el => el.classList.remove('selected'));
+    const el = document.getElementById('opt-' + choice);
+    if (el) el.classList.add('selected');
+    // Record event
+    if (window.__recordChoice) window.__recordChoice(choice, el ? el.innerText.trim() : choice);
+  }
+</script>
+</body>
+</html>

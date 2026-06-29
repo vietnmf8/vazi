@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2 Refined</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 36px 28px 60px;
+  }
+  h1 { font-size: 20px; font-weight: 700; color: #f8fafc; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 32px; }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 960px;
+  }
+
+  /* ── Simulated QuickApplyForm header ── */
+  .form-header {
+    background: linear-gradient(to right, rgba(245,158,11,0.12), rgba(245,158,11,0.05), transparent);
+    border: 1px solid rgba(245,158,11,0.22);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .form-header-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #f59e0b;
+    margin-bottom: 6px;
+  }
+  .form-price-row { display: flex; align-items: baseline; gap: 8px; }
+  .form-price-sub { font-size: 13px; color: #64748b; }
+
+  /* ── Simulated PriceBreakdown sidebar ── */
+  .breakdown {
+    background: #1a1f2e;
+    border: 1px solid #2d3650;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .bd-section {
+    padding: 12px 16px;
+    border-bottom: 1px solid #2d3650;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    font-weight: 700;
+  }
+  .bd-rows { padding: 12px 16px; display: flex; flex-direction: column; gap: 9px; }
+  .bd-row { display: flex; justify-content: space-between; font-size: 12px; color: #64748b; }
+  .bd-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1.5px solid #374151;
+  }
+  .bd-total-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #475569;
+  }
+
+  /* ── THE PRICE ELEMENT — base style ── */
+  .price-val {
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #f59e0b;
+    display: inline-block;
+    border-radius: 8px;
+    padding: 2px 8px;
+    line-height: 1;
+    /* No background, no shadow by default */
+    background: transparent;
+    box-shadow: none;
+    transition: none;
+  }
+  .price-val-lg {
+    font-size: 34px;
+  }
+
+  /* ── REFINED B2 animation ──
+     Goals: faster (~0.42s), stronger glow+scale, smoother spring, clean exit
+  */
+  @keyframes flashUp {
+    0%   {
+      transform: scale(1);
+      background: transparent;
+      color: #f59e0b;
+      box-shadow: none;
+    }
+    18%  {
+      transform: scale(1.26);
+      background: rgba(34, 197, 94, 0.22);
+      color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.18), 0 0 22px rgba(34,197,94,0.35);
+    }
+    50%  {
+      transform: scale(1.10);
+      background: rgba(34, 197, 94, 0.08);
+      color: #22c55e;
+      box-shadow: 0 0 10px rgba(34,197,94,0.15);
+    }
+    100% {
+      transform: scale(1);
+      background: transparent;
+      color: #f59e0b;
+      box-shadow: none;
+    }
+  }
+  @keyframes flashDown {
+    0%   {
+      transform: scale(1);
+      background: transparent;
+      color: #f59e0b;
+      box-shadow: none;
+    }
+    18%  {
+      transform: scale(1.22);
+      background: rgba(239, 68, 68, 0.2);
+      color: #dc2626;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.16), 0 0 20px rgba(239,68,68,0.3);
+    }
+    50%  {
+      transform: scale(1.08);
+      background: rgba(239, 68, 68, 0.07);
+      color: #ef4444;
+      box-shadow: 0 0 8px rgba(239,68,68,0.12);
+    }
+    100% {
+      transform: scale(1);
+      background: transparent;
+      color: #f59e0b;
+      box-shadow: none;
+    }
+  }
+
+  .flash-up {
+    animation: flashUp 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .flash-down {
+    animation: flashDown 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn {
+    flex: 1;
+    padding: 9px 0;
+    border: 1.5px solid #374151;
+    border-radius: 8px;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:hover { border-color: #6c8cff; color: #a5b4fc; background: rgba(108,140,255,0.06); }
+  .btn-up:hover   { border-color: #22c55e; color: #4ade80; background: rgba(34,197,94,0.06); }
+  .btn-down:hover { border-color: #ef4444; color: #f87171; background: rgba(239,68,68,0.06); }
+
+  .panel-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>B2 Refined — Glow + Scale Bounce</h1>
+<p class="subtitle">Faster · Stronger · Smooth spring · Clean return to amber. Simulate tăng/giảm riêng lẻ.</p>
+
+<div class="demo-grid">
+
+  <!-- QuickApplyForm header context -->
+  <div>
+    <p class="panel-label">Context 1 — QuickApplyForm header</p>
+    <div class="form-header">
+      <div class="form-header-label">Estimated Visa Pricing</div>
+      <div class="form-price-row">
+        <span class="price-val price-val-lg" id="qaf-price">$95</span>
+        <span class="form-price-sub">for 1 traveller</span>
+      </div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">$95/person · Full agency service guarantee</div>
+    </div>
+    <div class="controls">
+      <button class="btn btn-up"   onclick="fire('qaf', +1)">↑ Price Up</button>
+      <button class="btn btn-down" onclick="fire('qaf', -1)">↓ Price Down</button>
+    </div>
+  </div>
+
+  <!-- PriceBreakdown sidebar context -->
+  <div>
+    <p class="panel-label">Context 2 — PriceBreakdown sidebar</p>
+    <div class="breakdown">
+      <div class="bd-section">Order Summary</div>
+      <div class="bd-rows">
+        <div class="bd-row"><span>Base Service Fee</span><span>$45</span></div>
+        <div class="bd-row"><span>Processing</span><span>+$50</span></div>
+        <div class="bd-row"><span>Applicants</span><span>× 1 person</span></div>
+      </div>
+      <div class="bd-total">
+        <span class="bd-total-label">Total</span>
+        <span class="price-val" id="bd-price">$95</span>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn btn-up"   onclick="fire('bd', +1)">↑ Price Up</button>
+      <button class="btn btn-down" onclick="fire('bd', -1)">↓ Price Down</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const steps = [95, 145, 190, 70, 120, 45, 170];
+  const state = { qaf: 0, bd: 0 };
+
+  function fire(id, dir) {
+    const el = document.getElementById(id + '-price');
+
+    // Advance price in the chosen direction
+    if (dir > 0) {
+      state[id] = (state[id] + 1) % steps.length;
+    } else {
+      state[id] = (state[id] - 1 + steps.length) % steps.length;
+    }
+    const newVal = steps[state[id]];
+
+    // Clear any running animation first
+    el.classList.remove('flash-up', 'flash-down');
+    void el.offsetWidth; // force reflow
+
+    // Set new value then animate
+    el.textContent = '$' + newVal;
+    el.classList.add(dir > 0 ? 'flash-up' : 'flash-down');
+
+    // Clean removal after animation finishes (ensures pristine state)
+    setTimeout(() => {
+      el.classList.remove('flash-up', 'flash-down');
+      // Explicitly reset to base style
+      el.style.transform = '';
+      el.style.background = '';
+      el.style.color = '#f59e0b';
+      el.style.boxShadow = '';
+    }, 450);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+---
+activation: model_decision
+description: Security and Authentication Conventions for API Backend
+globs: src/**/*.ts
+---
+<security-auth-conventions>
+
+<rules>
+- Implement strict JWT (JSON Web Token) authentication with short-lived access tokens and secure HTTP-only refresh tokens.
+- Enforce Rate Limiting using libraries like `express-rate-limit` on all public and authentication routes to prevent brute-force attacks.
+- Use `helmet` middleware to set secure HTTP headers.
+- Configure CORS securely, explicitly whitelisting trusted origins instead of using wildcards (`*`).
+- Hash all passwords using strong algorithms (e.g., `bcrypt` or `argon2`) before storing them in the database.
+- Validate and sanitize all incoming user inputs to prevent SQL Injection (handled mostly by Prisma) and XSS.
+</rules>
+
+</security-auth-conventions>

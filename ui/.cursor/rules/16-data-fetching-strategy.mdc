@@ -1,0 +1,16 @@
+---
+description: Data Fetching and State Management Strategy for Frontend UI
+alwaysApply: false
+globs: ["**/app/**/*.tsx", "**/components/**/*.tsx", "**/hooks/**/*.ts"]
+---
+<data-fetching-strategy>
+
+<rules>
+- Centralize API calls using customized fetch wrappers or API client utilities (e.g. `src/lib/api.ts`).
+- Handle Authentication Tokens (JWT) transparently via HTTP interceptors or middleware.
+- Prefer Server Actions for simple mutations and forms in Next.js App Router.
+- For client-side data fetching, use SWR or React Query to handle caching, revalidation, and loading states.
+- Implement unified error handling and loading skeletons (Suspense).
+</rules>
+
+</data-fetching-strategy>

@@ -1,0 +1,175 @@
+---
+activation: model_decision
+description: [MANUAL] TypeScript setup, tsconfig, module-alias, and jsconfig for autocomplete.
+---
+
+# TypeScript Setup (with Module Alias)
+
+## package.json
+
+```json
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "tsx watch src/server.ts",
+        "queue": "tsx watch src/queue.ts",
+        "schedule": "tsx watch src/schedule.ts",
+        "build": "tsc && tsc-alias",
+        "start": "node -r module-alias/register dist/server.js",
+        "type-check": "tsc --noEmit"
+    },
+    "_moduleAliases": {
+        "@": "dist"
+    },
+    "dependencies": {
+        "express": "^4.21.0",
+        "@prisma/client": "^7.0.0",
+        "@prisma/adapter-mariadb": "^7.0.0",
+        "mariadb": "^3.4.0",
+        "express-validator": "^7.2.0",
+        "nodemailer": "^6.9.0",
+        "ejs": "^3.1.10",
+        "bcrypt": "^5.1.1",
+        "jsonwebtoken": "^9.0.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "module-alias": "^2.2.3",
+        "cron": "^3.1.7"
+    },
+    "devDependencies": {
+        "typescript": "^5.6.0",
+        "tsx": "^4.19.0",
+        "tsc-alias": "^1.8.10",
+        "@types/express": "^5.0.0",
+        "@types/node": "^22.7.0",
+        "@types/bcrypt": "^5.0.2",
+        "@types/jsonwebtoken": "^9.0.7",
+        "@types/cors": "^2.8.17",
+        "@types/nodemailer": "^6.4.16",
+        "prisma": "^7.0.0"
+    }
+}
+```
+
+## tsconfig.json
+
+```json
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "declaration": false,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
+```
+
+## jsconfig.json (cho IDE autocomplete khi mở file .js)
+
+```json
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*"]
+}
+```
+
+## Module alias runtime (production)
+
+Build xong, `dist/` cần resolve `@/`. Cách 1 dùng `tsc-alias` (recommended):
+
+```bash
+npm run build   # tsc + tsc-alias rewrite paths
+node dist/server.js
+```
+
+Cách 2: `module-alias`:
+
+```typescript
+// dist/server.js cần dòng đầu (post-build)
+require("module-alias/register");
+```
+
+## Common TS patterns cho Express
+
+### Typed Request với auth
+
+```typescript
+// src/types/express.d.ts
+import { User } from "@prisma/client";
+
+declare global {
+    namespace Express {
+        interface Request {
+            auth?: {
+                user: User;
+                accessToken: string;
+                tokenPayload: {
+                    sub: string;
+                    role: string;
+                    iat: number;
+                    exp: number;
+                };
+            };
+        }
+    }
+}
+
+export {};
+```
+
+### Singleton service
+
+```typescript
+// src/services/auth.service.ts
+class AuthService {
+    async login(email: string, password: string) {
+        // ...
+    }
+}
+
+export default new AuthService();
+```
+
+### Controller (function-based, theo file mẫu)
+
+```typescript
+// src/controllers/auth.controller.ts
+import { Request, Response } from "express";
+import authService from "@/services/auth.service";
+import { httpCodes } from "@/configs/constants";
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    const result = await authService.login(email, password);
+    res.success(result);
+};
+
+export const register = async (req: Request, res: Response) => {
+    const { email, password, name } = req.body;
+    const user = await authService.register({ email, password, name });
+    res.success(user, httpCodes.created);
+};
+
+// Export all
+export default { login, register };
+```

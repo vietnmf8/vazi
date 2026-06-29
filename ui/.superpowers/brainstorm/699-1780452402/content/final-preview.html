@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Preview — Teal #14b8a6</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0c0b0a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #faf8f5; padding: 28px; min-height: 100vh;
+  }
+
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 24px; }
+
+  /* Color palette display */
+  .palette {
+    display: flex; gap: 12px; align-items: center; margin-bottom: 28px;
+    padding: 12px 16px; background: #1a1815; border: 1px solid #2a2825; border-radius: 10px;
+    width: fit-content;
+  }
+  .swatch { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; }
+  .dot-main { background: #14b8a6; }
+  .dot-light { background: #2dd4bf; }
+  .dot-subtle { background: rgba(20,184,166,0.3); border: 1px solid #14b8a6; }
+  .swatch-label { font-size: 11px; color: #888; }
+  .swatch-val { font-size: 10px; color: #555; }
+  .sep { width: 1px; height: 28px; background: #333; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 900px; }
+
+  .section-title { font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+
+  /* Card */
+  .card {
+    background: #1a1815; border: 1px solid #2a2825;
+    border-radius: 14px; overflow: hidden; position: relative;
+  }
+  .upload-zone {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 12px; background: #141210; border-bottom: 1px solid #222;
+  }
+  .upload-box {
+    border: 1.5px dashed #2a2825; border-radius: 8px; padding: 14px 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; min-height: 80px;
+  }
+  .upload-box.has-image { border-color: rgba(20,184,166,0.3); }
+  .passport-thumb {
+    width: 100%; height: 62px; border-radius: 4px;
+    background: linear-gradient(135deg, #0f2b26, #183d36); position: relative; overflow: hidden;
+  }
+  .passport-thumb::after {
+    content: 'PASSPORT IMAGE'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; color: #2dd4bf; opacity: 0.6; letter-spacing: 1px;
+  }
+  .upload-icon { width: 20px; height: 20px; background: #2a2825; border-radius: 50%; }
+  .upload-text { font-size: 10px; color: #555; text-align: center; }
+
+  .form-area { padding: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field-label { font-size: 9px; color: #555; }
+  .field-input {
+    height: 28px; border-radius: 6px; border: 1px solid #2a2825;
+    background: #1e1b18; font-size: 10px; padding: 0 8px; color: #555;
+    display: flex; align-items: center; transition: all 0.4s ease;
+  }
+  .field-input.filled-teal {
+    border-color: #14b8a6; color: #99f6e4;
+    box-shadow: 0 0 8px rgba(20,184,166,0.15);
+  }
+  .field-input.filled-amber {
+    border-color: #f59e0b; color: #fde68a;
+    box-shadow: 0 0 8px rgba(245,158,11,0.15);
+  }
+  .field-label.warn { color: #f59e0b; }
+
+  /* HOLOGRAM OVERLAY — Teal #14b8a6 */
+  .hologram-overlay {
+    position: absolute; top: 117px; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: rgba(10, 14, 13, 0.93);
+    background-image:
+      linear-gradient(rgba(20,184,166,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,184,166,0.07) 1px, transparent 1px);
+    background-size: 18px 18px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; border-radius: 0 0 14px 14px;
+  }
+  .holo-sweep {
+    position: absolute; top: 0; bottom: 0; width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(20,184,166,0.06) 38%,
+      rgba(45,212,191,0.22) 50%,
+      rgba(20,184,166,0.06) 62%,
+      transparent
+    );
+    animation: sweep 2.2s infinite linear; pointer-events: none; transform: skewX(-12deg);
+  }
+  @keyframes sweep {
+    0% { transform: translateX(-130%) skewX(-12deg); }
+    100% { transform: translateX(230%) skewX(-12deg); }
+  }
+  .holo-center { position: relative; z-index: 2; text-align: center; }
+  .holo-box {
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(20,184,166,0.35);
+    border-radius: 10px; padding: 14px 20px;
+    backdrop-filter: blur(8px); margin-bottom: 10px;
+  }
+  .sparkle { font-size: 22px; color: #14b8a6; display: block; margin-bottom: 4px; animation: spin 3s linear infinite; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .ext-text { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; color: #2dd4bf; }
+  .dots { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
+  .dot2 { width: 5px; height: 5px; border-radius: 50%; background: #14b8a6; animation: bounce 0.8s infinite; }
+  .dot2:nth-child(2) { animation-delay: 0.15s; }
+  .dot2:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+  /* Toast — react-hot-toast style */
+  .toast-success {
+    position: absolute; top: 10px; right: 10px; z-index: 30;
+    background: #1a2e2b; border: 1px solid rgba(20,184,166,0.5);
+    color: #2dd4bf; font-size: 11px; padding: 8px 12px; border-radius: 8px;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 12px rgba(20,184,166,0.1);
+    animation: slideIn 0.3s ease;
+  }
+  .toast-warn {
+    position: absolute; top: 10px; right: 10px; z-index: 30;
+    background: #2a2010; border: 1px solid rgba(245,158,11,0.5);
+    color: #f59e0b; font-size: 11px; padding: 8px 12px; border-radius: 8px;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 12px rgba(245,158,11,0.1);
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Confidence badge on label */
+  .verify-badge {
+    display: inline-block; font-size: 8px; color: #f59e0b;
+    background: rgba(245,158,11,0.1); border-radius: 3px; padding: 1px 4px;
+    margin-left: 4px; font-weight: 600;
+  }
+
+  .note-box {
+    background: #1a1815; border: 1px solid #2a2825; border-radius: 10px;
+    padding: 14px 16px; margin-top: 24px; max-width: 900px;
+  }
+  .note-title { font-size: 12px; font-weight: 600; color: #a8a29e; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .note-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; font-size: 12px; color: #78716c; }
+  .note-icon { flex-shrink: 0; margin-top: 1px; }
+  .note-row strong { color: #a8a29e; }
+
+  .confirm-bar {
+    margin-top: 24px; padding: 14px 18px;
+    background: rgba(20,184,166,0.06); border: 1px solid rgba(20,184,166,0.2);
+    border-radius: 10px; max-width: 900px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .confirm-text { font-size: 13px; color: #a8a29e; }
+  .confirm-text strong { color: #2dd4bf; }
+  .confirm-btn {
+    background: rgba(20,184,166,0.15); border: 1px solid rgba(20,184,166,0.4);
+    color: #2dd4bf; font-size: 12px; font-weight: 600; padding: 7px 16px;
+    border-radius: 6px; cursor: pointer; transition: all 0.2s;
+  }
+  .confirm-btn:hover { background: rgba(20,184,166,0.25); }
+</style>
+</head>
+<body>
+
+<h1>Final Preview — Hologram Teal (design system)</h1>
+<p class="subtitle">Màu <code style="color:#2dd4bf;background:#0f2b26;padding:2px 6px;border-radius:4px;">--color-secondary: #14b8a6</code> — "Vibrant Electric Teal" từ globals.css dark mode</p>
+
+<!-- Palette -->
+<div class="palette">
+  <div class="swatch">
+    <div class="dot dot-main"></div>
+    <div>
+      <div class="swatch-label">Secondary</div>
+      <div class="swatch-val">#14b8a6 — teal-500</div>
+    </div>
+  </div>
+  <div class="sep"></div>
+  <div class="swatch">
+    <div class="dot dot-light"></div>
+    <div>
+      <div class="swatch-label">Secondary Light</div>
+      <div class="swatch-val">#2dd4bf — teal-300</div>
+    </div>
+  </div>
+  <div class="sep"></div>
+  <div class="swatch">
+    <div class="dot dot-subtle"></div>
+    <div>
+      <div class="swatch-label">Subtle</div>
+      <div class="swatch-val">rgba(20,184,166, 0.09)</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- STATE 1: DURING extraction -->
+  <div>
+    <div class="section-title">⏳ Đang extract — Hologram overlay</div>
+    <div class="card">
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input"></div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input"></div></div>
+      </div>
+      <!-- Hologram overlay chỉ phủ form, không phủ upload zone -->
+      <div class="hologram-overlay">
+        <div class="holo-sweep"></div>
+        <div class="holo-center">
+          <div class="holo-box">
+            <span class="sparkle">✦</span>
+            <div class="ext-text">EXTRACTING DATA</div>
+          </div>
+          <div class="dots">
+            <div class="dot2"></div>
+            <div class="dot2"></div>
+            <div class="dot2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATE 2A: SUCCESS — all high confidence -->
+  <div>
+    <div class="section-title">✅ Xong — All fields high confidence</div>
+    <div class="card" style="position:relative;">
+      <div class="toast-success">
+        <span>✓</span>
+        AI đã điền form tự động!
+      </div>
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input filled-teal">JUGALBOT MARDY C</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input filled-teal">Male</div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input filled-teal">Filipino</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input filled-teal">04/05/1982</div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input filled-teal">P8257603B</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input filled-teal">23/11/2031</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATE 2B: WARN — some low confidence fields -->
+  <div>
+    <div class="section-title">⚠️ Xong — Có field cần verify (low confidence)</div>
+    <div class="card" style="position:relative;">
+      <div class="toast-warn">
+        <span>⚠</span>
+        Vui lòng kiểm tra các field được đánh dấu
+      </div>
+      <div class="upload-zone">
+        <div class="upload-box has-image"><div class="passport-thumb"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input filled-teal">JUGALBOT MARDY C</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input filled-teal">Male</div></div>
+        <div class="field">
+          <div class="field-label warn">Nationality * <span class="verify-badge">⚠ Verify</span></div>
+          <div class="field-input filled-amber">Filipino</div>
+        </div>
+        <div class="field">
+          <div class="field-label warn">Date of Birth * <span class="verify-badge">⚠ Verify</span></div>
+          <div class="field-input filled-amber">04/05/1982</div>
+        </div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input filled-teal">P8257603B</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input filled-teal">23/11/2031</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATE 3: ERROR -->
+  <div>
+    <div class="section-title">❌ Lỗi — Không đọc được passport</div>
+    <div class="card" style="position:relative;">
+      <div class="upload-zone">
+        <div class="upload-box has-image" style="border-color:rgba(239,68,68,0.3);"><div class="passport-thumb" style="background:linear-gradient(135deg,#2b0f0f,#3d1515);"></div></div>
+        <div class="upload-box"><div class="upload-icon"></div><div class="upload-text">Upload flight ticket</div></div>
+      </div>
+      <!-- Fields trống, user tự fill -->
+      <div class="form-area">
+        <div class="field"><div class="field-label">Full Name *</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+        <div class="field"><div class="field-label">Gender</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+        <div class="field"><div class="field-label">Nationality *</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+        <div class="field"><div class="field-label">Date of Birth *</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+        <div class="field"><div class="field-label">Passport Number *</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+        <div class="field"><div class="field-label">Expiry Date *</div><div class="field-input" style="border-color:#333;color:#444;">Enter manually</div></div>
+      </div>
+      <!-- Toast lỗi handled by react-hot-toast ở góc màn hình, không vẽ ở đây -->
+      <div style="font-size:10px;color:#555;padding:0 12px 10px;font-style:italic;">→ react-hot-toast error toast xuất hiện góc màn hình</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Summary notes -->
+<div class="note-box">
+  <div class="note-title">Tóm tắt thiết kế đã thống nhất</div>
+  <div class="note-row"><span class="note-icon">🎯</span><span><strong>Scope overlay:</strong> Chỉ phủ phần form fields (bên dưới upload zone) — upload zone vẫn thấy ảnh passport</span></div>
+  <div class="note-row"><span class="note-icon">🎨</span><span><strong>Màu:</strong> <code style="color:#2dd4bf;background:#0f2b26;padding:1px 5px;border-radius:3px;">--color-secondary #14b8a6</code> — teal từ design system, không hardcode</span></div>
+  <div class="note-row"><span class="note-icon">📦</span><span><strong>No layout shift:</strong> Không có badge/text "Đang scanning..." — overlay tự thay thế hoàn toàn</span></div>
+  <div class="note-row"><span class="note-icon">🔔</span><span><strong>Toast:</strong> react-hot-toast — success (teal) nếu all high confidence, warning (amber) nếu có field cần verify</span></div>
+  <div class="note-row"><span class="note-icon">⚠️</span><span><strong>Confidence logic giữ nguyên:</strong> Field low-confidence → amber border + "⚠ Verify" trên label (thay vì badge riêng)</span></div>
+  <div class="note-row"><span class="note-icon">✦</span><span><strong>No label text:</strong> "EXTRACTING DATA" + 3 dots — không có chữ "Đang scanning..." bên ngoài overlay</span></div>
+</div>
+
+<div class="confirm-bar">
+  <div class="confirm-text">Design này có ổn không? Nếu OK, mình sẽ viết spec và chuyển sang <strong>writing-plans</strong>.</div>
+  <button class="confirm-btn" onclick="select('confirm')" data-choice="confirm">✓ Xác nhận design này</button>
+</div>
+
+<script>
+  function select(choice) {
+    if (window.__recordChoice) window.__recordChoice(choice, choice);
+    if (choice === 'confirm') {
+      document.querySelector('.confirm-btn').textContent = '✓ Đã xác nhận!';
+      document.querySelector('.confirm-btn').style.background = 'rgba(20,184,166,0.35)';
+    }
+  }
+</script>
+</body>
+</html>

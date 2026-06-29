@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật hồ sơ - FastVisa</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #faf8f5;
+            margin: 0;
+            padding: 0;
+            color: #44403c;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(28, 25, 23, 0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(217, 119, 6, 0.1);
+        }
+        .header img {
+            max-width: 140px;
+            height: auto;
+        }
+        .hero {
+            padding: 40px 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff !important;
+        }
+        .content {
+            padding: 40px 30px;
+            text-align: left;
+        }
+        .content p {
+            margin: 0 0 16px 0;
+            font-size: 15px;
+            color: #44403c;
+        }
+        .btn-wrapper {
+            text-align: center;
+            margin: 35px 0 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+        .footer {
+            background-color: #f5f1eb;
+            padding: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #78716c;
+            border-top: 1px solid rgba(28, 25, 23, 0.05);
+        }
+        .footer p {
+            margin: 0 0 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <a href="https://fastvisa.com" target="_blank" style="text-decoration: none;">
+                <img src="https://res.cloudinary.com/dbzaqlxvc/image/upload/v1782034070/fastvisa/assets/logo-lm.png" alt="FastVisa Logo">
+            </a>
+        </div>
+        
+        <!-- Hero Section -->
+        <div class="hero" style="background-color: <%= color %>;">
+            <h1 style="color: #ffffff !important;">Cập nhật hồ sơ: <%= applicationCode %></h1>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <p><%= t.greeting %></p>
+            
+            <p><%- t.updateMsg(applicationCode) %></p>
+            
+            <div class="btn-wrapper">
+                <span class="btn" style="background-color: <%= color %>;"><%= status %></span>
+            </div>
+            
+            <p><%- statusMessage %></p>
+            
+            <p style="margin-top: 30px;">
+                <%- t.thanks %>
+            </p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; <%= new Date().getFullYear() %> FASTVISA. All rights reserved.</p>
+            <p><%= t.autoFooter %></p>
+        </div>
+    </div>
+</body>
+</html>

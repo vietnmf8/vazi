@@ -1,0 +1,125 @@
+<h2>Câu hỏi 1: AI extraction được kích hoạt như thế nào?</h2>
+<p class="subtitle">Chọn luồng UX phù hợp nhất với trải nghiệm bạn muốn mang lại cho user</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;overflow:hidden;">
+        <div style="background:#334155;padding:10px 14px;font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.05em;">PASSPORT DATA PAGE</div>
+        <div style="padding:14px;display:flex;gap:10px;align-items:center;">
+          <div style="width:70px;height:50px;background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#fff;font-size:18px;">🛂</span>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:10px;color:#64748b;margin-bottom:4px;">Passport uploaded</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite;"></div>
+              <span style="font-size:11px;color:#22c55e;font-weight:600;">AI đang trích xuất thông tin...</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:0 14px 14px;">
+          <div style="background:#0f172a;border-radius:6px;padding:10px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Full Name</div><div style="height:20px;background:linear-gradient(90deg,#1e3a5f,#1e293b,#1e3a5f);background-size:200%;border-radius:4px;animation:shimmer 1.5s infinite;"></div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Passport Number</div><div style="height:20px;background:linear-gradient(90deg,#1e3a5f,#1e293b,#1e3a5f);background-size:200%;border-radius:4px;animation:shimmer 1.5s infinite;"></div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Date of Birth</div><div style="height:20px;background:linear-gradient(90deg,#1e3a5f,#1e293b,#1e3a5f);background-size:200%;border-radius:4px;animation:shimmer 1.5s infinite;"></div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Nationality</div><div style="height:20px;background:linear-gradient(90deg,#1e3a5f,#1e293b,#1e3a5f);background-size:200%;border-radius:4px;animation:shimmer 1.5s infinite;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Auto-fill ngay khi upload xong</h3>
+      <p>Passport vừa upload → AI tự động trích xuất ngay, form fields fill vào với shimmer animation. Zero clicks từ user.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Trải nghiệm liền mạch nhất</li><li>Không cần thêm bước</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>User không biết AI đang làm gì nếu latency cao</li><li>Khó rollback nếu fill sai</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;overflow:hidden;">
+        <div style="background:#334155;padding:10px 14px;font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.05em;">PASSPORT DATA PAGE</div>
+        <div style="padding:14px;">
+          <div style="background:#0f172a;border-radius:8px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:10px;">
+            <div style="width:60px;height:44px;background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="color:#fff;font-size:16px;">🛂</span>
+            </div>
+            <div>
+              <div style="font-size:11px;color:#e2e8f0;font-weight:500;">passport_JUGALBOT.jpg</div>
+              <div style="font-size:10px;color:#64748b;">Uploaded successfully</div>
+            </div>
+          </div>
+          <button style="width:100%;background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:8px;padding:10px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <span>✨</span> Auto-fill từ Passport
+          </button>
+        </div>
+        <div style="padding:0 14px 14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Full Name</div><div style="height:20px;background:#0f172a;border:1px solid #334155;border-radius:4px;"></div></div>
+            <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Passport Number</div><div style="height:20px;background:#0f172a;border:1px solid #334155;border-radius:4px;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Button "Auto-fill từ Passport"</h3>
+      <p>Sau khi upload, hiện button "✨ Auto-fill từ Passport". User chủ động click → AI xử lý → fill fields.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>User in control, rõ ràng</li><li>Dễ retry nếu sai</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Thêm 1 click</li><li>User có thể bỏ qua button</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;">
+      <div style="background:#1e293b;border-radius:10px;overflow:hidden;">
+        <div style="background:#334155;padding:10px 14px;font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.05em;">AI EXTRACTED — REVIEW BEFORE FILL</div>
+        <div style="padding:14px;">
+          <div style="background:#0f172a;border-radius:8px;padding:12px;margin-bottom:10px;">
+            <div style="font-size:10px;color:#a78bfa;font-weight:600;margin-bottom:8px;">✨ AI đã đọc được thông tin này:</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Full Name</div><div style="height:20px;background:#1e293b;border:1px solid #a78bfa40;border-radius:4px;padding:3px 6px;font-size:9px;color:#e2e8f0;">MARDY JUGALBOT</div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Nationality</div><div style="height:20px;background:#1e293b;border:1px solid #a78bfa40;border-radius:4px;padding:3px 6px;font-size:9px;color:#e2e8f0;">Philippine</div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">Passport No.</div><div style="height:20px;background:#1e293b;border:1px solid #a78bfa40;border-radius:4px;padding:3px 6px;font-size:9px;color:#e2e8f0;">P82576038</div></div>
+              <div><div style="font-size:9px;color:#475569;margin-bottom:2px;">DOB</div><div style="height:20px;background:#1e293b;border:1px solid #fbbf2440;border-radius:4px;padding:3px 6px;font-size:9px;color:#fbbf24;">04/05/1982 ⚠️</div></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button style="flex:1;background:#334155;border:none;border-radius:6px;padding:7px;color:#94a3b8;font-size:10px;cursor:pointer;">Bỏ qua</button>
+            <button style="flex:2;background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:6px;padding:7px;color:#fff;font-size:10px;font-weight:600;cursor:pointer;">✓ Áp dụng vào form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Review trước khi apply (Confirm Modal / Inline Panel)</h3>
+      <p>AI trích xuất xong → hiện preview inline (hoặc modal) để user review và confirm trước khi điền vào form. Cho phép edit từng field AI đọc sai.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Accuracy cao nhất từ góc độ UX</li><li>User trust cao hơn (thấy AI đọc gì)</li><li>Có thể highlight field AI không chắc</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Phức tạp nhất</li><li>Thêm bước confirm</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+@keyframes shimmer {
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+@keyframes pulse {
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+</style>

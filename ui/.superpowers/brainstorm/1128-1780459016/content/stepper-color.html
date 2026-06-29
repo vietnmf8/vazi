@@ -1,0 +1,356 @@
+<style>
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .color-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .color-card:hover { border-color: #94a3b8; transform: translateY(-2px); }
+  .color-card.selected { border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
+
+  .card-header {
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .badge {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+  .badge-gray { background: #e2e8f0; color: #64748b; }
+  .badge-teal-dark { background: #ccfbf1; color: #0f766e; }
+  .badge-teal-light { background: #e0fdf4; color: #0d9488; }
+
+  .stepper-preview {
+    padding: 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    background: #f8fafc;
+    border-radius: 0;
+  }
+
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+  }
+  .step-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .step-circle {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+  }
+  .step-connector {
+    flex: 1;
+    height: 2px;
+    margin-top: 0;
+  }
+  .step-label {
+    font-size: 10px;
+    margin-top: 6px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.3;
+    max-width: 60px;
+  }
+
+  /* Current — near black */
+  .current-done {
+    background: transparent;
+    border-color: #1c1917;
+    color: #1c1917;
+  }
+  .current-active {
+    background: #1c1917;
+    border-color: #1c1917;
+    color: #fff;
+  }
+  .current-todo {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+  }
+  .current-line-done { background: #1c1917; }
+  .current-line-todo { background: #e2e8f0; }
+  .current-label-done { color: #1c1917; }
+  .current-label-active { color: #1c1917; font-weight: 600; }
+  .current-label-todo { color: #94a3b8; }
+
+  /* Option A — teal đậm #0f766e */
+  .dark-done {
+    background: transparent;
+    border-color: #0f766e;
+    color: #0f766e;
+  }
+  .dark-active {
+    background: #1c1917;
+    border-color: #1c1917;
+    color: #fff;
+  }
+  .dark-todo {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+  }
+  .dark-line-done { background: #0f766e; }
+  .dark-line-todo { background: #e2e8f0; }
+  .dark-label-done { color: #0f766e; }
+  .dark-label-active { color: #1c1917; font-weight: 600; }
+  .dark-label-todo { color: #94a3b8; }
+
+  /* Option B — teal sáng #14b8a6 */
+  .light-done {
+    background: transparent;
+    border-color: #14b8a6;
+    color: #14b8a6;
+  }
+  .light-active {
+    background: #1c1917;
+    border-color: #1c1917;
+    color: #fff;
+  }
+  .light-todo {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+  }
+  .light-line-done { background: #14b8a6; }
+  .light-line-todo { background: #e2e8f0; }
+  .light-label-done { color: #14b8a6; }
+  .light-label-active { color: #1c1917; font-weight: 600; }
+  .light-label-todo { color: #94a3b8; }
+
+  /* Option C — teal filled (solid bg for done) */
+  .filled-done {
+    background: #0f766e;
+    border-color: #0f766e;
+    color: #fff;
+  }
+  .filled-active {
+    background: #1c1917;
+    border-color: #1c1917;
+    color: #fff;
+  }
+  .filled-todo {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #94a3b8;
+  }
+  .filled-line-done { background: #0f766e; }
+  .filled-line-todo { background: #e2e8f0; }
+  .filled-label-done { color: #0f766e; }
+  .filled-label-active { color: #1c1917; font-weight: 600; }
+  .filled-label-todo { color: #94a3b8; }
+
+  .color-swatch {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #64748b;
+    padding: 8px 16px;
+    border-top: 1px solid #f1f5f9;
+    background: #fff;
+  }
+  .swatch-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card-desc {
+    padding: 10px 16px;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+    background: #fff;
+  }
+  .card-desc strong { color: #374151; }
+
+  .step-wrapper {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+</style>
+
+<h2>Màu Stepper — Completed Steps</h2>
+<p class="subtitle">Bước hiện tại (active) giữ màu đen. Chọn màu teal cho bước đã hoàn thành.</p>
+
+<div class="color-grid">
+
+  <!-- CURRENT -->
+  <div class="color-card" data-choice="current" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <span>Hiện tại</span>
+      <span class="badge badge-gray">Đang dùng</span>
+    </div>
+    <div class="stepper-preview">
+      <!-- Step 1: done -->
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle current-done">✓</div>
+          <div class="step-connector current-line-done"></div>
+        </div>
+        <div class="step-label current-label-done">Visa<br>Options</div>
+      </div>
+      <!-- Step 2: active -->
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle current-active">2</div>
+          <div class="step-connector current-line-todo"></div>
+        </div>
+        <div class="step-label current-label-active">Applicant<br>Details</div>
+      </div>
+      <!-- Step 3: todo -->
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle current-todo">3</div>
+        </div>
+        <div class="step-label current-label-todo">Review<br>& Pay</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-dot" style="background:#1c1917;"></div>
+      <span>#1c1917 — Stone 900 (gần đen)</span>
+    </div>
+    <div class="card-desc">Done và active cùng màu → <strong>khó phân biệt</strong> tiến trình</div>
+  </div>
+
+  <!-- OPTION A: teal đậm outline -->
+  <div class="color-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <span>A — Teal đậm</span>
+      <span class="badge badge-teal-dark">--color-secondary</span>
+    </div>
+    <div class="stepper-preview">
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle dark-done">✓</div>
+          <div class="step-connector dark-line-done"></div>
+        </div>
+        <div class="step-label dark-label-done">Visa<br>Options</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle dark-active">2</div>
+          <div class="step-connector dark-line-todo"></div>
+        </div>
+        <div class="step-label dark-label-active">Applicant<br>Details</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle dark-todo">3</div>
+        </div>
+        <div class="step-label dark-label-todo">Review<br>& Pay</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-dot" style="background:#0f766e;"></div>
+      <span>#0f766e — Tropical Teal (đậm)</span>
+    </div>
+    <div class="card-desc">Outline teal đậm. <strong>Tương phản cao</strong>, nghiêm túc, professional.</div>
+  </div>
+
+  <!-- OPTION B: teal sáng outline -->
+  <div class="color-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <span>B — Teal sáng</span>
+      <span class="badge badge-teal-light">--color-secondary-light</span>
+    </div>
+    <div class="stepper-preview">
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle light-done">✓</div>
+          <div class="step-connector light-line-done"></div>
+        </div>
+        <div class="step-label light-label-done">Visa<br>Options</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle light-active">2</div>
+          <div class="step-connector light-line-todo"></div>
+        </div>
+        <div class="step-label light-label-active">Applicant<br>Details</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle light-todo">3</div>
+        </div>
+        <div class="step-label light-label-todo">Review<br>& Pay</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-dot" style="background:#14b8a6;"></div>
+      <span>#14b8a6 — Vibrant Teal (sáng)</span>
+    </div>
+    <div class="card-desc">Outline teal sáng. <strong>Tươi, nổi bật</strong>, cảm giác hoàn thành rõ ràng hơn.</div>
+  </div>
+
+  <!-- OPTION C: teal filled -->
+  <div class="color-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-header">
+      <span>C — Teal filled</span>
+      <span class="badge badge-teal-dark">Solid background</span>
+    </div>
+    <div class="stepper-preview">
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle filled-done">✓</div>
+          <div class="step-connector filled-line-done"></div>
+        </div>
+        <div class="step-label filled-label-done">Visa<br>Options</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle filled-active">2</div>
+          <div class="step-connector filled-line-todo"></div>
+        </div>
+        <div class="step-label filled-label-active">Applicant<br>Details</div>
+      </div>
+      <div class="step-item">
+        <div class="step-wrapper">
+          <div class="step-circle filled-todo">3</div>
+        </div>
+        <div class="step-label filled-label-todo">Review<br>& Pay</div>
+      </div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-dot" style="background:#0f766e;"></div>
+      <span>#0f766e — nền solid teal</span>
+    </div>
+    <div class="card-desc">Circle done có nền teal đặc. <strong>Mạnh nhất</strong> về visual weight — hoàn thành rõ ràng nhất.</div>
+  </div>
+
+</div>
+
+<div style="margin-top:16px; padding:12px 16px; background:#f0fdfa; border-radius:8px; border:1px solid #99f6e4; font-size:12px; color:#0f766e;">
+  💡 <strong>Active step (bước đang làm)</strong> giữ nguyên màu đen <code>#1c1917</code> để phân biệt rõ "đã xong" vs "đang làm"
+</div>

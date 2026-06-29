@@ -1,0 +1,86 @@
+---
+activation: model_decision
+description: Prisma schema naming conventions for MySQL.
+globs: prisma/*.prisma
+---
+
+# Prisma Schema Naming Convention
+
+## Model naming
+
+- **Model name**: `PascalCase`, **danh từ số ít**
+- **`@@map`**: `snake_case`, **danh từ số nhiều** (tên bảng MySQL)
+- **Field name**: `camelCase`
+- **`@map`**: `snake_case` cho column name
+
+## Example
+
+```prisma
+model User {
+    id         String   @id @default(cuid())
+    email      String   @unique
+    name       String
+    avatarUrl  String?  @map("avatar_url") @db.VarChar(500)
+    createdAt  DateTime @default(now()) @map("created_at")
+    updatedAt  DateTime @updatedAt @map("updated_at")
+    deletedAt  DateTime? @map("deleted_at")
+
+    posts      Post[]
+
+    @@map("users")              // ← snake_case plural
+    @@index([email])
+    @@index([deletedAt, createdAt])
+}
+
+model Post {
+    id         String   @id @default(cuid())
+    title      String   @db.VarChar(500)
+    content    String   @db.Text
+    authorId   String   @map("author_id")
+    author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    createdAt  DateTime @default(now()) @map("created_at")
+    updatedAt  DateTime @updatedAt @map("updated_at")
+
+    @@map("posts")              // ← snake_case plural
+    // KHÔNG cần @@index([authorId]) — MySQL auto-index FK
+}
+
+model RefreshToken {
+    id         String   @id @default(cuid())
+    userId     String   @map("user_id")
+    token      String   @unique @db.VarChar(255)
+    expiresAt  DateTime @map("expires_at")
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt  DateTime @default(now()) @map("created_at")
+
+    @@map("refresh_tokens")     // ← snake_case plural
+}
+```
+
+## Rules
+
+1. Model **danh từ số ít** → bảng **số nhiều** (`User` → `users`)
+2. JOIN/junction table: `<a>_<b>` snake_case (e.g. `post_tags`, `user_roles`)
+3. Tất cả timestamp fields: `createdAt` / `updatedAt` / `deletedAt` (consistent)
+4. FK fields: `<entity>Id` (camelCase, mapped sang `<entity>_id`)
+5. Boolean fields: `is<X>` / `has<X>` (e.g. `isActive`, `hasVerifiedEmail`)
+6. `@db.VarChar(191)` cho indexed fields (MySQL 5.x compat)
+7. `@db.Text` cho content dài
+8. `@db.Decimal(10, 2)` cho money (KHÔNG `Float`)
+9. Mọi FK phải có `onDelete` action (xem rule `06-prisma-mysql-gotchas`)
+
+## Anti-patterns
+
+```prisma
+// ❌ SAI
+model users {                   // Lowercase + plural
+    id INT @id
+    created_at DateTime          // snake_case field
+    @@map("User")                // PascalCase table
+}
+
+// ❌ SAI: thiếu @@map → Prisma dùng tên model làm tên bảng
+model User {                     // → bảng "User" (không phải "users")
+    id String @id
+}
+```

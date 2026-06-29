@@ -1,0 +1,120 @@
+---
+activation: model_decision
+description: Config files read from .env with defaults. NEVER use process.env directly in services/controllers.
+globs: ["src/configs/**/*.ts", "src/services/**/*.ts", "src/controllers/**/*.ts"]
+---
+
+# Config & Environment Rules
+
+## Cấu trúc
+
+```
+src/configs/
+├── auth.ts          # JWT, bcrypt rounds, token TTL
+├── db.ts            # MySQL connection
+├── mail.ts          # SMTP, NodeMailer
+├── queue.ts         # Queue interval, retry count
+├── constants.ts     # httpCodes, errorCodes, prismaCodes...
+└── index.ts         # Re-export all configs
+```
+
+## Rules
+
+### 1. CHỈ `server.ts`, `queue.ts`, `schedule.ts` được import `dotenv/config`
+
+```typescript
+// ✅ server.ts (top of file)
+import "dotenv/config";
+import express from "express";
+// ...
+
+// ❌ NEVER in services/controllers/middlewares
+import "dotenv/config"; // SAI ở đây
+```
+
+### 2. NEVER dùng `process.env.X` trực tiếp trong services/controllers
+
+```typescript
+// ❌ SAI
+class AuthService {
+    async login() {
+        const secret = process.env.AUTH_JWT_SECRET; // KHÔNG được
+    }
+}
+
+// ✅ ĐÚNG: dùng config
+import authConfig from "@/configs/auth";
+class AuthService {
+    async login() {
+        const secret = authConfig.jwt.secret;
+    }
+}
+```
+
+### 3. Config file template (với prefix + default)
+
+```typescript
+// src/configs/auth.ts
+export default {
+    jwt: {
+        secret: process.env.AUTH_JWT_SECRET ?? "change-me-in-production",
+        expiresIn: process.env.AUTH_JWT_EXPIRES_IN ?? "15m",
+        verifyExpiresIn: process.env.AUTH_VERIFY_JWT_EXPIRES ?? "24h",
+    },
+    refresh: {
+        ttlDays: parseInt(process.env.AUTH_REFRESH_TTL_DAYS ?? "30", 10),
+    },
+    bcrypt: {
+        saltRounds: parseInt(process.env.AUTH_BCRYPT_ROUNDS ?? "10", 10),
+    },
+    blacklist: {
+        cleanupCron: process.env.AUTH_BLACKLIST_CLEANUP_CRON ?? "0 3 * * *",
+    },
+} as const;
+```
+
+### 4. Naming convention env vars
+
+| Service | Prefix                           | Examples                                              |
+| ------- | -------------------------------- | ----------------------------------------------------- |
+| Auth    | `AUTH_`                          | `AUTH_JWT_SECRET`, `AUTH_REFRESH_TTL_DAYS`            |
+| DB      | `DB_` hoặc Prisma `DATABASE_URL` | `DB_HOST`, `DATABASE_URL`                             |
+| Mail    | `MAIL_`                          | `MAIL_HOST`, `MAIL_FROM_ADDRESS`, `MAIL_APP_PASSWORD` |
+| Queue   | `QUEUE_`                         | `QUEUE_INTERVAL_MS`, `QUEUE_MAX_RETRY`                |
+| App     | `APP_`                           | `APP_PORT`, `APP_ENV`, `APP_BASE_URL`                 |
+
+### 5. Generate secrets
+
+```bash
+# Random JWT secret
+openssl rand -base64 32
+
+# Random API key
+openssl rand -hex 32
+```
+
+### 6. `.env.example` MUST exist
+
+```env
+# .env.example — committed to git (no real secrets)
+APP_PORT=3000
+APP_ENV=development
+APP_BASE_URL=http://localhost:3000
+
+# Database (Prisma 7)
+DATABASE_URL="mysql://root:password@localhost:3306/mydb"
+
+# Auth
+AUTH_JWT_SECRET=
+AUTH_JWT_EXPIRES_IN=15m
+AUTH_REFRESH_TTL_DAYS=30
+AUTH_BCRYPT_ROUNDS=10
+
+# Mail (Gmail App Password)
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your-email@gmail.com
+MAIL_APP_PASSWORD=    # Generate at: https://myaccount.google.com/apppasswords
+MAIL_FROM_NAME=YourApp
+MAIL_FROM_ADDRESS=noreply@yourapp.com
+```
